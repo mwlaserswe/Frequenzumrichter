@@ -1,0 +1,28 @@
+https://www.mikrocontroller.net/articles/3-Phasen_Frequenzumrichter_mit_AVR
+
+Prozessor:	ATMega 88/168/328P
+
+
+https://www.youtube.com/watch?v=PAJQ-byyz5k
+http://winavr.sourceforge.net/download.html
+https://sourceforge.net/projects/winavr/files/
+
+http://www.microchip.com/mplab/avr-support/atmel-studio-7
+
+Gesamtdoku:		https://www.microchip.com/webdoc/index.html
+Schulung C:		http://www.schellong.de/c.htm
+AVR-GCC-Tutorial:	https://www.mikrocontroller.net/articles/AVR-GCC-Tutorial
+
+
+https://www.avrfreaks.net/forum/as7-error-failed-initialize-asf-distribution
+
+Failed to initialize ASF distribution
+'IronPython.runtime.Exceptions.AssertionException: category must be a Warning subclass at Atmel.VsIde.AvrStudio.Asf.Data.Provider.DataModel.DistributionManager.get_Instance()' 
+
+
+
+
+
+
+
+

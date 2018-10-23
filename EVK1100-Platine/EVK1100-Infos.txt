@@ -1,0 +1,43 @@
+EVK1100
+https://www.microchip.com/webdoc/evk1100/index.html
+
+Das EVK1100 ist ein Evaluierungs- und Entwicklungswerkzeug für den AVR32 AT32UC3A-Mikrocontroller.
+
+Hauptmerkmale:
+unterstützt den AT32UC3A Ethernet port Sensoren: Licht, Temperatur, Potentiometer 4x20 Blue LCD (PWM Adjustable backlight)
+Schnittstelle für JTAG, Nexus, USART, USB 2.0, TWI, SPI SD und MMC Card Reader
+Die AVR32 AT32UC3-Software-Bibliothek beinhaltet Treiber, Softwareservice und Demo-Anwendungen.
+Jedes Softwaremodul beinhaltet den kompletten Source Code, Beispiele,
+HTML-Dokumentation und Ready-to-use-Projekte für den IAR EWAVR32 und GNU GCC Compiler. 
+
+https://www.avrfreaks.net/forum/avr32-evk1100-getting-started
+https://www.microchip.com/webdoc/evk1100/evk1100._hardware_known_issues.html
+https://www.microchip.com/webdoc/evk1100/index.html
+
+http://asf.atmel.com/docs/3.44.0/common.services.ioport.example1.evk1100/html/index.html
+
+
+
+Power supply
+
+The EVK1100 board is designed to be powered by a 8-20V DC power supply. The EVK1100 can be configured to use one of the following two power sources:
+
+    8-20V DC power adapter connected to the power supply jack: to use this configuration, set the PWR switch(the switch is near the power supply jack) to the EXT position.
+    5V DC power via the USB miniAB connector: to use this configuration, set the PWR switch(the switch is near the power supply jack) to the USB position.
+    -> (http://asf.atmel.com/docs/latest/avr32.applications.demo.evk1100.example.evk1100/html/index.html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+
+01 Neues Repository anlegen
+	->www.github.com ->"New repository" klicken
+	
+02 Repository clonen
+	->Smart Git ->Repository ->Clone... ->https://github.com/mwlaserswe/RepositoryName.git
+

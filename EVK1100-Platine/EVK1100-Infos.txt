@@ -16,7 +16,8 @@ https://www.microchip.com/webdoc/evk1100/index.html
 
 http://asf.atmel.com/docs/3.44.0/common.services.ioport.example1.evk1100/html/index.html
 
-
+Doku für AVR32_GPIO.port[1].ovr
+	https://www.mikrocontroller.net/articles/AVR32_Tutorial
 
 Power supply
 

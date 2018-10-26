@@ -20,8 +20,11 @@ Failed to initialize ASF distribution
 'IronPython.runtime.Exceptions.AssertionException: category must be a Warning subclass at Atmel.VsIde.AvrStudio.Asf.Data.Provider.DataModel.DistributionManager.get_Instance()' 
 
 
-
-
+- Fehlermeldung: unknown identifier
+	Lösung:	- variable als static
+		- variable als volatile
+		- oder globale variable
+		z.B. volatile uint8_t value
 
 
 

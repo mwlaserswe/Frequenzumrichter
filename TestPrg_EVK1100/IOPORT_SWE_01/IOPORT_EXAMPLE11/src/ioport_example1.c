@@ -85,6 +85,7 @@ int main(void)
 	while (true) {
 
 		// Lauflicht mit den grünen LED's
+		// Doku: https://www.mikrocontroller.net/articles/AVR32_Tutorial
 		AVR32_GPIO.port[1].ovr = 0x70000000;
 		delay_ms(500);
 		AVR32_GPIO.port[1].ovr = 0x68000000;

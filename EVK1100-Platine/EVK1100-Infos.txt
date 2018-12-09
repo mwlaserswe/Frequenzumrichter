@@ -19,7 +19,12 @@ http://asf.atmel.com/docs/3.44.0/common.services.ioport.example1.evk1100/html/in
 Doku f¸r AVR32_GPIO.port[1].ovr
 	https://www.mikrocontroller.net/articles/AVR32_Tutorial
 
-Power supply
+	
+Doku auf Youtube: Stichwort "Getting Started With AVR"	
+	
+	
+	
+=== Power supply ===
 
 The EVK1100 board is designed to be powered by a 8-20V DC power supply. The EVK1100 can be configured to use one of the following two power sources:
 
@@ -27,8 +32,54 @@ The EVK1100 board is designed to be powered by a 8-20V DC power supply. The EVK1
     5V DC power via the USB miniAB connector: to use this configuration, set the PWR switch(the switch is near the power supply jack) to the USB position.
     -> (http://asf.atmel.com/docs/latest/avr32.applications.demo.evk1100.example.evk1100/html/index.html)
 
+=== Display ===
+The only difference between an Atmel board template and a User Board template is that the latter has all the clock and LED/other hardware definitions preconfigured.
+- Display DIP204 Example for evk1100 Documentation:	http://asf.atmel.com/docs/latest/avr32.components.display.dip204.example.evk1100/html/index.html
+- LCD DIP204 example driver for EVK1100 board:		http://simplemachines.it/martin/mizar32/1.6.0-AT32UC3/COMPONENTS/DISPLAY/DIP204/EXAMPLE/DOC/html/a00003.html
 
 
+=== ADC ===
+http://simplemachines.it/martin/mizar32/1.6.0-AT32UC3/DRIVERS/ADC/EXAMPLE/DOC/html/a00003.html
+
+
+=== Zeilennummern ===
+Tools > Options > Text Editor > All languages > General -- Display click on line numbers
+
+=== Stimulus ===
+- .stim-File erzeugen. Wichtig: Groﬂ/Kleinschreibung beachten. "PortA.IN" ->"PORTA.IN"
+- Auf den Simulator-Button (Werkzeug) klicken
+- Stimuli File ausw‰hlen
+- Stim-File starten: ->Debug ->Execute Stimulifime (Programm muﬂ laufen)
+
+=== Fehlermeldung: Failed to initialize ASF distribution
+'IronPython.runtime.Exceptions.AssertionException: category must be a Warning subclass at Atmel.VsIde.AvrStudio.Asf.Data.Provider.DataModel.DistributionManager.get_Instance()' 
+https://www.avrfreaks.net/forum/as7-error-failed-initialize-asf-distribution
+=== Leere "Board Selection"
+https://www.avrfreaks.net/forum/device-selection-not-showing-any-devices
+	Can you check the following
+	1) Make sure there are files under <STUDIOINSTALLDIR>\packs\atmel. If these files are present then chances are the cache is not created.
+	2) Start Atmel Studio
+	3) Go to Tools -> Device Pack Manager -> Advanced -> Reset cache
+	4) Restart Atmel Studio. If you are not able see the devices still in new project dialog then do the following workaround.
+	     Create a folder like D:\Studio\7.0
+	     Modify the file <STUDIOINSTALLDIR>\atpackmanager\atpack.properties
+	     Set CacheFolder=D:\Studio\7.0
+	     Restart Studio
+
+=== Header-Dateien automatisch einbinden ===
+- ->AFS ->AFS Wizard ->gew¸nschtes Modul ->Add ->Apply
+	- Die Datei wird auf der Festplatte an die richtige Stelle kopiert
+	- Die Datei wird in den Solution Exlorer eingetragen
+- #include <asf.h> einf¸gen 
+
+=== Header-Dateien selbst einbinden ===
+	->Solution Explorer: rechte Mouse auf den Projektordner ->add ->New Folder
+	  - Auf der Festplatte wird ein Ordner unter dem Projektordner erzeugt.
+	->Solution Explorer: rechte Mouse auf neuen Ornder ->Existing Item... ->z.B. delay.h aus einem anderen Projekt ->entweder "Add" oder "Add As Link"
+	  - Bei "Add" wird die Datei in diesen Ordner kopiert
+	  - Im Code: #include "Headers/delay.h"    Wichtig: "" statt <>
+	  
+	  - Wenn man mit <> einbindet, werden die Dateien aus der Altmel-Studio Installation genommen.
 
 
 

@@ -1,0 +1,6 @@
+// Simple stimfile to give input on PORTA
+
+$repeat 5
+	#23
+	PORTA.IN = *PORTB.OUT
+$endrep

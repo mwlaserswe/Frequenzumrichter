@@ -25,9 +25,9 @@ Dez	Bin	Hex
 0x10 != 50dec
 
 
+||||||||
 
-
-
+0xFF
 
 
 

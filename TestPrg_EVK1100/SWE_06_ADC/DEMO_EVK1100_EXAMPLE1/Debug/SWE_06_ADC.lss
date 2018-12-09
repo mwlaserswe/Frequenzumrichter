@@ -1,0 +1,3564 @@
+
+SWE_06_ADC.elf:     file format elf32-avr32
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .reset        0000200c  80000000  80000000  00000400  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rela.got     00000000  8000200c  8000200c  0000240c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .init         0000001a  8000200c  8000200c  0000240c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .text         0000134c  80002028  80002028  00002428  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .exception    00000200  80003400  80003400  00003800  2**9
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  5 .fini         00000018  80003600  80003600  00003a00  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  6 .rodata       000001c4  80003618  80003618  00003a18  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .lalign       00000004  800037dc  800037dc  00003bdc  2**0
+                  ALLOC
+  8 .dalign       00000004  00000004  00000004  00000000  2**0
+                  ALLOC
+  9 .ctors        00000008  00000008  800037e0  00003c08  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 10 .dtors        00000008  00000010  800037e8  00003c10  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 11 .jcr          00000004  00000018  800037f0  00003c18  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 12 .got          00000000  0000001c  800037f4  00003c1c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 13 .data         00000510  0000001c  800037f4  00003c1c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 14 .bss          0000020c  00000544  00000544  00000000  2**2
+                  ALLOC
+ 15 .heap         0000e8b0  00000750  00000750  00000000  2**0
+                  ALLOC
+ 16 .comment      00000030  00000000  00000000  0000412c  2**0
+                  CONTENTS, READONLY
+ 17 .debug_aranges 00000970  00000000  00000000  00004160  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 18 .debug_pubnames 0000144d  00000000  00000000  00004ad0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 19 .debug_info   00011fdb  00000000  00000000  00005f1d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 20 .debug_abbrev 000029ff  00000000  00000000  00017ef8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 21 .debug_line   00007e9f  00000000  00000000  0001a8f7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 22 .debug_frame  000015e4  00000000  00000000  00022798  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 23 .debug_str    0000352d  00000000  00000000  00023d7c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 24 .debug_loc    0000348c  00000000  00000000  000272a9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 25 .debug_macinfo 0095ba5b  00000000  00000000  0002a735  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 26 .stack        00001000  0000f000  0000f000  00000000  2**0
+                  ALLOC
+ 27 .debug_ranges 00000948  00000000  00000000  00986190  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .reset:
+
+80000000 <_start>:
+80000000:	48 1f       	lddpc	pc,80000004 <_start+0x4>
+80000002:	d7 03       	nop
+80000004:	80 00       	ld.sh	r0,r0[0x0]
+80000006:	20 28       	sub	r8,2
+
+80000008 <_trampoline>:
+
+  .global _trampoline
+  .type _trampoline, @function
+_trampoline:
+  // Jump to program start.
+  rjmp    program_start
+80000008:	e0 8f 10 00 	bral	80002008 <program_start>
+	...
+
+80002008 <program_start>:
+
+  .org  PROGRAM_START_OFFSET
+program_start:
+  // Jump to the C runtime startup routine.
+  lda.w   pc, _stext
+80002008:	fe cf ff e0 	sub	pc,pc,-32
+
+Disassembly of section .init:
+
+8000200c <_init>:
+8000200c:	eb cd 40 40 	pushm	r6,lr
+80002010:	48 26       	lddpc	r6,80002018 <_init+0xc>
+80002012:	1e 26       	rsub	r6,pc
+80002014:	c0 48       	rjmp	8000201c <_init+0x10>
+80002016:	d7 03       	nop
+80002018:	80 00       	ld.sh	r0,r0[0x0]
+8000201a:	1f f6       	ld.ub	r6,pc[0x7]
+8000201c:	c5 4c       	rcall	800020c4 <frame_dummy>
+8000201e:	e0 a0 09 a1 	rcall	80003360 <__do_global_ctors_aux>
+80002022:	e3 cd 80 40 	ldm	sp++,r6,pc
+
+Disassembly of section .text:
+
+80002028 <_stext>:
+80002028:	30 07       	mov	r7,0
+8000202a:	e0 7a 00 00 	mov	r10,65536
+8000202e:	5b fa       	cp.w	r10,-1
+80002030:	f4 0d 17 10 	movne	sp,r10
+80002034:	fe cb e8 54 	sub	r11,pc,-6060
+80002038:	30 8c       	mov	r12,8
+8000203a:	18 3b       	cp.w	r11,r12
+8000203c:	c0 70       	breq	8000204a <_stext+0x22>
+8000203e:	e0 6a 05 30 	mov	r10,1328
+80002042:	b7 09       	ld.d	r8,r11++
+80002044:	b9 28       	st.d	r12++,r8
+80002046:	14 3c       	cp.w	r12,r10
+80002048:	cf d5       	brlt	80002042 <_stext+0x1a>
+8000204a:	e0 6a 07 50 	mov	r10,1872
+8000204e:	e0 6c 05 30 	mov	r12,1328
+80002052:	30 08       	mov	r8,0
+80002054:	30 09       	mov	r9,0
+80002056:	b9 28       	st.d	r12++,r8
+80002058:	14 3c       	cp.w	r12,r10
+8000205a:	cf e5       	brlt	80002056 <_stext+0x2e>
+8000205c:	e0 a0 03 3e 	rcall	800026d8 <_init_startup>
+80002060:	fe cc ea 60 	sub	r12,pc,-5536
+80002064:	e0 a0 05 3a 	rcall	80002ad8 <atexit>
+80002068:	cd 2f       	rcall	8000200c <_init>
+8000206a:	1a 9c       	mov	r12,sp
+8000206c:	30 0b       	mov	r11,0
+8000206e:	e0 a0 07 87 	rcall	80002f7c <_init_argv>
+80002072:	5b fc       	cp.w	r12,-1
+80002074:	f9 bc 00 00 	moveq	r12,0
+80002078:	f9 ba 00 00 	moveq	r10,0
+8000207c:	14 1d       	sub	sp,r10
+8000207e:	e0 a0 04 8d 	rcall	80002998 <main>
+80002082:	e0 a0 05 33 	rcall	80002ae8 <exit>
+80002086:	d7 03       	nop
+
+80002088 <__do_global_dtors_aux>:
+80002088:	d4 21       	pushm	r4-r7,lr
+8000208a:	e0 68 05 44 	mov	r8,1348
+8000208e:	11 89       	ld.ub	r9,r8[0x0]
+80002090:	30 08       	mov	r8,0
+80002092:	f0 09 18 00 	cp.b	r9,r8
+80002096:	c1 61       	brne	800020c2 <__do_global_dtors_aux+0x3a>
+80002098:	31 08       	mov	r8,16
+8000209a:	31 46       	mov	r6,20
+8000209c:	10 95       	mov	r5,r8
+8000209e:	10 16       	sub	r6,r8
+800020a0:	e0 67 05 48 	mov	r7,1352
+800020a4:	a3 46       	asr	r6,0x2
+800020a6:	20 16       	sub	r6,1
+800020a8:	c0 68       	rjmp	800020b4 <__do_global_dtors_aux+0x2c>
+800020aa:	2f f8       	sub	r8,-1
+800020ac:	8f 08       	st.w	r7[0x0],r8
+800020ae:	ea 08 03 28 	ld.w	r8,r5[r8<<0x2]
+800020b2:	5d 18       	icall	r8
+800020b4:	6e 08       	ld.w	r8,r7[0x0]
+800020b6:	0c 38       	cp.w	r8,r6
+800020b8:	cf 93       	brcs	800020aa <__do_global_dtors_aux+0x22>
+800020ba:	30 19       	mov	r9,1
+800020bc:	e0 68 05 44 	mov	r8,1348
+800020c0:	b0 89       	st.b	r8[0x0],r9
+800020c2:	d8 22       	popm	r4-r7,pc
+
+800020c4 <frame_dummy>:
+800020c4:	d4 01       	pushm	lr
+800020c6:	31 8c       	mov	r12,24
+800020c8:	78 08       	ld.w	r8,r12[0x0]
+800020ca:	58 08       	cp.w	r8,0
+800020cc:	c0 50       	breq	800020d6 <frame_dummy+0x12>
+800020ce:	48 38       	lddpc	r8,800020d8 <frame_dummy+0x14>
+800020d0:	58 08       	cp.w	r8,0
+800020d2:	c0 20       	breq	800020d6 <frame_dummy+0x12>
+800020d4:	5d 18       	icall	r8
+800020d6:	d8 02       	popm	pc
+800020d8:	00 00       	add	r0,r0
+	...
+
+800020dc <adc_configure>:
+	adc->mr |= 1 << AVR32_ADC_LOWRES_OFFSET;
+#endif
+
+	/* Set Sample/Hold time to max so that the ADC capacitor should be
+	 * loaded entirely */
+	adc->mr |= 0xF << AVR32_ADC_SHTIM_OFFSET;
+800020dc:	78 18       	ld.w	r8,r12[0x4]
+800020de:	ea 18 0f 00 	orh	r8,0xf00
+800020e2:	99 18       	st.w	r12[0x4],r8
+
+	/* Set Startup to max so that the ADC capacitor should be loaded
+	 * entirely */
+	adc->mr |= 0x1F << AVR32_ADC_STARTUP_OFFSET;
+800020e4:	78 18       	ld.w	r8,r12[0x4]
+800020e6:	ea 18 00 1f 	orh	r8,0x1f
+800020ea:	99 18       	st.w	r12[0x4],r8
+}
+800020ec:	5e fc       	retal	r12
+
+800020ee <adc_start>:
+void adc_start(volatile avr32_adc_t *adc)
+{
+	Assert( adc != NULL );
+
+	/* start conversion */
+	adc->cr = AVR32_ADC_START_MASK;
+800020ee:	30 28       	mov	r8,2
+800020f0:	99 08       	st.w	r12[0x0],r8
+}
+800020f2:	5e fc       	retal	r12
+
+800020f4 <adc_enable>:
+	Assert( adc != NULL );
+	Assert( channel <= AVR32_ADC_CHANNELS_MSB ); /* check if channel exist
+	                                              **/
+
+	/* enable channel */
+	adc->cher = (1 << channel);
+800020f4:	30 18       	mov	r8,1
+800020f6:	f0 0b 09 48 	lsl	r8,r8,r11
+800020fa:	99 48       	st.w	r12[0x10],r8
+}
+800020fc:	5e fc       	retal	r12
+
+800020fe <adc_get_status>:
+{
+	Assert( adc != NULL );
+	Assert( channel <= AVR32_ADC_CHANNELS_MSB ); /* check if channel exist
+	                                              **/
+
+	return ((adc->chsr & (1 << channel)) ? true : false);
+800020fe:	78 68       	ld.w	r8,r12[0x18]
+80002100:	30 19       	mov	r9,1
+80002102:	f2 0b 09 49 	lsl	r9,r9,r11
+80002106:	f3 e8 00 08 	and	r8,r9,r8
+}
+8000210a:	5f 1c       	srne	r12
+8000210c:	5e fc       	retal	r12
+8000210e:	d7 03       	nop
+
+80002110 <adc_disable>:
+ *
+ * \param *adc Base address of the ADC
+ * \param  channel   channel to disable (0 to 7)
+ */
+void adc_disable(volatile avr32_adc_t *adc, uint16_t channel)
+{
+80002110:	eb cd 40 c0 	pushm	r6-r7,lr
+80002114:	18 96       	mov	r6,r12
+	Assert( adc != NULL );
+	Assert( channel <= AVR32_ADC_CHANNELS_MSB ); /* check if channel exist
+	                                              **/
+
+	if (adc_get_status(adc, channel) == true) {
+80002116:	ef db c0 10 	bfextu	r7,r11,0x0,0x10
+8000211a:	0e 9b       	mov	r11,r7
+8000211c:	f0 1f 00 06 	mcall	80002134 <adc_disable+0x24>
+80002120:	c0 70       	breq	8000212e <adc_disable+0x1e>
+		/* disable channel */
+		adc->chdr |= (1 << channel);
+80002122:	6c 58       	ld.w	r8,r6[0x14]
+80002124:	30 19       	mov	r9,1
+80002126:	f2 07 09 47 	lsl	r7,r9,r7
+8000212a:	10 47       	or	r7,r8
+8000212c:	8d 57       	st.w	r6[0x14],r7
+8000212e:	e3 cd 80 c0 	ldm	sp++,r6-r7,pc
+80002132:	00 00       	add	r0,r0
+80002134:	80 00       	ld.sh	r0,r0[0x0]
+80002136:	20 fe       	sub	lr,15
+
+80002138 <adc_check_eoc>:
+	Assert( adc != NULL );
+	Assert( channel <= AVR32_ADC_CHANNELS_MSB ); /* check if channel exist
+	                                              **/
+
+	/* get SR register : EOC bit for channel */
+	return ((adc->sr & (1 << channel)) ? true : false);
+80002138:	78 78       	ld.w	r8,r12[0x1c]
+8000213a:	30 19       	mov	r9,1
+8000213c:	f2 0b 09 49 	lsl	r9,r9,r11
+80002140:	f3 e8 00 08 	and	r8,r9,r8
+}
+80002144:	5f 1c       	srne	r12
+80002146:	5e fc       	retal	r12
+
+80002148 <adc_get_value>:
+ * \param *adc Base address of the ADC
+ * \param  channel   channel to handle (0 to 7)
+ * \return The value acquired (unsigned long)
+ */
+uint32_t adc_get_value(volatile avr32_adc_t *adc, uint16_t channel)
+{
+80002148:	eb cd 40 e0 	pushm	r5-r7,lr
+8000214c:	18 97       	mov	r7,r12
+8000214e:	16 95       	mov	r5,r11
+	Assert( adc != NULL );
+	Assert( channel <= AVR32_ADC_CHANNELS_MSB );
+
+	/* wait for end of conversion */
+	while (adc_check_eoc(adc, channel) != true) {
+80002150:	ed db c0 10 	bfextu	r6,r11,0x0,0x10
+80002154:	0c 9b       	mov	r11,r6
+80002156:	0e 9c       	mov	r12,r7
+80002158:	f0 1f 00 05 	mcall	8000216c <adc_get_value+0x24>
+8000215c:	cf c0       	breq	80002154 <adc_get_value+0xc>
+	}
+
+	return *((uint32_t *)((&(adc->cdr0)) + channel));
+8000215e:	2d 07       	sub	r7,-48
+80002160:	5c 75       	castu.h	r5
+}
+80002162:	ee 05 03 2c 	ld.w	r12,r7[r5<<0x2]
+80002166:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
+8000216a:	00 00       	add	r0,r0
+8000216c:	80 00       	ld.sh	r0,r0[0x0]
+8000216e:	21 38       	sub	r8,19
+
+80002170 <gpio_enable_module_pin>:
+ *
+ * \return \ref GPIO_SUCCESS or \ref GPIO_INVALID_ARGUMENT.
+ */
+uint32_t gpio_enable_module_pin(uint32_t pin, uint32_t function)
+{
+	volatile avr32_gpio_port_t *gpio_port = &AVR32_GPIO.port[pin >> 5];
+80002170:	f8 08 16 05 	lsr	r8,r12,0x5
+80002174:	a9 68       	lsl	r8,0x8
+80002176:	e0 28 f0 00 	sub	r8,61440
+
+	/* Enable the correct function. */
+	switch (function) {
+8000217a:	58 1b       	cp.w	r11,1
+8000217c:	c0 d0       	breq	80002196 <gpio_enable_module_pin+0x26>
+8000217e:	c0 63       	brcs	8000218a <gpio_enable_module_pin+0x1a>
+80002180:	58 2b       	cp.w	r11,2
+80002182:	c1 00       	breq	800021a2 <gpio_enable_module_pin+0x32>
+80002184:	58 3b       	cp.w	r11,3
+80002186:	c1 40       	breq	800021ae <gpio_enable_module_pin+0x3e>
+80002188:	5e ff       	retal	1
+	case 0: /* A function. */
+		gpio_port->pmr0c = 1 << (pin & 0x1F);
+8000218a:	30 19       	mov	r9,1
+8000218c:	f2 0c 09 49 	lsl	r9,r9,r12
+80002190:	91 69       	st.w	r8[0x18],r9
+		gpio_port->pmr1c = 1 << (pin & 0x1F);
+80002192:	91 a9       	st.w	r8[0x28],r9
+#if (AVR32_GPIO_H_VERSION >= 210)
+		gpio_port->pmr2c = 1 << (pin & 0x1F);
+#endif
+		break;
+80002194:	c1 28       	rjmp	800021b8 <gpio_enable_module_pin+0x48>
+
+	case 1: /* B function. */
+		gpio_port->pmr0s = 1 << (pin & 0x1F);
+80002196:	30 19       	mov	r9,1
+80002198:	f2 0c 09 49 	lsl	r9,r9,r12
+8000219c:	91 59       	st.w	r8[0x14],r9
+		gpio_port->pmr1c = 1 << (pin & 0x1F);
+8000219e:	91 a9       	st.w	r8[0x28],r9
+#if (AVR32_GPIO_H_VERSION >= 210)
+		gpio_port->pmr2c = 1 << (pin & 0x1F);
+#endif
+		break;
+800021a0:	c0 c8       	rjmp	800021b8 <gpio_enable_module_pin+0x48>
+
+	case 2: /* C function. */
+		gpio_port->pmr0c = 1 << (pin & 0x1F);
+800021a2:	30 19       	mov	r9,1
+800021a4:	f2 0c 09 49 	lsl	r9,r9,r12
+800021a8:	91 69       	st.w	r8[0x18],r9
+		gpio_port->pmr1s = 1 << (pin & 0x1F);
+800021aa:	91 99       	st.w	r8[0x24],r9
+#if (AVR32_GPIO_H_VERSION >= 210)
+		gpio_port->pmr2c = 1 << (pin & 0x1F);
+#endif
+		break;
+800021ac:	c0 68       	rjmp	800021b8 <gpio_enable_module_pin+0x48>
+
+	case 3: /* D function. */
+		gpio_port->pmr0s = 1 << (pin & 0x1F);
+800021ae:	30 19       	mov	r9,1
+800021b0:	f2 0c 09 49 	lsl	r9,r9,r12
+800021b4:	91 59       	st.w	r8[0x14],r9
+		gpio_port->pmr1s = 1 << (pin & 0x1F);
+800021b6:	91 99       	st.w	r8[0x24],r9
+	default:
+		return GPIO_INVALID_ARGUMENT;
+	}
+
+	/* Disable GPIO control. */
+	gpio_port->gperc = 1 << (pin & 0x1F);
+800021b8:	30 19       	mov	r9,1
+800021ba:	f2 0c 09 4c 	lsl	r12,r9,r12
+800021be:	91 2c       	st.w	r8[0x8],r12
+800021c0:	5e fd       	retal	0
+800021c2:	d7 03       	nop
+
+800021c4 <gpio_enable_module>:
+ * \param size The number of pins in \a gpiomap.
+ *
+ * \return \ref GPIO_SUCCESS or \ref GPIO_INVALID_ARGUMENT.
+ */
+uint32_t gpio_enable_module(const gpio_map_t gpiomap, uint32_t size)
+{
+800021c4:	d4 21       	pushm	r4-r7,lr
+800021c6:	18 97       	mov	r7,r12
+800021c8:	16 94       	mov	r4,r11
+	uint32_t status = GPIO_SUCCESS;
+	uint32_t i;
+
+	for (i = 0; i < size; i++) {
+800021ca:	58 0b       	cp.w	r11,0
+800021cc:	c0 31       	brne	800021d2 <gpio_enable_module+0xe>
+800021ce:	30 05       	mov	r5,0
+800021d0:	c0 d8       	rjmp	800021ea <gpio_enable_module+0x26>
+800021d2:	30 06       	mov	r6,0
+800021d4:	0c 95       	mov	r5,r6
+		status |= gpio_enable_module_pin(gpiomap->pin, gpiomap->function);
+800021d6:	6e 1b       	ld.w	r11,r7[0x4]
+800021d8:	6e 0c       	ld.w	r12,r7[0x0]
+800021da:	f0 1f 00 06 	mcall	800021f0 <gpio_enable_module+0x2c>
+800021de:	18 45       	or	r5,r12
+		gpiomap++;
+800021e0:	2f 87       	sub	r7,-8
+uint32_t gpio_enable_module(const gpio_map_t gpiomap, uint32_t size)
+{
+	uint32_t status = GPIO_SUCCESS;
+	uint32_t i;
+
+	for (i = 0; i < size; i++) {
+800021e2:	2f f6       	sub	r6,-1
+800021e4:	0c 34       	cp.w	r4,r6
+800021e6:	fe 9b ff f8 	brhi	800021d6 <gpio_enable_module+0x12>
+		status |= gpio_enable_module_pin(gpiomap->pin, gpiomap->function);
+		gpiomap++;
+	}
+
+	return status;
+}
+800021ea:	0a 9c       	mov	r12,r5
+800021ec:	d8 22       	popm	r4-r7,pc
+800021ee:	00 00       	add	r0,r0
+800021f0:	80 00       	ld.sh	r0,r0[0x0]
+800021f2:	21 70       	sub	r0,23
+
+800021f4 <_unhandled_interrupt>:
+__attribute__((__interrupt__))
+#elif (defined __ICCAVR32__)
+__interrupt
+#endif
+static void _unhandled_interrupt(void)
+{
+800021f4:	c0 08       	rjmp	800021f4 <_unhandled_interrupt>
+800021f6:	d7 03       	nop
+
+800021f8 <INTC_init_interrupts>:
+/**
+ * \brief Initializes the hardware interrupt controller driver.
+ *
+ */
+void INTC_init_interrupts(void)
+{
+800021f8:	d4 21       	pushm	r4-r7,lr
+ * \brief Init EVBA address. This operation may or may not have been done by the
+ * C startup process.
+ */
+static __inline__ void INTC_init_evba(void)
+{
+  Set_system_register(AVR32_EVBA, (int32_t)&_evba );
+800021fa:	49 18       	lddpc	r8,8000223c <INTC_init_interrupts+0x44>
+800021fc:	e3 b8 00 01 	mtsr	0x4,r8
+80002200:	49 0e       	lddpc	lr,80002240 <INTC_init_interrupts+0x48>
+80002202:	30 07       	mov	r7,0
+80002204:	0e 94       	mov	r4,r7
+			int_req < _int_handler_table[int_grp].num_irqs;
+			int_req++)
+		{
+			/* Assign _unhandled_interrupt as the default interrupt
+			handler. */
+			_int_handler_table[int_grp]
+80002206:	49 0c       	lddpc	r12,80002244 <INTC_init_interrupts+0x4c>
+
+		/* Set the interrupt group priority register to its default
+		value.
+		By default, all interrupt groups are linked to the interrupt
+		priority level 0 and to the interrupt vector _int0. */
+		AVR32_INTC.ipr[int_grp] = IPR_INT0;
+80002208:	49 05       	lddpc	r5,80002248 <INTC_init_interrupts+0x50>
+8000220a:	10 15       	sub	r5,r8
+8000220c:	fe 76 08 00 	mov	r6,-63488
+80002210:	c1 08       	rjmp	80002230 <INTC_init_interrupts+0x38>
+ * \brief Init EVBA address. This operation may or may not have been done by the
+ * C startup process.
+ */
+static __inline__ void INTC_init_evba(void)
+{
+  Set_system_register(AVR32_EVBA, (int32_t)&_evba );
+80002212:	08 98       	mov	r8,r4
+			int_req++)
+		{
+			/* Assign _unhandled_interrupt as the default interrupt
+			handler. */
+			_int_handler_table[int_grp]
+				._int_line_handler_table[int_req]
+80002214:	7c 1b       	ld.w	r11,lr[0x4]
+
+	// For all interrupt groups,
+	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
+	{
+		// For all interrupt request lines of each group,
+		for (int_req = 0;
+80002216:	7c 0a       	ld.w	r10,lr[0x0]
+			int_req < _int_handler_table[int_grp].num_irqs;
+			int_req++)
+		{
+			/* Assign _unhandled_interrupt as the default interrupt
+			handler. */
+			_int_handler_table[int_grp]
+80002218:	f6 08 09 2c 	st.w	r11[r8<<0x2],r12
+	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
+	{
+		// For all interrupt request lines of each group,
+		for (int_req = 0;
+			int_req < _int_handler_table[int_grp].num_irqs;
+			int_req++)
+8000221c:	2f f8       	sub	r8,-1
+
+	// For all interrupt groups,
+	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
+	{
+		// For all interrupt request lines of each group,
+		for (int_req = 0;
+8000221e:	10 3a       	cp.w	r10,r8
+80002220:	fe 9b ff fc 	brhi	80002218 <INTC_init_interrupts+0x20>
+
+		/* Set the interrupt group priority register to its default
+		value.
+		By default, all interrupt groups are linked to the interrupt
+		priority level 0 and to the interrupt vector _int0. */
+		AVR32_INTC.ipr[int_grp] = IPR_INT0;
+80002224:	ec 07 09 25 	st.w	r6[r7<<0x2],r5
+	uint32_t int_grp, int_req;
+
+	INTC_init_evba();
+
+	// For all interrupt groups,
+	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
+80002228:	2f f7       	sub	r7,-1
+8000222a:	2f 8e       	sub	lr,-8
+8000222c:	59 47       	cp.w	r7,20
+8000222e:	c0 50       	breq	80002238 <INTC_init_interrupts+0x40>
+	{
+		// For all interrupt request lines of each group,
+		for (int_req = 0;
+80002230:	7c 08       	ld.w	r8,lr[0x0]
+80002232:	58 08       	cp.w	r8,0
+80002234:	ce f1       	brne	80002212 <INTC_init_interrupts+0x1a>
+80002236:	cf 7b       	rjmp	80002224 <INTC_init_interrupts+0x2c>
+80002238:	d8 22       	popm	r4-r7,pc
+8000223a:	00 00       	add	r0,r0
+8000223c:	80 00       	ld.sh	r0,r0[0x0]
+8000223e:	34 00       	mov	r0,64
+80002240:	80 00       	ld.sh	r0,r0[0x0]
+80002242:	36 18       	mov	r8,97
+80002244:	80 00       	ld.sh	r0,r0[0x0]
+80002246:	21 f4       	sub	r4,31
+80002248:	80 00       	ld.sh	r0,r0[0x0]
+8000224a:	35 04       	mov	r4,80
+
+8000224c <_get_interrupt_handler>:
+__int_handler _get_interrupt_handler(uint32_t int_level)
+{
+	/* ICR3 is mapped first, ICR0 last.
+	Code in exception.S puts int_level in R12 which is used by the compiler
+	to pass a single argument to a function. */
+	uint32_t int_grp = AVR32_INTC.icr[AVR32_INTC_INT3 - int_level];
+8000224c:	fe 78 08 00 	mov	r8,-63488
+80002250:	e0 69 00 83 	mov	r9,131
+80002254:	f2 0c 01 0c 	sub	r12,r9,r12
+80002258:	f0 0c 03 29 	ld.w	r9,r8[r12<<0x2]
+	uint32_t int_req = AVR32_INTC.irr[int_grp];
+8000225c:	f2 ca ff c0 	sub	r10,r9,-64
+80002260:	f0 0a 03 28 	ld.w	r8,r8[r10<<0x2]
+	exception.S will provide the interrupt handler with a clean interrupt
+	stack frame, with nothing more pushed onto the stack. The interrupt
+	handler must manage the `rete' instruction, which can be done using
+	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
+	C function attribute.*/
+	return (int_req)
+80002264:	58 08       	cp.w	r8,0
+80002266:	c0 21       	brne	8000226a <_get_interrupt_handler+0x1e>
+80002268:	5e fd       	retal	0
+		? _int_handler_table[int_grp]._int_line_handler_table[32
+			- clz(int_req) - 1]
+8000226a:	f0 08 12 00 	clz	r8,r8
+	stack frame, with nothing more pushed onto the stack. The interrupt
+	handler must manage the `rete' instruction, which can be done using
+	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
+	C function attribute.*/
+	return (int_req)
+		? _int_handler_table[int_grp]._int_line_handler_table[32
+8000226e:	48 5a       	lddpc	r10,80002280 <_get_interrupt_handler+0x34>
+80002270:	f4 09 00 39 	add	r9,r10,r9<<0x3
+80002274:	f0 08 11 1f 	rsub	r8,r8,31
+80002278:	72 19       	ld.w	r9,r9[0x4]
+	exception.S will provide the interrupt handler with a clean interrupt
+	stack frame, with nothing more pushed onto the stack. The interrupt
+	handler must manage the `rete' instruction, which can be done using
+	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
+	C function attribute.*/
+	return (int_req)
+8000227a:	f2 08 03 2c 	ld.w	r12,r9[r8<<0x2]
+		? _int_handler_table[int_grp]._int_line_handler_table[32
+			- clz(int_req) - 1]
+		: NULL;
+}
+8000227e:	5e fc       	retal	r12
+80002280:	80 00       	ld.sh	r0,r0[0x0]
+80002282:	36 18       	mov	r8,97
+
+80002284 <pm_set_osc0_mode>:
+ * \param mode Oscillator 0 mode (i.e. AVR32_PM_OSCCTRL0_MODE_x).
+ */
+static void pm_set_osc0_mode(volatile avr32_pm_t *pm, unsigned int mode)
+{
+  // Read
+  u_avr32_pm_oscctrl0_t u_avr32_pm_oscctrl0 = {pm->oscctrl0};
+80002284:	78 a8       	ld.w	r8,r12[0x28]
+  // Modify
+  u_avr32_pm_oscctrl0.OSCCTRL0.mode = mode;
+80002286:	f1 db d0 03 	bfins	r8,r11,0x0,0x3
+  // Write
+  pm->oscctrl0 = u_avr32_pm_oscctrl0.oscctrl0;
+8000228a:	99 a8       	st.w	r12[0x28],r8
+}
+8000228c:	5e fc       	retal	r12
+8000228e:	d7 03       	nop
+
+80002290 <pm_enable_osc0_crystal>:
+  pm_set_osc0_mode(pm, AVR32_PM_OSCCTRL0_MODE_EXT_CLOCK);
+}
+
+
+void pm_enable_osc0_crystal(volatile avr32_pm_t *pm, unsigned int fosc0)
+{
+80002290:	d4 01       	pushm	lr
+  pm_set_osc0_mode(pm, (fosc0 <  900000) ? AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G0 :
+80002292:	ec 5b bb 9f 	cp.w	r11,899999
+80002296:	e0 8b 00 04 	brhi	8000229e <pm_enable_osc0_crystal+0xe>
+8000229a:	30 4b       	mov	r11,4
+8000229c:	c1 38       	rjmp	800022c2 <pm_enable_osc0_crystal+0x32>
+8000229e:	e0 68 c6 bf 	mov	r8,50879
+800022a2:	ea 18 00 2d 	orh	r8,0x2d
+800022a6:	10 3b       	cp.w	r11,r8
+800022a8:	e0 8b 00 04 	brhi	800022b0 <pm_enable_osc0_crystal+0x20>
+800022ac:	30 5b       	mov	r11,5
+800022ae:	c0 a8       	rjmp	800022c2 <pm_enable_osc0_crystal+0x32>
+800022b0:	e0 68 12 00 	mov	r8,4608
+800022b4:	ea 18 00 7a 	orh	r8,0x7a
+800022b8:	10 3b       	cp.w	r11,r8
+800022ba:	f9 bb 03 06 	movlo	r11,6
+800022be:	f9 bb 02 07 	movhs	r11,7
+800022c2:	f0 1f 00 02 	mcall	800022c8 <pm_enable_osc0_crystal+0x38>
+                       (fosc0 < 3000000) ? AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G1 :
+                       (fosc0 < 8000000) ? AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G2 :
+                                           AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G3);
+}
+800022c6:	d8 02       	popm	pc
+800022c8:	80 00       	ld.sh	r0,r0[0x0]
+800022ca:	22 84       	sub	r4,40
+
+800022cc <pm_enable_clk0_no_wait>:
+
+
+void pm_enable_clk0_no_wait(volatile avr32_pm_t *pm, unsigned int startup)
+{
+  // Read register
+  u_avr32_pm_oscctrl0_t u_avr32_pm_oscctrl0 = {pm->oscctrl0};
+800022cc:	78 a8       	ld.w	r8,r12[0x28]
+  // Modify
+  u_avr32_pm_oscctrl0.OSCCTRL0.startup = startup;
+800022ce:	f1 db d1 03 	bfins	r8,r11,0x8,0x3
+  // Write back
+  pm->oscctrl0 = u_avr32_pm_oscctrl0.oscctrl0;
+800022d2:	99 a8       	st.w	r12[0x28],r8
+
+  pm->mcctrl |= AVR32_PM_MCCTRL_OSC0EN_MASK;
+800022d4:	78 08       	ld.w	r8,r12[0x0]
+800022d6:	a3 a8       	sbr	r8,0x2
+800022d8:	99 08       	st.w	r12[0x0],r8
+}
+800022da:	5e fc       	retal	r12
+
+800022dc <pm_wait_for_clk0_ready>:
+
+
+void pm_wait_for_clk0_ready(volatile avr32_pm_t *pm)
+{
+  while (!(pm->poscsr & AVR32_PM_POSCSR_OSC0RDY_MASK));
+800022dc:	79 58       	ld.w	r8,r12[0x54]
+800022de:	e2 18 00 80 	andl	r8,0x80,COH
+800022e2:	cf d0       	breq	800022dc <pm_wait_for_clk0_ready>
+}
+800022e4:	5e fc       	retal	r12
+800022e6:	d7 03       	nop
+
+800022e8 <pm_enable_clk0>:
+                                           AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G3);
+}
+
+
+void pm_enable_clk0(volatile avr32_pm_t *pm, unsigned int startup)
+{
+800022e8:	eb cd 40 80 	pushm	r7,lr
+800022ec:	18 97       	mov	r7,r12
+  pm_enable_clk0_no_wait(pm, startup);
+800022ee:	f0 1f 00 04 	mcall	800022fc <pm_enable_clk0+0x14>
+  pm_wait_for_clk0_ready(pm);
+800022f2:	0e 9c       	mov	r12,r7
+800022f4:	f0 1f 00 03 	mcall	80002300 <pm_enable_clk0+0x18>
+}
+800022f8:	e3 cd 80 80 	ldm	sp++,r7,pc
+800022fc:	80 00       	ld.sh	r0,r0[0x0]
+800022fe:	22 cc       	sub	r12,44
+80002300:	80 00       	ld.sh	r0,r0[0x0]
+80002302:	22 dc       	sub	r12,45
+
+80002304 <pm_switch_to_clock>:
+
+
+void pm_switch_to_clock(volatile avr32_pm_t *pm, unsigned long clock)
+{
+  // Read
+  u_avr32_pm_mcctrl_t u_avr32_pm_mcctrl = {pm->mcctrl};
+80002304:	78 08       	ld.w	r8,r12[0x0]
+  // Modify
+  u_avr32_pm_mcctrl.MCCTRL.mcsel = clock;
+80002306:	f1 db d0 02 	bfins	r8,r11,0x0,0x2
+  // Write back
+  pm->mcctrl = u_avr32_pm_mcctrl.mcctrl;
+8000230a:	99 08       	st.w	r12[0x0],r8
+}
+8000230c:	5e fc       	retal	r12
+8000230e:	d7 03       	nop
+
+80002310 <pm_switch_to_osc0>:
+
+
+void pm_switch_to_osc0(volatile avr32_pm_t *pm, unsigned int fosc0, unsigned int startup)
+{
+80002310:	eb cd 40 c0 	pushm	r6-r7,lr
+80002314:	18 97       	mov	r7,r12
+80002316:	14 96       	mov	r6,r10
+  pm_enable_osc0_crystal(pm, fosc0);            // Enable the Osc0 in crystal mode
+80002318:	f0 1f 00 06 	mcall	80002330 <pm_switch_to_osc0+0x20>
+  pm_enable_clk0(pm, startup);                  // Crystal startup time - This parameter is critical and depends on the characteristics of the crystal
+8000231c:	0c 9b       	mov	r11,r6
+8000231e:	0e 9c       	mov	r12,r7
+80002320:	f0 1f 00 05 	mcall	80002334 <pm_switch_to_osc0+0x24>
+  pm_switch_to_clock(pm, AVR32_PM_MCSEL_OSC0);  // Then switch main clock to Osc0
+80002324:	30 1b       	mov	r11,1
+80002326:	0e 9c       	mov	r12,r7
+80002328:	f0 1f 00 04 	mcall	80002338 <pm_switch_to_osc0+0x28>
+}
+8000232c:	e3 cd 80 c0 	ldm	sp++,r6-r7,pc
+80002330:	80 00       	ld.sh	r0,r0[0x0]
+80002332:	22 90       	sub	r0,41
+80002334:	80 00       	ld.sh	r0,r0[0x0]
+80002336:	22 e8       	sub	r8,46
+80002338:	80 00       	ld.sh	r0,r0[0x0]
+8000233a:	23 04       	sub	r4,48
+
+8000233c <usart_set_async_baudrate>:
+ *
+ * \retval USART_SUCCESS        Baud rate successfully initialized.
+ * \retval USART_INVALID_INPUT  Baud rate set point is out of range for the given input clock frequency.
+ */
+static int usart_set_async_baudrate(volatile avr32_usart_t *usart, unsigned int baudrate, unsigned long pba_hz)
+{
+8000233c:	d4 01       	pushm	lr
+  unsigned int over = (pba_hz >= 16 * baudrate) ? 16 : 8;
+8000233e:	f6 08 15 04 	lsl	r8,r11,0x4
+80002342:	14 38       	cp.w	r8,r10
+80002344:	f9 b8 08 10 	movls	r8,16
+80002348:	f9 b8 0b 08 	movhi	r8,8
+  unsigned int cd_fp = ((1 << AVR32_USART_BRGR_FP_SIZE) * pba_hz + (over * baudrate) / 2) / (over * baudrate);
+8000234c:	f0 0b 02 4b 	mul	r11,r8,r11
+80002350:	f6 09 16 01 	lsr	r9,r11,0x1
+80002354:	f2 0a 00 3a 	add	r10,r9,r10<<0x3
+80002358:	f4 0b 0d 0a 	divu	r10,r10,r11
+  unsigned int cd = cd_fp >> AVR32_USART_BRGR_FP_SIZE;
+8000235c:	f4 09 16 03 	lsr	r9,r10,0x3
+  unsigned int fp = cd_fp & ((1 << AVR32_USART_BRGR_FP_SIZE) - 1);
+
+  if (cd < 1 || cd > (1 << AVR32_USART_BRGR_CD_SIZE) - 1)
+80002360:	f2 cb 00 01 	sub	r11,r9,1
+80002364:	e0 4b ff fe 	cp.w	r11,65534
+80002368:	e0 88 00 03 	brls	8000236e <usart_set_async_baudrate+0x32>
+8000236c:	da 0a       	popm	pc,r12=1
+    return USART_INVALID_INPUT;
+
+  usart->mr = (usart->mr & ~(AVR32_USART_MR_USCLKS_MASK |
+                             AVR32_USART_MR_SYNC_MASK |
+                             AVR32_USART_MR_OVER_MASK)) |
+              AVR32_USART_MR_USCLKS_MCK << AVR32_USART_MR_USCLKS_OFFSET |
+8000236e:	78 1b       	ld.w	r11,r12[0x4]
+  unsigned int fp = cd_fp & ((1 << AVR32_USART_BRGR_FP_SIZE) - 1);
+
+  if (cd < 1 || cd > (1 << AVR32_USART_BRGR_CD_SIZE) - 1)
+    return USART_INVALID_INPUT;
+
+  usart->mr = (usart->mr & ~(AVR32_USART_MR_USCLKS_MASK |
+80002370:	e8 6e 00 00 	mov	lr,524288
+80002374:	59 08       	cp.w	r8,16
+80002376:	fc 08 17 10 	movne	r8,lr
+8000237a:	f9 b8 00 00 	moveq	r8,0
+8000237e:	e4 1b ff f7 	andh	r11,0xfff7
+80002382:	e0 1b fe cf 	andl	r11,0xfecf
+80002386:	16 48       	or	r8,r11
+80002388:	99 18       	st.w	r12[0x4],r8
+                             AVR32_USART_MR_SYNC_MASK |
+                             AVR32_USART_MR_OVER_MASK)) |
+              AVR32_USART_MR_USCLKS_MCK << AVR32_USART_MR_USCLKS_OFFSET |
+              ((over == 16) ? AVR32_USART_MR_OVER_X16 : AVR32_USART_MR_OVER_X8) << AVR32_USART_MR_OVER_OFFSET;
+
+  usart->brgr = cd << AVR32_USART_BRGR_CD_OFFSET |
+8000238a:	f5 da c0 03 	bfextu	r10,r10,0x0,0x3
+8000238e:	f3 ea 11 09 	or	r9,r9,r10<<0x10
+80002392:	99 89       	st.w	r12[0x20],r9
+80002394:	d8 0a       	popm	pc,r12=0
+
+80002396 <usart_write_char>:
+ *
+ * \return \c 1 if the USART Transmit Holding Register is free, otherwise \c 0.
+ */
+__always_inline static int usart_tx_ready(volatile avr32_usart_t *usart)
+{
+  return (usart->csr & AVR32_USART_CSR_TXRDY_MASK) != 0;
+80002396:	78 58       	ld.w	r8,r12[0x14]
+}
+
+
+int usart_write_char(volatile avr32_usart_t *usart, int c)
+{
+  if (usart_tx_ready(usart))
+80002398:	e2 18 00 02 	andl	r8,0x2,COH
+8000239c:	c0 31       	brne	800023a2 <usart_write_char+0xc>
+8000239e:	30 2c       	mov	r12,2
+800023a0:	5e fc       	retal	r12
+  {
+    usart->thr = (c << AVR32_USART_THR_TXCHR_OFFSET) & AVR32_USART_THR_TXCHR_MASK;
+800023a2:	f7 db c0 09 	bfextu	r11,r11,0x0,0x9
+800023a6:	99 7b       	st.w	r12[0x1c],r11
+800023a8:	5e fd       	retal	0
+800023aa:	d7 03       	nop
+
+800023ac <usart_putchar>:
+    return USART_TX_BUSY;
+}
+
+
+int usart_putchar(volatile avr32_usart_t *usart, int c)
+{
+800023ac:	eb cd 40 e0 	pushm	r5-r7,lr
+800023b0:	18 96       	mov	r6,r12
+800023b2:	16 95       	mov	r5,r11
+800023b4:	e0 67 27 0f 	mov	r7,9999
+800023b8:	c0 68       	rjmp	800023c4 <usart_putchar+0x18>
+  int timeout = USART_DEFAULT_TIMEOUT;
+
+  do
+  {
+    if (!timeout--) return USART_FAILURE;
+800023ba:	58 07       	cp.w	r7,0
+800023bc:	c0 31       	brne	800023c2 <usart_putchar+0x16>
+800023be:	e3 cf c0 e0 	ldm	sp++,r5-r7,pc,r12=-1
+800023c2:	20 17       	sub	r7,1
+  } while (usart_write_char(usart, c) != USART_SUCCESS);
+800023c4:	0a 9b       	mov	r11,r5
+800023c6:	0c 9c       	mov	r12,r6
+800023c8:	f0 1f 00 03 	mcall	800023d4 <usart_putchar+0x28>
+800023cc:	cf 71       	brne	800023ba <usart_putchar+0xe>
+
+  return USART_SUCCESS;
+}
+800023ce:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
+800023d2:	00 00       	add	r0,r0
+800023d4:	80 00       	ld.sh	r0,r0[0x0]
+800023d6:	23 96       	sub	r6,57
+
+800023d8 <usart_write_line>:
+  return c;
+}
+
+
+void usart_write_line(volatile avr32_usart_t *usart, const char *string)
+{
+800023d8:	eb cd 40 c0 	pushm	r6-r7,lr
+800023dc:	18 96       	mov	r6,r12
+800023de:	16 97       	mov	r7,r11
+  while (*string != '\0')
+800023e0:	17 8b       	ld.ub	r11,r11[0x0]
+800023e2:	58 0b       	cp.w	r11,0
+800023e4:	c0 80       	breq	800023f4 <usart_write_line+0x1c>
+    usart_putchar(usart, *string++);
+800023e6:	2f f7       	sub	r7,-1
+800023e8:	0c 9c       	mov	r12,r6
+800023ea:	f0 1f 00 04 	mcall	800023f8 <usart_write_line+0x20>
+}
+
+
+void usart_write_line(volatile avr32_usart_t *usart, const char *string)
+{
+  while (*string != '\0')
+800023ee:	0f 8b       	ld.ub	r11,r7[0x0]
+800023f0:	58 0b       	cp.w	r11,0
+800023f2:	cf a1       	brne	800023e6 <usart_write_line+0xe>
+800023f4:	e3 cd 80 c0 	ldm	sp++,r6-r7,pc
+800023f8:	80 00       	ld.sh	r0,r0[0x0]
+800023fa:	23 ac       	sub	r12,58
+
+800023fc <usart_reset>:
+//! @{
+
+
+void usart_reset(volatile avr32_usart_t *usart)
+{
+  bool global_interrupt_enabled = cpu_irq_is_enabled();
+800023fc:	e1 b8 00 00 	mfsr	r8,0x0
+
+  // Disable all USART interrupts.
+  // Interrupts needed should be set explicitly on every reset.
+  if (global_interrupt_enabled) cpu_irq_disable();
+80002400:	e6 18 00 01 	andh	r8,0x1,COH
+80002404:	c0 71       	brne	80002412 <usart_reset+0x16>
+80002406:	d3 03       	ssrf	0x10
+  usart->idr = 0xFFFFFFFF;
+80002408:	3f f8       	mov	r8,-1
+8000240a:	99 38       	st.w	r12[0xc],r8
+  usart->csr;
+8000240c:	78 58       	ld.w	r8,r12[0x14]
+  if (global_interrupt_enabled) cpu_irq_enable();
+8000240e:	d5 03       	csrf	0x10
+80002410:	c0 48       	rjmp	80002418 <usart_reset+0x1c>
+  bool global_interrupt_enabled = cpu_irq_is_enabled();
+
+  // Disable all USART interrupts.
+  // Interrupts needed should be set explicitly on every reset.
+  if (global_interrupt_enabled) cpu_irq_disable();
+  usart->idr = 0xFFFFFFFF;
+80002412:	3f f8       	mov	r8,-1
+80002414:	99 38       	st.w	r12[0xc],r8
+  usart->csr;
+80002416:	78 58       	ld.w	r8,r12[0x14]
+  if (global_interrupt_enabled) cpu_irq_enable();
+
+  // Reset mode and other registers that could cause unpredictable behavior after reset.
+  usart->mr = 0;
+80002418:	30 08       	mov	r8,0
+8000241a:	99 18       	st.w	r12[0x4],r8
+  usart->rtor = 0;
+8000241c:	99 98       	st.w	r12[0x24],r8
+  usart->ttgr = 0;
+8000241e:	99 a8       	st.w	r12[0x28],r8
+
+  // Shutdown TX and RX (will be re-enabled when setup has successfully completed),
+  // reset status bits and turn off DTR and RTS.
+  usart->cr = AVR32_USART_CR_RSTRX_MASK   |
+80002420:	ea 68 61 0c 	mov	r8,680204
+80002424:	99 08       	st.w	r12[0x0],r8
+#ifndef AVR32_USART_440_H_INCLUDED
+// Note: Modem Signal Management DTR-DSR-DCD-RI are not included in USART rev.440.
+              AVR32_USART_CR_DTRDIS_MASK  |
+#endif
+              AVR32_USART_CR_RTSDIS_MASK;
+}
+80002426:	5e fc       	retal	r12
+
+80002428 <usart_init_rs232>:
+
+
+int usart_init_rs232(volatile avr32_usart_t *usart, const usart_options_t *opt, long pba_hz)
+{
+80002428:	eb cd 40 e0 	pushm	r5-r7,lr
+8000242c:	18 96       	mov	r6,r12
+8000242e:	16 97       	mov	r7,r11
+80002430:	14 95       	mov	r5,r10
+  // Reset the USART and shutdown TX and RX.
+  usart_reset(usart);
+80002432:	f0 1f 00 2f 	mcall	800024ec <usart_init_rs232+0xc4>
+
+  // Check input values.
+  if (!opt || // Null pointer.
+80002436:	58 07       	cp.w	r7,0
+80002438:	c5 80       	breq	800024e8 <usart_init_rs232+0xc0>
+      opt->charlength < 5 || opt->charlength > 9 ||
+8000243a:	0f c8       	ld.ub	r8,r7[0x4]
+{
+  // Reset the USART and shutdown TX and RX.
+  usart_reset(usart);
+
+  // Check input values.
+  if (!opt || // Null pointer.
+8000243c:	30 49       	mov	r9,4
+8000243e:	f2 08 18 00 	cp.b	r8,r9
+80002442:	e0 88 00 53 	brls	800024e8 <usart_init_rs232+0xc0>
+80002446:	30 99       	mov	r9,9
+80002448:	f2 08 18 00 	cp.b	r8,r9
+8000244c:	e0 8b 00 4e 	brhi	800024e8 <usart_init_rs232+0xc0>
+      opt->charlength < 5 || opt->charlength > 9 ||
+      opt->paritytype > 7 ||
+80002450:	0f d9       	ld.ub	r9,r7[0x5]
+80002452:	30 78       	mov	r8,7
+80002454:	f0 09 18 00 	cp.b	r9,r8
+80002458:	e0 8b 00 48 	brhi	800024e8 <usart_init_rs232+0xc0>
+      opt->stopbits > 2 + 255 ||
+8000245c:	8e 39       	ld.sh	r9,r7[0x6]
+8000245e:	e0 68 01 01 	mov	r8,257
+80002462:	f0 09 19 00 	cp.h	r9,r8
+80002466:	e0 8b 00 41 	brhi	800024e8 <usart_init_rs232+0xc0>
+      opt->channelmode > 3 ||
+8000246a:	ef 39 00 08 	ld.ub	r9,r7[8]
+8000246e:	30 38       	mov	r8,3
+80002470:	f0 09 18 00 	cp.b	r9,r8
+80002474:	e0 8b 00 3a 	brhi	800024e8 <usart_init_rs232+0xc0>
+      usart_set_async_baudrate(usart, opt->baudrate, pba_hz) == USART_INVALID_INPUT)
+80002478:	0a 9a       	mov	r10,r5
+8000247a:	6e 0b       	ld.w	r11,r7[0x0]
+8000247c:	0c 9c       	mov	r12,r6
+8000247e:	f0 1f 00 1d 	mcall	800024f0 <usart_init_rs232+0xc8>
+{
+  // Reset the USART and shutdown TX and RX.
+  usart_reset(usart);
+
+  // Check input values.
+  if (!opt || // Null pointer.
+80002482:	58 1c       	cp.w	r12,1
+80002484:	c3 20       	breq	800024e8 <usart_init_rs232+0xc0>
+      opt->stopbits > 2 + 255 ||
+      opt->channelmode > 3 ||
+      usart_set_async_baudrate(usart, opt->baudrate, pba_hz) == USART_INVALID_INPUT)
+    return USART_INVALID_INPUT;
+
+  if (opt->charlength == 9)
+80002486:	0f c8       	ld.ub	r8,r7[0x4]
+80002488:	30 99       	mov	r9,9
+8000248a:	f2 08 18 00 	cp.b	r8,r9
+8000248e:	c0 51       	brne	80002498 <usart_init_rs232+0x70>
+  {
+    // Character length set to 9 bits. MODE9 dominates CHRL.
+    usart->mr |= AVR32_USART_MR_MODE9_MASK;
+80002490:	6c 18       	ld.w	r8,r6[0x4]
+80002492:	b1 b8       	sbr	r8,0x11
+80002494:	8d 18       	st.w	r6[0x4],r8
+80002496:	c0 68       	rjmp	800024a2 <usart_init_rs232+0x7a>
+  }
+  else
+  {
+    // CHRL gives the character length (- 5) when MODE9 = 0.
+    usart->mr |= (opt->charlength - 5) << AVR32_USART_MR_CHRL_OFFSET;
+80002498:	6c 19       	ld.w	r9,r6[0x4]
+8000249a:	20 58       	sub	r8,5
+8000249c:	f3 e8 10 68 	or	r8,r9,r8<<0x6
+800024a0:	8d 18       	st.w	r6[0x4],r8
+  }
+
+  usart->mr |= opt->paritytype << AVR32_USART_MR_PAR_OFFSET |
+800024a2:	6c 19       	ld.w	r9,r6[0x4]
+800024a4:	ef 3a 00 08 	ld.ub	r10,r7[8]
+800024a8:	0f d8       	ld.ub	r8,r7[0x5]
+800024aa:	a9 78       	lsl	r8,0x9
+800024ac:	f1 ea 10 e8 	or	r8,r8,r10<<0xe
+800024b0:	12 48       	or	r8,r9
+800024b2:	8d 18       	st.w	r6[0x4],r8
+               opt->channelmode << AVR32_USART_MR_CHMODE_OFFSET;
+
+  if (opt->stopbits > USART_2_STOPBITS)
+800024b4:	8e 38       	ld.sh	r8,r7[0x6]
+800024b6:	30 29       	mov	r9,2
+800024b8:	f2 08 19 00 	cp.h	r8,r9
+800024bc:	e0 88 00 09 	brls	800024ce <usart_init_rs232+0xa6>
+  {
+    // Set two stop bits
+    usart->mr |= AVR32_USART_MR_NBSTOP_2 << AVR32_USART_MR_NBSTOP_OFFSET;
+800024c0:	6c 18       	ld.w	r8,r6[0x4]
+800024c2:	ad b8       	sbr	r8,0xd
+800024c4:	8d 18       	st.w	r6[0x4],r8
+    // and a timeguard period gives the rest.
+    usart->ttgr = opt->stopbits - USART_2_STOPBITS;
+800024c6:	8e b8       	ld.uh	r8,r7[0x6]
+800024c8:	20 28       	sub	r8,2
+800024ca:	8d a8       	st.w	r6[0x28],r8
+800024cc:	c0 68       	rjmp	800024d8 <usart_init_rs232+0xb0>
+  }
+  else
+    // Insert 1, 1.5 or 2 stop bits.
+    usart->mr |= opt->stopbits << AVR32_USART_MR_NBSTOP_OFFSET;
+800024ce:	6c 19       	ld.w	r9,r6[0x4]
+800024d0:	5c 78       	castu.h	r8
+800024d2:	f3 e8 10 c8 	or	r8,r9,r8<<0xc
+800024d6:	8d 18       	st.w	r6[0x4],r8
+
+  // Set normal mode.
+  usart->mr = (usart->mr & ~AVR32_USART_MR_MODE_MASK) |
+800024d8:	6c 18       	ld.w	r8,r6[0x4]
+800024da:	e0 18 ff f0 	andl	r8,0xfff0
+800024de:	8d 18       	st.w	r6[0x4],r8
+              AVR32_USART_MR_MODE_NORMAL << AVR32_USART_MR_MODE_OFFSET;
+
+  // Setup complete; enable communication.
+  // Enable input and output.
+  usart->cr = AVR32_USART_CR_RXEN_MASK |
+800024e0:	35 08       	mov	r8,80
+800024e2:	8d 08       	st.w	r6[0x0],r8
+800024e4:	e3 cf 80 e0 	ldm	sp++,r5-r7,pc,r12=0
+              AVR32_USART_CR_TXEN_MASK;
+
+  return USART_SUCCESS;
+800024e8:	e3 cf 90 e0 	ldm	sp++,r5-r7,pc,r12=1
+800024ec:	80 00       	ld.sh	r0,r0[0x0]
+800024ee:	23 fc       	sub	r12,63
+800024f0:	80 00       	ld.sh	r0,r0[0x0]
+800024f2:	23 3c       	sub	r12,51
+
+800024f4 <print>:
+  print_hex(DBG_USART, n);
+}
+
+
+void print(volatile avr32_usart_t *usart, const char *str)
+{
+800024f4:	d4 01       	pushm	lr
+  // Invoke the USART driver to transmit the input string with the given USART.
+  usart_write_line(usart, str);
+800024f6:	f0 1f 00 02 	mcall	800024fc <print+0x8>
+}
+800024fa:	d8 02       	popm	pc
+800024fc:	80 00       	ld.sh	r0,r0[0x0]
+800024fe:	23 d8       	sub	r8,61
+
+80002500 <print_hex>:
+  print(usart, tmp);
+}
+
+
+void print_hex(volatile avr32_usart_t *usart, unsigned long n)
+{
+80002500:	d4 01       	pushm	lr
+80002502:	20 3d       	sub	sp,12
+  char tmp[9];
+  int i;
+
+  // Convert the given number to an ASCII hexadecimal representation.
+  tmp[8] = '\0';
+80002504:	30 08       	mov	r8,0
+80002506:	fb 68 00 08 	st.b	sp[8],r8
+8000250a:	fa c8 ff f9 	sub	r8,sp,-7
+  // Transmit the resulting string with the given USART.
+  print(usart, tmp);
+}
+
+
+void print_hex(volatile avr32_usart_t *usart, unsigned long n)
+8000250e:	fa ce 00 01 	sub	lr,sp,1
+
+  // Convert the given number to an ASCII hexadecimal representation.
+  tmp[8] = '\0';
+  for (i = 7; i >= 0; i--)
+  {
+    tmp[i] = HEX_DIGITS[n & 0xF];
+80002512:	48 8a       	lddpc	r10,80002530 <print_hex+0x30>
+80002514:	f3 db c0 04 	bfextu	r9,r11,0x0,0x4
+80002518:	f4 09 07 09 	ld.ub	r9,r10[r9]
+8000251c:	b0 89       	st.b	r8[0x0],r9
+    n >>= 4;
+8000251e:	a5 8b       	lsr	r11,0x4
+80002520:	20 18       	sub	r8,1
+  char tmp[9];
+  int i;
+
+  // Convert the given number to an ASCII hexadecimal representation.
+  tmp[8] = '\0';
+  for (i = 7; i >= 0; i--)
+80002522:	1c 38       	cp.w	r8,lr
+80002524:	cf 81       	brne	80002514 <print_hex+0x14>
+    tmp[i] = HEX_DIGITS[n & 0xF];
+    n >>= 4;
+  }
+
+  // Transmit the resulting string with the given USART.
+  print(usart, tmp);
+80002526:	1a 9b       	mov	r11,sp
+80002528:	f0 1f 00 03 	mcall	80002534 <print_hex+0x34>
+}
+8000252c:	2f dd       	sub	sp,-12
+8000252e:	d8 02       	popm	pc
+80002530:	80 00       	ld.sh	r0,r0[0x0]
+80002532:	36 c8       	mov	r8,108
+80002534:	80 00       	ld.sh	r0,r0[0x0]
+80002536:	24 f4       	sub	r4,79
+
+80002538 <print_dbg_hex>:
+  print_short_hex(DBG_USART, n);
+}
+
+
+void print_dbg_hex(unsigned long n)
+{
+80002538:	d4 01       	pushm	lr
+  // Redirection to the debug USART.
+  print_hex(DBG_USART, n);
+8000253a:	18 9b       	mov	r11,r12
+8000253c:	fe 7c 18 00 	mov	r12,-59392
+80002540:	f0 1f 00 02 	mcall	80002548 <print_dbg_hex+0x10>
+}
+80002544:	d8 02       	popm	pc
+80002546:	00 00       	add	r0,r0
+80002548:	80 00       	ld.sh	r0,r0[0x0]
+8000254a:	25 00       	sub	r0,80
+
+8000254c <print_dbg>:
+  usart_init_rs232(DBG_USART, &dbg_usart_options, pba_hz);
+}
+
+
+void print_dbg(const char *str)
+{
+8000254c:	d4 01       	pushm	lr
+  // Redirection to the debug USART.
+  print(DBG_USART, str);
+8000254e:	18 9b       	mov	r11,r12
+80002550:	fe 7c 18 00 	mov	r12,-59392
+80002554:	f0 1f 00 02 	mcall	8000255c <print_dbg+0x10>
+}
+80002558:	d8 02       	popm	pc
+8000255a:	00 00       	add	r0,r0
+8000255c:	80 00       	ld.sh	r0,r0[0x0]
+8000255e:	24 f4       	sub	r4,79
+
+80002560 <init_dbg_rs232_ex>:
+  init_dbg_rs232_ex(DBG_USART_BAUDRATE, pba_hz);
+}
+
+
+void init_dbg_rs232_ex(unsigned long baudrate, long pba_hz)
+{
+80002560:	eb cd 40 80 	pushm	r7,lr
+80002564:	20 3d       	sub	sp,12
+80002566:	16 97       	mov	r7,r11
+    .baudrate = baudrate,
+    .charlength = 8,
+    .paritytype = USART_NO_PARITY,
+    .stopbits = USART_1_STOPBIT,
+    .channelmode = USART_NORMAL_CHMODE
+  };
+80002568:	50 0c       	stdsp	sp[0x0],r12
+8000256a:	30 88       	mov	r8,8
+8000256c:	ba c8       	st.b	sp[0x4],r8
+8000256e:	30 48       	mov	r8,4
+80002570:	ba d8       	st.b	sp[0x5],r8
+80002572:	30 08       	mov	r8,0
+80002574:	ba 38       	st.h	sp[0x6],r8
+80002576:	fb 68 00 08 	st.b	sp[8],r8
+
+  // Setup GPIO for debug USART.
+  gpio_enable_module(DBG_USART_GPIO_MAP,
+8000257a:	30 2b       	mov	r11,2
+8000257c:	48 6c       	lddpc	r12,80002594 <init_dbg_rs232_ex+0x34>
+8000257e:	f0 1f 00 07 	mcall	80002598 <init_dbg_rs232_ex+0x38>
+                     sizeof(DBG_USART_GPIO_MAP) / sizeof(DBG_USART_GPIO_MAP[0]));
+
+  // Initialize it in RS232 mode.
+  usart_init_rs232(DBG_USART, &dbg_usart_options, pba_hz);
+80002582:	0e 9a       	mov	r10,r7
+80002584:	1a 9b       	mov	r11,sp
+80002586:	fe 7c 18 00 	mov	r12,-59392
+8000258a:	f0 1f 00 05 	mcall	8000259c <init_dbg_rs232_ex+0x3c>
+}
+8000258e:	2f dd       	sub	sp,-12
+80002590:	e3 cd 80 80 	ldm	sp++,r7,pc
+80002594:	80 00       	ld.sh	r0,r0[0x0]
+80002596:	36 b8       	mov	r8,107
+80002598:	80 00       	ld.sh	r0,r0[0x0]
+8000259a:	21 c4       	sub	r4,28
+8000259c:	80 00       	ld.sh	r0,r0[0x0]
+8000259e:	24 28       	sub	r8,66
+
+800025a0 <init_dbg_rs232>:
+//! ASCII representation of hexadecimal digits.
+static const char HEX_DIGITS[16] = "0123456789ABCDEF";
+
+
+void init_dbg_rs232(long pba_hz)
+{
+800025a0:	d4 01       	pushm	lr
+  init_dbg_rs232_ex(DBG_USART_BAUDRATE, pba_hz);
+800025a2:	18 9b       	mov	r11,r12
+800025a4:	e0 6c e1 00 	mov	r12,57600
+800025a8:	f0 1f 00 02 	mcall	800025b0 <init_dbg_rs232+0x10>
+}
+800025ac:	d8 02       	popm	pc
+800025ae:	00 00       	add	r0,r0
+800025b0:	80 00       	ld.sh	r0,r0[0x0]
+800025b2:	25 60       	sub	r0,86
+
+800025b4 <vListInsertEnd>:
+
+	/* Insert a new list item into pxList, but rather than sort the list,
+	makes the new list item the last item to be removed by a call to
+	pvListGetOwnerOfNextEntry.  This means it has to be the item pointed to by
+	the pxIndex member. */
+	pxIndex = pxList->pxIndex;
+800025b4:	78 18       	ld.w	r8,r12[0x4]
+
+	pxNewListItem->pxNext = pxIndex->pxNext;
+800025b6:	70 19       	ld.w	r9,r8[0x4]
+800025b8:	97 19       	st.w	r11[0x4],r9
+	pxNewListItem->pxPrevious = pxList->pxIndex;
+800025ba:	78 19       	ld.w	r9,r12[0x4]
+800025bc:	97 29       	st.w	r11[0x8],r9
+	pxIndex->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+800025be:	70 19       	ld.w	r9,r8[0x4]
+800025c0:	93 2b       	st.w	r9[0x8],r11
+	pxIndex->pxNext = ( volatile xListItem * ) pxNewListItem;
+800025c2:	91 1b       	st.w	r8[0x4],r11
+	pxList->pxIndex = ( volatile xListItem * ) pxNewListItem;
+800025c4:	99 1b       	st.w	r12[0x4],r11
+
+	/* Remember which list the item is in. */
+	pxNewListItem->pvContainer = ( void * ) pxList;
+800025c6:	97 4c       	st.w	r11[0x10],r12
+
+	( pxList->uxNumberOfItems )++;
+800025c8:	78 08       	ld.w	r8,r12[0x0]
+800025ca:	2f f8       	sub	r8,-1
+800025cc:	99 08       	st.w	r12[0x0],r8
+}
+800025ce:	5e fc       	retal	r12
+
+800025d0 <vListRemove>:
+
+void vListRemove( xListItem *pxItemToRemove )
+{
+xList * pxList;
+
+	pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
+800025d0:	78 18       	ld.w	r8,r12[0x4]
+800025d2:	78 29       	ld.w	r9,r12[0x8]
+800025d4:	91 29       	st.w	r8[0x8],r9
+	pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
+800025d6:	78 28       	ld.w	r8,r12[0x8]
+800025d8:	78 19       	ld.w	r9,r12[0x4]
+800025da:	91 19       	st.w	r8[0x4],r9
+
+	/* The list item knows which list it is in.  Obtain the list from the list
+	item. */
+	pxList = ( xList * ) pxItemToRemove->pvContainer;
+800025dc:	78 48       	ld.w	r8,r12[0x10]
+
+	/* Make sure the index is left pointing to a valid item. */
+	if( pxList->pxIndex == pxItemToRemove )
+800025de:	70 19       	ld.w	r9,r8[0x4]
+	{
+		pxList->pxIndex = pxItemToRemove->pxPrevious;
+800025e0:	18 39       	cp.w	r9,r12
+800025e2:	f9 f9 00 02 	ld.weq	r9,r12[0x8]
+800025e6:	f1 f9 0a 01 	st.weq	r8[0x4],r9
+	}
+
+	pxItemToRemove->pvContainer = NULL;
+800025ea:	30 09       	mov	r9,0
+800025ec:	99 49       	st.w	r12[0x10],r9
+	( pxList->uxNumberOfItems )--;
+800025ee:	70 09       	ld.w	r9,r8[0x0]
+800025f0:	20 19       	sub	r9,1
+800025f2:	91 09       	st.w	r8[0x0],r9
+}
+800025f4:	5e fc       	retal	r12
+800025f6:	d7 03       	nop
+
+800025f8 <vPortEnterCritical>:
+be saved to the stack.  Instead the critical section nesting level is stored
+in a variable, which is then saved as part of the stack context. */
+__attribute__((__noinline__)) void vPortEnterCritical( void )
+{
+	/* Disable interrupts */
+	portDISABLE_INTERRUPTS();
+800025f8:	d3 03       	ssrf	0x10
+
+	/* Now interrupts are disabled ulCriticalNesting can be accessed
+	 directly.  Increment ulCriticalNesting to keep a count of how many times
+	 portENTER_CRITICAL() has been called. */
+	ulCriticalNesting++;
+800025fa:	48 38       	lddpc	r8,80002604 <vPortEnterCritical+0xc>
+800025fc:	70 09       	ld.w	r9,r8[0x0]
+800025fe:	2f f9       	sub	r9,-1
+80002600:	91 09       	st.w	r8[0x0],r9
+}
+80002602:	5e fc       	retal	r12
+80002604:	00 00       	add	r0,r0
+80002606:	00 1c       	sub	r12,r0
+
+80002608 <SCALLYield>:
+/*-----------------------------------------------------------*/
+__attribute__((__naked__)) void SCALLYield( void );
+__attribute__((__naked__)) void SCALLYield( void )
+{
+	/* Save the context of the interrupted task. */
+	portSAVE_CONTEXT_SCALL();
+80002608:	20 6d       	sub	sp,24
+8000260a:	eb cd 00 ff 	pushm	r0-r7
+8000260e:	fa c7 ff c0 	sub	r7,sp,-64
+80002612:	ee f0 ff f8 	ld.w	r0,r7[-8]
+80002616:	ef 40 ff e0 	st.w	r7[-32],r0
+8000261a:	ee f0 ff fc 	ld.w	r0,r7[-4]
+8000261e:	ef 40 ff e4 	st.w	r7[-28],r0
+80002622:	eb c7 5f 00 	stm	--r7,r8-r12,lr
+80002626:	e0 68 00 1c 	mov	r8,28
+8000262a:	ea 18 00 00 	orh	r8,0x0
+8000262e:	70 00       	ld.w	r0,r8[0x0]
+80002630:	1a d0       	st.w	--sp,r0
+80002632:	f0 1f 00 1a 	mcall	80002698 <LABEL_RET_SCALL_260+0x14>
+80002636:	e0 68 06 e8 	mov	r8,1768
+8000263a:	ea 18 00 00 	orh	r8,0x0
+8000263e:	70 00       	ld.w	r0,r8[0x0]
+80002640:	81 0d       	st.w	r0[0x0],sp
+	vTaskSwitchContext();
+80002642:	f0 1f 00 17 	mcall	8000269c <LABEL_RET_SCALL_260+0x18>
+	portRESTORE_CONTEXT_SCALL();
+80002646:	e0 68 06 e8 	mov	r8,1768
+8000264a:	ea 18 00 00 	orh	r8,0x0
+8000264e:	70 00       	ld.w	r0,r8[0x0]
+80002650:	60 0d       	ld.w	sp,r0[0x0]
+80002652:	1b 00       	ld.w	r0,sp++
+80002654:	e0 68 00 1c 	mov	r8,28
+80002658:	ea 18 00 00 	orh	r8,0x0
+8000265c:	91 00       	st.w	r8[0x0],r0
+8000265e:	fa c7 ff d8 	sub	r7,sp,-40
+80002662:	e3 c7 5f 00 	ldm	r7++,r8-r12,lr
+80002666:	ee f0 ff e0 	ld.w	r0,r7[-32]
+8000266a:	e0 61 00 1c 	mov	r1,28
+8000266e:	ea 11 00 00 	orh	r1,0x0
+80002672:	62 02       	ld.w	r2,r1[0x0]
+80002674:	58 02       	cp.w	r2,0
+80002676:	c0 70       	breq	80002684 <LABEL_RET_SCALL_260>
+80002678:	e4 c2 00 01 	sub	r2,r2,1
+8000267c:	83 02       	st.w	r1[0x0],r2
+8000267e:	58 02       	cp.w	r2,0
+80002680:	c0 21       	brne	80002684 <LABEL_RET_SCALL_260>
+80002682:	b1 c0       	cbr	r0,0x10
+
+80002684 <LABEL_RET_SCALL_260>:
+80002684:	ef 40 ff f8 	st.w	r7[-8],r0
+80002688:	ee f0 ff e4 	ld.w	r0,r7[-28]
+8000268c:	ef 40 ff fc 	st.w	r7[-4],r0
+80002690:	e3 cd 00 ff 	ldm	sp++,r0-r7
+80002694:	2f ad       	sub	sp,-24
+80002696:	d6 13       	rets
+80002698:	80 00       	ld.sh	r0,r0[0x0]
+8000269a:	25 f8       	sub	r8,95
+8000269c:	80 00       	ld.sh	r0,r0[0x0]
+8000269e:	27 20       	sub	r0,114
+
+800026a0 <vPortExitCritical>:
+}
+/*-----------------------------------------------------------*/
+
+__attribute__((__noinline__)) void vPortExitCritical( void )
+{
+	if(ulCriticalNesting > portNO_CRITICAL_NESTING)
+800026a0:	48 78       	lddpc	r8,800026bc <vPortExitCritical+0x1c>
+800026a2:	70 08       	ld.w	r8,r8[0x0]
+800026a4:	58 08       	cp.w	r8,0
+800026a6:	5e 0c       	reteq	r12
+	{
+		ulCriticalNesting--;
+800026a8:	48 58       	lddpc	r8,800026bc <vPortExitCritical+0x1c>
+800026aa:	70 09       	ld.w	r9,r8[0x0]
+800026ac:	20 19       	sub	r9,1
+800026ae:	91 09       	st.w	r8[0x0],r9
+		if( ulCriticalNesting == portNO_CRITICAL_NESTING )
+800026b0:	70 08       	ld.w	r8,r8[0x0]
+800026b2:	58 08       	cp.w	r8,0
+800026b4:	5e 1c       	retne	r12
+		{
+			/* Enable all interrupt/exception. */
+			portENABLE_INTERRUPTS();
+800026b6:	d5 03       	csrf	0x10
+800026b8:	5e fc       	retal	r12
+800026ba:	00 00       	add	r0,r0
+800026bc:	00 00       	add	r0,r0
+800026be:	00 1c       	sub	r12,r0
+
+800026c0 <__malloc_lock>:
+ * safe section as memory allocation management uses global data.
+ * See the aforementioned details.
+ */
+void __malloc_lock(struct _reent *ptr);
+void __malloc_lock(struct _reent *ptr)
+{
+800026c0:	d4 01       	pushm	lr
+	vTaskSuspendAll();
+800026c2:	f0 1f 00 02 	mcall	800026c8 <__malloc_lock+0x8>
+}
+800026c6:	d8 02       	popm	pc
+800026c8:	80 00       	ld.sh	r0,r0[0x0]
+800026ca:	27 10       	sub	r0,113
+
+800026cc <__malloc_unlock>:
+ * a safe section as memory allocation management uses global data.
+ * See the aforementioned details.
+ */
+void __malloc_unlock(struct _reent *ptr);
+void __malloc_unlock(struct _reent *ptr)
+{
+800026cc:	d4 01       	pushm	lr
+	xTaskResumeAll();
+800026ce:	f0 1f 00 02 	mcall	800026d4 <__malloc_unlock+0x8>
+}
+800026d2:	d8 02       	popm	pc
+800026d4:	80 00       	ld.sh	r0,r0[0x0]
+800026d6:	28 b0       	sub	r0,-117
+
+800026d8 <_init_startup>:
+ * exception vectors are not compatible with the SCALL management in the current
+ * FreeRTOS port. More low-level initializations are besides added here.
+ */
+int _init_startup(void);
+int _init_startup(void)
+{
+800026d8:	d4 01       	pushm	lr
+		extern void __heap_end__;
+		portBASE_TYPE *pxMem;
+	#endif
+
+	/* Load the Exception Vector Base Address in the corresponding system register. */
+	Set_system_register( AVR32_EVBA, ( int ) &_evba );
+800026da:	48 a8       	lddpc	r8,80002700 <_init_startup+0x28>
+800026dc:	e3 b8 00 01 	mtsr	0x4,r8
+
+	/* Enable exceptions. */
+	ENABLE_ALL_EXCEPTIONS();
+800026e0:	d5 53       	csrf	0x15
+
+	/* Initialize interrupt handling. */
+	INTC_init_interrupts();
+800026e2:	f0 1f 00 09 	mcall	80002704 <_init_startup+0x2c>
+
+	#if configHEAP_INIT
+
+		/* Initialize the heap used by malloc. */
+		for( pxMem = &__heap_start__; pxMem < ( portBASE_TYPE * )&__heap_end__; )
+800026e6:	48 98       	lddpc	r8,80002708 <_init_startup+0x30>
+800026e8:	48 99       	lddpc	r9,8000270c <_init_startup+0x34>
+800026ea:	12 38       	cp.w	r8,r9
+800026ec:	c0 82       	brcc	800026fc <_init_startup+0x24>
+		{
+			*pxMem++ = 0xA5A5A5A5;
+800026ee:	e0 6a a5 a5 	mov	r10,42405
+800026f2:	ea 1a a5 a5 	orh	r10,0xa5a5
+800026f6:	10 aa       	st.w	r8++,r10
+	INTC_init_interrupts();
+
+	#if configHEAP_INIT
+
+		/* Initialize the heap used by malloc. */
+		for( pxMem = &__heap_start__; pxMem < ( portBASE_TYPE * )&__heap_end__; )
+800026f8:	12 38       	cp.w	r8,r9
+800026fa:	cf e3       	brcs	800026f6 <_init_startup+0x1e>
+	}
+	#endif
+
+  // Don't-care value for GCC.
+  return 1;
+}
+800026fc:	da 0a       	popm	pc,r12=1
+800026fe:	00 00       	add	r0,r0
+80002700:	80 00       	ld.sh	r0,r0[0x0]
+80002702:	34 00       	mov	r0,64
+80002704:	80 00       	ld.sh	r0,r0[0x0]
+80002706:	21 f8       	sub	r8,31
+80002708:	00 00       	add	r0,r0
+8000270a:	07 50       	ld.sh	r0,--r3
+8000270c:	00 00       	add	r0,r0
+8000270e:	f0 00       	*unknown*
+
+80002710 <vTaskSuspendAll>:
+
+void vTaskSuspendAll( void )
+{
+	/* A critical section is not required as the variable is of type
+	portBASE_TYPE. */
+	++uxSchedulerSuspended;
+80002710:	48 38       	lddpc	r8,8000271c <vTaskSuspendAll+0xc>
+80002712:	70 09       	ld.w	r9,r8[0x0]
+80002714:	2f f9       	sub	r9,-1
+80002716:	91 09       	st.w	r8[0x0],r9
+}
+80002718:	5e fc       	retal	r12
+8000271a:	00 00       	add	r0,r0
+8000271c:	00 00       	add	r0,r0
+8000271e:	07 04       	ld.w	r4,r3++
+
+80002720 <vTaskSwitchContext>:
+#endif
+/*-----------------------------------------------------------*/
+
+void vTaskSwitchContext( void )
+{
+	if( uxSchedulerSuspended != ( unsigned portBASE_TYPE ) pdFALSE )
+80002720:	49 a8       	lddpc	r8,80002788 <vTaskSwitchContext+0x68>
+80002722:	70 08       	ld.w	r8,r8[0x0]
+80002724:	58 08       	cp.w	r8,0
+80002726:	c0 b1       	brne	8000273c <vTaskSwitchContext+0x1c>
+
+		taskFIRST_CHECK_FOR_STACK_OVERFLOW();
+		taskSECOND_CHECK_FOR_STACK_OVERFLOW();
+
+		/* Find the highest priority queue that contains ready tasks. */
+		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
+80002728:	49 98       	lddpc	r8,8000278c <vTaskSwitchContext+0x6c>
+8000272a:	70 08       	ld.w	r8,r8[0x0]
+8000272c:	f0 08 00 28 	add	r8,r8,r8<<0x2
+80002730:	49 89       	lddpc	r9,80002790 <vTaskSwitchContext+0x70>
+80002732:	f2 08 03 28 	ld.w	r8,r9[r8<<0x2]
+80002736:	58 08       	cp.w	r8,0
+80002738:	c0 60       	breq	80002744 <vTaskSwitchContext+0x24>
+8000273a:	c1 18       	rjmp	8000275c <vTaskSwitchContext+0x3c>
+{
+	if( uxSchedulerSuspended != ( unsigned portBASE_TYPE ) pdFALSE )
+	{
+		/* The scheduler is currently suspended - do not allow a context
+		switch. */
+		xMissedYield = pdTRUE;
+8000273c:	30 19       	mov	r9,1
+8000273e:	49 68       	lddpc	r8,80002794 <vTaskSwitchContext+0x74>
+80002740:	91 09       	st.w	r8[0x0],r9
+80002742:	5e fc       	retal	r12
+
+		/* Find the highest priority queue that contains ready tasks. */
+		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
+		{
+			configASSERT( uxTopReadyPriority );
+			--uxTopReadyPriority;
+80002744:	49 28       	lddpc	r8,8000278c <vTaskSwitchContext+0x6c>
+
+		taskFIRST_CHECK_FOR_STACK_OVERFLOW();
+		taskSECOND_CHECK_FOR_STACK_OVERFLOW();
+
+		/* Find the highest priority queue that contains ready tasks. */
+		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
+80002746:	49 3a       	lddpc	r10,80002790 <vTaskSwitchContext+0x70>
+		{
+			configASSERT( uxTopReadyPriority );
+			--uxTopReadyPriority;
+80002748:	70 09       	ld.w	r9,r8[0x0]
+8000274a:	20 19       	sub	r9,1
+8000274c:	91 09       	st.w	r8[0x0],r9
+
+		taskFIRST_CHECK_FOR_STACK_OVERFLOW();
+		taskSECOND_CHECK_FOR_STACK_OVERFLOW();
+
+		/* Find the highest priority queue that contains ready tasks. */
+		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
+8000274e:	70 09       	ld.w	r9,r8[0x0]
+80002750:	f2 09 00 29 	add	r9,r9,r9<<0x2
+80002754:	f4 09 03 29 	ld.w	r9,r10[r9<<0x2]
+80002758:	58 09       	cp.w	r9,0
+8000275a:	cf 70       	breq	80002748 <vTaskSwitchContext+0x28>
+			--uxTopReadyPriority;
+		}
+
+		/* listGET_OWNER_OF_NEXT_ENTRY walks through the list, so the tasks of the
+		same priority get an equal share of the processor time. */
+		listGET_OWNER_OF_NEXT_ENTRY( pxCurrentTCB, &( pxReadyTasksLists[ uxTopReadyPriority ] ) );
+8000275c:	48 c8       	lddpc	r8,8000278c <vTaskSwitchContext+0x6c>
+8000275e:	70 08       	ld.w	r8,r8[0x0]
+80002760:	f0 08 00 28 	add	r8,r8,r8<<0x2
+80002764:	48 b9       	lddpc	r9,80002790 <vTaskSwitchContext+0x70>
+80002766:	f2 08 00 28 	add	r8,r9,r8<<0x2
+8000276a:	70 19       	ld.w	r9,r8[0x4]
+8000276c:	72 19       	ld.w	r9,r9[0x4]
+8000276e:	91 19       	st.w	r8[0x4],r9
+80002770:	f0 ca ff f8 	sub	r10,r8,-8
+80002774:	14 39       	cp.w	r9,r10
+80002776:	f3 f9 00 01 	ld.weq	r9,r9[0x4]
+8000277a:	f1 f9 0a 01 	st.weq	r8[0x4],r9
+8000277e:	70 18       	ld.w	r8,r8[0x4]
+80002780:	70 39       	ld.w	r9,r8[0xc]
+80002782:	48 68       	lddpc	r8,80002798 <vTaskSwitchContext+0x78>
+80002784:	91 09       	st.w	r8[0x0],r9
+80002786:	5e fc       	retal	r12
+80002788:	00 00       	add	r0,r0
+8000278a:	07 04       	ld.w	r4,r3++
+8000278c:	00 00       	add	r0,r0
+8000278e:	07 10       	ld.sh	r0,r3++
+80002790:	00 00       	add	r0,r0
+80002792:	06 48       	or	r8,r3
+80002794:	00 00       	add	r0,r0
+80002796:	07 0c       	ld.w	r12,r3++
+80002798:	00 00       	add	r0,r0
+8000279a:	06 e8       	st.h	--r3,r8
+
+8000279c <vTaskIncrementTick>:
+ * documented in task.h
+ *----------------------------------------------------------*/
+
+
+void vTaskIncrementTick( void )
+{
+8000279c:	eb cd 40 fc 	pushm	r2-r7,lr
+tskTCB * pxTCB;
+
+	/* Called by the portable layer each time a tick interrupt occurs.
+	Increments the tick then checks to see if the new tick value will cause any
+	tasks to be unblocked. */
+	if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+800027a0:	4b 98       	lddpc	r8,80002884 <vTaskIncrementTick+0xe8>
+800027a2:	70 08       	ld.w	r8,r8[0x0]
+800027a4:	58 08       	cp.w	r8,0
+800027a6:	c6 91       	brne	80002878 <vTaskIncrementTick+0xdc>
+	{
+		++xTickCount;
+800027a8:	4b 88       	lddpc	r8,80002888 <vTaskIncrementTick+0xec>
+800027aa:	70 09       	ld.w	r9,r8[0x0]
+800027ac:	2f f9       	sub	r9,-1
+800027ae:	91 09       	st.w	r8[0x0],r9
+		if( xTickCount == ( portTickType ) 0 )
+800027b0:	70 08       	ld.w	r8,r8[0x0]
+800027b2:	58 08       	cp.w	r8,0
+800027b4:	c1 a1       	brne	800027e8 <vTaskIncrementTick+0x4c>
+			/* Tick count has overflowed so we need to swap the delay lists.
+			If there are any items in pxDelayedTaskList here then there is
+			an error! */
+			configASSERT( ( listLIST_IS_EMPTY( pxDelayedTaskList ) ) );
+
+			pxTemp = pxDelayedTaskList;
+800027b6:	4b 68       	lddpc	r8,8000288c <vTaskIncrementTick+0xf0>
+800027b8:	70 0a       	ld.w	r10,r8[0x0]
+			pxDelayedTaskList = pxOverflowDelayedTaskList;
+800027ba:	4b 69       	lddpc	r9,80002890 <vTaskIncrementTick+0xf4>
+800027bc:	72 0b       	ld.w	r11,r9[0x0]
+800027be:	91 0b       	st.w	r8[0x0],r11
+			pxOverflowDelayedTaskList = pxTemp;
+800027c0:	93 0a       	st.w	r9[0x0],r10
+			xNumOfOverflows++;
+800027c2:	4b 59       	lddpc	r9,80002894 <vTaskIncrementTick+0xf8>
+800027c4:	72 0a       	ld.w	r10,r9[0x0]
+800027c6:	2f fa       	sub	r10,-1
+800027c8:	93 0a       	st.w	r9[0x0],r10
+
+			if( listLIST_IS_EMPTY( pxDelayedTaskList ) != pdFALSE )
+800027ca:	70 08       	ld.w	r8,r8[0x0]
+800027cc:	70 08       	ld.w	r8,r8[0x0]
+800027ce:	58 08       	cp.w	r8,0
+800027d0:	c0 51       	brne	800027da <vTaskIncrementTick+0x3e>
+				/* The new current delayed list is empty.  Set
+				xNextTaskUnblockTime to the maximum possible value so it is
+				extremely unlikely that the
+				if( xTickCount >= xNextTaskUnblockTime ) test will pass until
+				there is an item in the delayed list. */
+				xNextTaskUnblockTime = portMAX_DELAY;
+800027d2:	3f f9       	mov	r9,-1
+800027d4:	4b 18       	lddpc	r8,80002898 <vTaskIncrementTick+0xfc>
+800027d6:	91 09       	st.w	r8[0x0],r9
+800027d8:	c0 88       	rjmp	800027e8 <vTaskIncrementTick+0x4c>
+			{
+				/* The new current delayed list is not empty, get the value of
+				the item at the head of the delayed list.  This is the time at
+				which the task at the head of the delayed list should be removed
+				from the Blocked state. */
+				pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedTaskList );
+800027da:	4a d8       	lddpc	r8,8000288c <vTaskIncrementTick+0xf0>
+800027dc:	70 08       	ld.w	r8,r8[0x0]
+800027de:	70 38       	ld.w	r8,r8[0xc]
+800027e0:	70 38       	ld.w	r8,r8[0xc]
+				xNextTaskUnblockTime = listGET_LIST_ITEM_VALUE( &( pxTCB->xGenericListItem ) );
+800027e2:	70 19       	ld.w	r9,r8[0x4]
+800027e4:	4a d8       	lddpc	r8,80002898 <vTaskIncrementTick+0xfc>
+800027e6:	91 09       	st.w	r8[0x0],r9
+			}
+		}
+
+		/* See if this tick has made a timeout expire. */
+		prvCheckDelayedTasks();
+800027e8:	4a 88       	lddpc	r8,80002888 <vTaskIncrementTick+0xec>
+800027ea:	70 09       	ld.w	r9,r8[0x0]
+800027ec:	4a b8       	lddpc	r8,80002898 <vTaskIncrementTick+0xfc>
+800027ee:	70 08       	ld.w	r8,r8[0x0]
+800027f0:	10 39       	cp.w	r9,r8
+800027f2:	c4 73       	brcs	80002880 <vTaskIncrementTick+0xe4>
+800027f4:	4a 68       	lddpc	r8,8000288c <vTaskIncrementTick+0xf0>
+800027f6:	70 08       	ld.w	r8,r8[0x0]
+800027f8:	70 08       	ld.w	r8,r8[0x0]
+800027fa:	58 08       	cp.w	r8,0
+800027fc:	c0 c0       	breq	80002814 <vTaskIncrementTick+0x78>
+800027fe:	4a 48       	lddpc	r8,8000288c <vTaskIncrementTick+0xf0>
+80002800:	70 08       	ld.w	r8,r8[0x0]
+80002802:	70 38       	ld.w	r8,r8[0xc]
+80002804:	70 37       	ld.w	r7,r8[0xc]
+80002806:	6e 18       	ld.w	r8,r7[0x4]
+80002808:	4a 09       	lddpc	r9,80002888 <vTaskIncrementTick+0xec>
+8000280a:	72 09       	ld.w	r9,r9[0x0]
+8000280c:	12 38       	cp.w	r8,r9
+8000280e:	e0 88 00 14 	brls	80002836 <vTaskIncrementTick+0x9a>
+80002812:	c0 e8       	rjmp	8000282e <vTaskIncrementTick+0x92>
+80002814:	3f f9       	mov	r9,-1
+80002816:	4a 18       	lddpc	r8,80002898 <vTaskIncrementTick+0xfc>
+80002818:	91 09       	st.w	r8[0x0],r9
+8000281a:	e3 cd 80 fc 	ldm	sp++,r2-r7,pc
+8000281e:	6a 08       	ld.w	r8,r5[0x0]
+80002820:	70 38       	ld.w	r8,r8[0xc]
+80002822:	70 37       	ld.w	r7,r8[0xc]
+80002824:	6e 18       	ld.w	r8,r7[0x4]
+80002826:	64 09       	ld.w	r9,r2[0x0]
+80002828:	12 38       	cp.w	r8,r9
+8000282a:	e0 88 00 0a 	brls	8000283e <vTaskIncrementTick+0xa2>
+8000282e:	49 b9       	lddpc	r9,80002898 <vTaskIncrementTick+0xfc>
+80002830:	93 08       	st.w	r9[0x0],r8
+80002832:	e3 cd 80 fc 	ldm	sp++,r2-r7,pc
+80002836:	49 a4       	lddpc	r4,8000289c <vTaskIncrementTick+0x100>
+80002838:	49 a3       	lddpc	r3,800028a0 <vTaskIncrementTick+0x104>
+8000283a:	49 55       	lddpc	r5,8000288c <vTaskIncrementTick+0xf0>
+8000283c:	49 32       	lddpc	r2,80002888 <vTaskIncrementTick+0xec>
+8000283e:	ee c6 ff fc 	sub	r6,r7,-4
+80002842:	0c 9c       	mov	r12,r6
+80002844:	f0 1f 00 18 	mcall	800028a4 <vTaskIncrementTick+0x108>
+80002848:	6e a8       	ld.w	r8,r7[0x28]
+8000284a:	58 08       	cp.w	r8,0
+8000284c:	c0 50       	breq	80002856 <vTaskIncrementTick+0xba>
+8000284e:	ee cc ff e8 	sub	r12,r7,-24
+80002852:	f0 1f 00 15 	mcall	800028a4 <vTaskIncrementTick+0x108>
+80002856:	6e bc       	ld.w	r12,r7[0x2c]
+80002858:	68 08       	ld.w	r8,r4[0x0]
+8000285a:	10 3c       	cp.w	r12,r8
+8000285c:	e9 fc ba 00 	st.whi	r4[0x0],r12
+80002860:	f8 0c 00 2c 	add	r12,r12,r12<<0x2
+80002864:	0c 9b       	mov	r11,r6
+80002866:	e6 0c 00 2c 	add	r12,r3,r12<<0x2
+8000286a:	f0 1f 00 10 	mcall	800028a8 <vTaskIncrementTick+0x10c>
+8000286e:	6a 08       	ld.w	r8,r5[0x0]
+80002870:	70 08       	ld.w	r8,r8[0x0]
+80002872:	58 08       	cp.w	r8,0
+80002874:	cd 51       	brne	8000281e <vTaskIncrementTick+0x82>
+80002876:	cc fb       	rjmp	80002814 <vTaskIncrementTick+0x78>
+	}
+	else
+	{
+		++uxMissedTicks;
+80002878:	48 d8       	lddpc	r8,800028ac <vTaskIncrementTick+0x110>
+8000287a:	70 09       	ld.w	r9,r8[0x0]
+8000287c:	2f f9       	sub	r9,-1
+8000287e:	91 09       	st.w	r8[0x0],r9
+80002880:	e3 cd 80 fc 	ldm	sp++,r2-r7,pc
+80002884:	00 00       	add	r0,r0
+80002886:	07 04       	ld.w	r4,r3++
+80002888:	00 00       	add	r0,r0
+8000288a:	07 00       	ld.w	r0,r3++
+8000288c:	00 00       	add	r0,r0
+8000288e:	06 3c       	cp.w	r12,r3
+80002890:	00 00       	add	r0,r0
+80002892:	06 44       	or	r4,r3
+80002894:	00 00       	add	r0,r0
+80002896:	06 40       	or	r0,r3
+80002898:	00 00       	add	r0,r0
+8000289a:	00 20       	rsub	r0,r0
+8000289c:	00 00       	add	r0,r0
+8000289e:	07 10       	ld.sh	r0,r3++
+800028a0:	00 00       	add	r0,r0
+800028a2:	06 48       	or	r8,r3
+800028a4:	80 00       	ld.sh	r0,r0[0x0]
+800028a6:	25 d0       	sub	r0,93
+800028a8:	80 00       	ld.sh	r0,r0[0x0]
+800028aa:	25 b4       	sub	r4,91
+800028ac:	00 00       	add	r0,r0
+800028ae:	06 38       	cp.w	r8,r3
+
+800028b0 <xTaskResumeAll>:
+	++uxSchedulerSuspended;
+}
+/*----------------------------------------------------------*/
+
+signed portBASE_TYPE xTaskResumeAll( void )
+{
+800028b0:	eb cd 40 fe 	pushm	r1-r7,lr
+	/* It is possible that an ISR caused a task to be removed from an event
+	list while the scheduler was suspended.  If this was the case then the
+	removed task will have been added to the xPendingReadyList.  Once the
+	scheduler has been resumed it is safe to move all the pending ready
+	tasks from this list into their appropriate ready list. */
+	taskENTER_CRITICAL();
+800028b4:	f0 1f 00 2c 	mcall	80002964 <xTaskResumeAll+0xb4>
+	{
+		--uxSchedulerSuspended;
+800028b8:	4a c8       	lddpc	r8,80002968 <xTaskResumeAll+0xb8>
+800028ba:	70 09       	ld.w	r9,r8[0x0]
+800028bc:	20 19       	sub	r9,1
+800028be:	91 09       	st.w	r8[0x0],r9
+
+		if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+800028c0:	70 08       	ld.w	r8,r8[0x0]
+800028c2:	58 08       	cp.w	r8,0
+800028c4:	c4 91       	brne	80002956 <xTaskResumeAll+0xa6>
+		{
+			if( uxCurrentNumberOfTasks > ( unsigned portBASE_TYPE ) 0 )
+800028c6:	4a a8       	lddpc	r8,8000296c <xTaskResumeAll+0xbc>
+800028c8:	70 08       	ld.w	r8,r8[0x0]
+800028ca:	58 08       	cp.w	r8,0
+800028cc:	c4 50       	breq	80002956 <xTaskResumeAll+0xa6>
+800028ce:	30 04       	mov	r4,0
+			{
+				portBASE_TYPE xYieldRequired = pdFALSE;
+
+				/* Move any readied tasks from the pending list into the
+				appropriate ready list. */
+				while( listLIST_IS_EMPTY( ( xList * ) &xPendingReadyList ) == pdFALSE )
+800028d0:	4a 85       	lddpc	r5,80002970 <xTaskResumeAll+0xc0>
+				{
+					pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY(  ( ( xList * ) &xPendingReadyList ) );
+					vListRemove( &( pxTCB->xEventListItem ) );
+					vListRemove( &( pxTCB->xGenericListItem ) );
+					prvAddTaskToReadyQueue( pxTCB );
+800028d2:	4a 93       	lddpc	r3,80002974 <xTaskResumeAll+0xc4>
+800028d4:	4a 92       	lddpc	r2,80002978 <xTaskResumeAll+0xc8>
+
+					/* If we have moved a task that has a priority higher than
+					the current task then we should yield. */
+					if( pxTCB->uxPriority >= pxCurrentTCB->uxPriority )
+800028d6:	4a a1       	lddpc	r1,8000297c <xTaskResumeAll+0xcc>
+800028d8:	c1 e8       	rjmp	80002914 <xTaskResumeAll+0x64>
+
+				/* Move any readied tasks from the pending list into the
+				appropriate ready list. */
+				while( listLIST_IS_EMPTY( ( xList * ) &xPendingReadyList ) == pdFALSE )
+				{
+					pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY(  ( ( xList * ) &xPendingReadyList ) );
+800028da:	6a 38       	ld.w	r8,r5[0xc]
+800028dc:	70 37       	ld.w	r7,r8[0xc]
+					vListRemove( &( pxTCB->xEventListItem ) );
+800028de:	ee cc ff e8 	sub	r12,r7,-24
+800028e2:	f0 1f 00 28 	mcall	80002980 <xTaskResumeAll+0xd0>
+					vListRemove( &( pxTCB->xGenericListItem ) );
+800028e6:	ee c6 ff fc 	sub	r6,r7,-4
+800028ea:	0c 9c       	mov	r12,r6
+800028ec:	f0 1f 00 25 	mcall	80002980 <xTaskResumeAll+0xd0>
+					prvAddTaskToReadyQueue( pxTCB );
+800028f0:	6e bc       	ld.w	r12,r7[0x2c]
+800028f2:	66 08       	ld.w	r8,r3[0x0]
+800028f4:	10 3c       	cp.w	r12,r8
+800028f6:	e7 fc ba 00 	st.whi	r3[0x0],r12
+800028fa:	f8 0c 00 2c 	add	r12,r12,r12<<0x2
+800028fe:	0c 9b       	mov	r11,r6
+80002900:	e4 0c 00 2c 	add	r12,r2,r12<<0x2
+80002904:	f0 1f 00 20 	mcall	80002984 <xTaskResumeAll+0xd4>
+
+					/* If we have moved a task that has a priority higher than
+					the current task then we should yield. */
+					if( pxTCB->uxPriority >= pxCurrentTCB->uxPriority )
+80002908:	62 08       	ld.w	r8,r1[0x0]
+8000290a:	6e b9       	ld.w	r9,r7[0x2c]
+8000290c:	70 b8       	ld.w	r8,r8[0x2c]
+8000290e:	10 39       	cp.w	r9,r8
+80002910:	f9 b4 02 01 	movhs	r4,1
+			{
+				portBASE_TYPE xYieldRequired = pdFALSE;
+
+				/* Move any readied tasks from the pending list into the
+				appropriate ready list. */
+				while( listLIST_IS_EMPTY( ( xList * ) &xPendingReadyList ) == pdFALSE )
+80002914:	6a 08       	ld.w	r8,r5[0x0]
+80002916:	58 08       	cp.w	r8,0
+80002918:	ce 11       	brne	800028da <xTaskResumeAll+0x2a>
+				}
+
+				/* If any ticks occurred while the scheduler was suspended then
+				they should be processed now.  This ensures the tick count does not
+				slip, and that any delayed tasks are resumed at the correct time. */
+				if( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+8000291a:	49 c8       	lddpc	r8,80002988 <xTaskResumeAll+0xd8>
+8000291c:	70 08       	ld.w	r8,r8[0x0]
+8000291e:	58 08       	cp.w	r8,0
+80002920:	c0 f0       	breq	8000293e <xTaskResumeAll+0x8e>
+				{
+					while( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+80002922:	49 a8       	lddpc	r8,80002988 <xTaskResumeAll+0xd8>
+80002924:	70 08       	ld.w	r8,r8[0x0]
+80002926:	58 08       	cp.w	r8,0
+80002928:	c1 10       	breq	8000294a <xTaskResumeAll+0x9a>
+					{
+						vTaskIncrementTick();
+						--uxMissedTicks;
+8000292a:	49 87       	lddpc	r7,80002988 <xTaskResumeAll+0xd8>
+				slip, and that any delayed tasks are resumed at the correct time. */
+				if( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+				{
+					while( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+					{
+						vTaskIncrementTick();
+8000292c:	f0 1f 00 18 	mcall	8000298c <xTaskResumeAll+0xdc>
+						--uxMissedTicks;
+80002930:	6e 08       	ld.w	r8,r7[0x0]
+80002932:	20 18       	sub	r8,1
+80002934:	8f 08       	st.w	r7[0x0],r8
+				/* If any ticks occurred while the scheduler was suspended then
+				they should be processed now.  This ensures the tick count does not
+				slip, and that any delayed tasks are resumed at the correct time. */
+				if( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+				{
+					while( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+80002936:	6e 08       	ld.w	r8,r7[0x0]
+80002938:	58 08       	cp.w	r8,0
+8000293a:	cf 91       	brne	8000292c <xTaskResumeAll+0x7c>
+8000293c:	c0 78       	rjmp	8000294a <xTaskResumeAll+0x9a>
+						xYieldRequired = pdTRUE;
+					}
+					#endif
+				}
+
+				if( ( xYieldRequired == pdTRUE ) || ( xMissedYield == pdTRUE ) )
+8000293e:	58 14       	cp.w	r4,1
+80002940:	c0 50       	breq	8000294a <xTaskResumeAll+0x9a>
+80002942:	49 48       	lddpc	r8,80002990 <xTaskResumeAll+0xe0>
+80002944:	70 08       	ld.w	r8,r8[0x0]
+80002946:	58 18       	cp.w	r8,1
+80002948:	c0 71       	brne	80002956 <xTaskResumeAll+0xa6>
+				{
+					xAlreadyYielded = pdTRUE;
+					xMissedYield = pdFALSE;
+8000294a:	30 09       	mov	r9,0
+8000294c:	49 18       	lddpc	r8,80002990 <xTaskResumeAll+0xe0>
+8000294e:	91 09       	st.w	r8[0x0],r9
+					portYIELD_WITHIN_API();
+80002950:	d7 33       	scall
+80002952:	30 17       	mov	r7,1
+80002954:	c0 28       	rjmp	80002958 <xTaskResumeAll+0xa8>
+80002956:	30 07       	mov	r7,0
+				}
+			}
+		}
+	}
+	taskEXIT_CRITICAL();
+80002958:	f0 1f 00 0f 	mcall	80002994 <xTaskResumeAll+0xe4>
+
+	return xAlreadyYielded;
+}
+8000295c:	0e 9c       	mov	r12,r7
+8000295e:	e3 cd 80 fe 	ldm	sp++,r1-r7,pc
+80002962:	00 00       	add	r0,r0
+80002964:	80 00       	ld.sh	r0,r0[0x0]
+80002966:	25 f8       	sub	r8,95
+80002968:	00 00       	add	r0,r0
+8000296a:	07 04       	ld.w	r4,r3++
+8000296c:	00 00       	add	r0,r0
+8000296e:	07 08       	ld.w	r8,r3++
+80002970:	00 00       	add	r0,r0
+80002972:	06 ec       	st.h	--r3,r12
+80002974:	00 00       	add	r0,r0
+80002976:	07 10       	ld.sh	r0,r3++
+80002978:	00 00       	add	r0,r0
+8000297a:	06 48       	or	r8,r3
+8000297c:	00 00       	add	r0,r0
+8000297e:	06 e8       	st.h	--r3,r8
+80002980:	80 00       	ld.sh	r0,r0[0x0]
+80002982:	25 d0       	sub	r0,93
+80002984:	80 00       	ld.sh	r0,r0[0x0]
+80002986:	25 b4       	sub	r4,91
+80002988:	00 00       	add	r0,r0
+8000298a:	06 38       	cp.w	r8,r3
+8000298c:	80 00       	ld.sh	r0,r0[0x0]
+8000298e:	27 9c       	sub	r12,121
+80002990:	00 00       	add	r0,r0
+80002992:	07 0c       	ld.w	r12,r3++
+80002994:	80 00       	ld.sh	r0,r0[0x0]
+80002996:	26 a0       	sub	r0,106
+
+80002998 <main>:
+#endif
+
+volatile int true_var = 1;
+
+int main( void )
+{
+80002998:	d4 31       	pushm	r0-r7,lr
+8000299a:	20 2d       	sub	sp,8
+	};
+
+	volatile avr32_adc_t *adc = &AVR32_ADC; // ADC IP registers address
+
+	#if BOARD == EVK1100 || BOARD == EVK1101
+	volatile signed short adc_value_temp = -1;
+8000299c:	3f f8       	mov	r8,-1
+8000299e:	ba 38       	st.h	sp[0x6],r8
+	#endif
+	volatile signed short adc_value_light = -1;
+800029a0:	ba 28       	st.h	sp[0x4],r8
+	#if BOARD == EVK1100
+	volatile signed short adc_value_pot = -1;
+800029a2:	ba 18       	st.h	sp[0x2],r8
+
+	int i;
+
+
+	// switch to oscillator 0
+	pm_switch_to_osc0(&AVR32_PM, FOSC0, OSC0_STARTUP);
+800029a4:	30 3a       	mov	r10,3
+800029a6:	e0 6b 1b 00 	mov	r11,6912
+800029aa:	ea 1b 00 b7 	orh	r11,0xb7
+800029ae:	fe 7c 0c 00 	mov	r12,-62464
+800029b2:	f0 1f 00 39 	mcall	80002a94 <main+0xfc>
+
+	// init debug serial line
+	init_dbg_rs232(FOSC0);
+800029b6:	e0 6c 1b 00 	mov	r12,6912
+800029ba:	ea 1c 00 b7 	orh	r12,0xb7
+800029be:	f0 1f 00 37 	mcall	80002a98 <main+0x100>
+
+	// Assign and enable GPIO pins to the ADC function.
+	gpio_enable_module(ADC_GPIO_MAP, sizeof(ADC_GPIO_MAP) / sizeof(ADC_GPIO_MAP[0]));
+800029c2:	30 3b       	mov	r11,3
+800029c4:	4b 6c       	lddpc	r12,80002a9c <main+0x104>
+800029c6:	f0 1f 00 37 	mcall	80002aa0 <main+0x108>
+
+	// configure ADC
+	// Lower the ADC clock to match the ADC characteristics (because we configured
+	// the CPU clock to 12MHz, and the ADC clock characteristics are usually lower;
+	// cf. the ADC Characteristic section in the datasheet).
+	AVR32_ADC.mr |= 0x1 << AVR32_ADC_MR_PRESCAL_OFFSET;
+800029ca:	fe 77 3c 00 	mov	r7,-50176
+800029ce:	6e 18       	ld.w	r8,r7[0x4]
+800029d0:	a9 a8       	sbr	r8,0x8
+800029d2:	8f 18       	st.w	r7[0x4],r8
+	adc_configure(adc);
+800029d4:	0e 9c       	mov	r12,r7
+800029d6:	f0 1f 00 34 	mcall	80002aa4 <main+0x10c>
+
+	// Enable the ADC channels.
+	#if BOARD == EVK1100 || BOARD == EVK1101
+	adc_enable(adc,adc_channel_temp);
+800029da:	30 0b       	mov	r11,0
+800029dc:	0e 9c       	mov	r12,r7
+800029de:	f0 1f 00 33 	mcall	80002aa8 <main+0x110>
+	#endif
+	adc_enable(adc,adc_channel_light);
+800029e2:	30 2b       	mov	r11,2
+800029e4:	0e 9c       	mov	r12,r7
+800029e6:	f0 1f 00 31 	mcall	80002aa8 <main+0x110>
+	#if BOARD == EVK1100
+	adc_enable(adc,adc_channel_pot);
+800029ea:	30 1b       	mov	r11,1
+800029ec:	0e 9c       	mov	r12,r7
+800029ee:	f0 1f 00 2f 	mcall	80002aa8 <main+0x110>
+	#endif
+
+
+	// do an infinite loop
+	while (true_var)    // use a volatile true variable to avoid warning on unreachable code
+800029f2:	4a f8       	lddpc	r8,80002aac <main+0x114>
+800029f4:	70 08       	ld.w	r8,r8[0x0]
+800029f6:	58 08       	cp.w	r8,0
+800029f8:	c3 c0       	breq	80002a70 <main+0xd8>
+	{
+		// slow down operations
+		for ( i=0 ; i < 1000000 ; i++);
+
+		// display a header to user
+		print_dbg("\x1B[2J\x1B[H\r\nADC Example\r\n");
+800029fa:	4a e5       	lddpc	r5,80002ab0 <main+0x118>
+		// launch conversion on all enabled channels
+		adc_start(adc);
+		
+		#if BOARD == EVK1100 || BOARD == EVK1101
+		// get value for the temperature adc channel
+		adc_value_temp = adc_get_value(adc, adc_channel_temp);
+800029fc:	30 04       	mov	r4,0
+		// display value to user
+		print_dbg("HEX Value for Channel temperature : 0x");
+800029fe:	4a e3       	lddpc	r3,80002ab4 <main+0x11c>
+		print_dbg_hex(adc_value_temp);
+		print_dbg("\r\n");
+80002a00:	4a e6       	lddpc	r6,80002ab8 <main+0x120>
+		#endif
+
+		// get value for the light adc channel
+		adc_value_light = adc_get_value(adc, adc_channel_light);
+80002a02:	30 22       	mov	r2,2
+		// display value to user
+		print_dbg("HEX Value for Channel light : 0x");
+80002a04:	4a e1       	lddpc	r1,80002abc <main+0x124>
+		print_dbg_hex(adc_value_light);
+		print_dbg("\r\n");
+
+		#if BOARD == EVK1100
+		// get value for the potentiometer adc channel
+		adc_value_pot = adc_get_value(adc, adc_channel_pot);
+80002a06:	30 10       	mov	r0,1
+	{
+		// slow down operations
+		for ( i=0 ; i < 1000000 ; i++);
+
+		// display a header to user
+		print_dbg("\x1B[2J\x1B[H\r\nADC Example\r\n");
+80002a08:	0a 9c       	mov	r12,r5
+80002a0a:	f0 1f 00 2e 	mcall	80002ac0 <main+0x128>
+
+		// launch conversion on all enabled channels
+		adc_start(adc);
+80002a0e:	0e 9c       	mov	r12,r7
+80002a10:	f0 1f 00 2d 	mcall	80002ac4 <main+0x12c>
+		
+		#if BOARD == EVK1100 || BOARD == EVK1101
+		// get value for the temperature adc channel
+		adc_value_temp = adc_get_value(adc, adc_channel_temp);
+80002a14:	08 9b       	mov	r11,r4
+80002a16:	0e 9c       	mov	r12,r7
+80002a18:	f0 1f 00 2c 	mcall	80002ac8 <main+0x130>
+80002a1c:	ba 3c       	st.h	sp[0x6],r12
+		// display value to user
+		print_dbg("HEX Value for Channel temperature : 0x");
+80002a1e:	06 9c       	mov	r12,r3
+80002a20:	f0 1f 00 28 	mcall	80002ac0 <main+0x128>
+		print_dbg_hex(adc_value_temp);
+80002a24:	9a 3c       	ld.sh	r12,sp[0x6]
+80002a26:	f0 1f 00 2a 	mcall	80002acc <main+0x134>
+		print_dbg("\r\n");
+80002a2a:	0c 9c       	mov	r12,r6
+80002a2c:	f0 1f 00 25 	mcall	80002ac0 <main+0x128>
+		#endif
+
+		// get value for the light adc channel
+		adc_value_light = adc_get_value(adc, adc_channel_light);
+80002a30:	04 9b       	mov	r11,r2
+80002a32:	0e 9c       	mov	r12,r7
+80002a34:	f0 1f 00 25 	mcall	80002ac8 <main+0x130>
+80002a38:	ba 2c       	st.h	sp[0x4],r12
+		// display value to user
+		print_dbg("HEX Value for Channel light : 0x");
+80002a3a:	02 9c       	mov	r12,r1
+80002a3c:	f0 1f 00 21 	mcall	80002ac0 <main+0x128>
+		print_dbg_hex(adc_value_light);
+80002a40:	9a 2c       	ld.sh	r12,sp[0x4]
+80002a42:	f0 1f 00 23 	mcall	80002acc <main+0x134>
+		print_dbg("\r\n");
+80002a46:	0c 9c       	mov	r12,r6
+80002a48:	f0 1f 00 1e 	mcall	80002ac0 <main+0x128>
+
+		#if BOARD == EVK1100
+		// get value for the potentiometer adc channel
+		adc_value_pot = adc_get_value(adc, adc_channel_pot);
+80002a4c:	00 9b       	mov	r11,r0
+80002a4e:	0e 9c       	mov	r12,r7
+80002a50:	f0 1f 00 1e 	mcall	80002ac8 <main+0x130>
+80002a54:	ba 1c       	st.h	sp[0x2],r12
+		// display value to user
+		print_dbg("HEX Value for Channel pot : 0x");
+80002a56:	49 fc       	lddpc	r12,80002ad0 <main+0x138>
+80002a58:	f0 1f 00 1a 	mcall	80002ac0 <main+0x128>
+		print_dbg_hex(adc_value_pot);
+80002a5c:	9a 1c       	ld.sh	r12,sp[0x2]
+80002a5e:	f0 1f 00 1c 	mcall	80002acc <main+0x134>
+		print_dbg("\r\n");
+80002a62:	0c 9c       	mov	r12,r6
+80002a64:	f0 1f 00 17 	mcall	80002ac0 <main+0x128>
+	adc_enable(adc,adc_channel_pot);
+	#endif
+
+
+	// do an infinite loop
+	while (true_var)    // use a volatile true variable to avoid warning on unreachable code
+80002a68:	49 18       	lddpc	r8,80002aac <main+0x114>
+80002a6a:	70 08       	ld.w	r8,r8[0x0]
+80002a6c:	58 08       	cp.w	r8,0
+80002a6e:	cc d1       	brne	80002a08 <main+0x70>
+		print_dbg("\r\n");
+		#endif
+	}
+	// Disable the ADC channels.
+	#if BOARD == EVK1100 || BOARD == EVK1101
+	adc_disable(adc,adc_channel_temp);
+80002a70:	30 0b       	mov	r11,0
+80002a72:	fe 7c 3c 00 	mov	r12,-50176
+80002a76:	f0 1f 00 18 	mcall	80002ad4 <main+0x13c>
+	#endif
+	adc_disable(adc,adc_channel_light);
+80002a7a:	30 2b       	mov	r11,2
+80002a7c:	fe 7c 3c 00 	mov	r12,-50176
+80002a80:	f0 1f 00 15 	mcall	80002ad4 <main+0x13c>
+	#if BOARD == EVK1100
+	adc_disable(adc,adc_channel_pot);
+80002a84:	30 1b       	mov	r11,1
+80002a86:	fe 7c 3c 00 	mov	r12,-50176
+80002a8a:	f0 1f 00 13 	mcall	80002ad4 <main+0x13c>
+	#endif
+	return 0;
+}
+80002a8e:	2f ed       	sub	sp,-8
+80002a90:	d8 3a       	popm	r0-r7,pc,r12=0
+80002a92:	00 00       	add	r0,r0
+80002a94:	80 00       	ld.sh	r0,r0[0x0]
+80002a96:	23 10       	sub	r0,49
+80002a98:	80 00       	ld.sh	r0,r0[0x0]
+80002a9a:	25 a0       	sub	r0,90
+80002a9c:	80 00       	ld.sh	r0,r0[0x0]
+80002a9e:	37 5c       	mov	r12,117
+80002aa0:	80 00       	ld.sh	r0,r0[0x0]
+80002aa2:	21 c4       	sub	r4,28
+80002aa4:	80 00       	ld.sh	r0,r0[0x0]
+80002aa6:	20 dc       	sub	r12,13
+80002aa8:	80 00       	ld.sh	r0,r0[0x0]
+80002aaa:	20 f4       	sub	r4,15
+80002aac:	00 00       	add	r0,r0
+80002aae:	00 24       	rsub	r4,r0
+80002ab0:	80 00       	ld.sh	r0,r0[0x0]
+80002ab2:	36 d8       	mov	r8,109
+80002ab4:	80 00       	ld.sh	r0,r0[0x0]
+80002ab6:	36 f0       	mov	r0,111
+80002ab8:	80 00       	ld.sh	r0,r0[0x0]
+80002aba:	36 ec       	mov	r12,110
+80002abc:	80 00       	ld.sh	r0,r0[0x0]
+80002abe:	37 18       	mov	r8,113
+80002ac0:	80 00       	ld.sh	r0,r0[0x0]
+80002ac2:	25 4c       	sub	r12,84
+80002ac4:	80 00       	ld.sh	r0,r0[0x0]
+80002ac6:	20 ee       	sub	lr,14
+80002ac8:	80 00       	ld.sh	r0,r0[0x0]
+80002aca:	21 48       	sub	r8,20
+80002acc:	80 00       	ld.sh	r0,r0[0x0]
+80002ace:	25 38       	sub	r8,83
+80002ad0:	80 00       	ld.sh	r0,r0[0x0]
+80002ad2:	37 3c       	mov	r12,115
+80002ad4:	80 00       	ld.sh	r0,r0[0x0]
+80002ad6:	21 10       	sub	r0,17
+
+80002ad8 <atexit>:
+80002ad8:	d4 01       	pushm	lr
+80002ada:	30 09       	mov	r9,0
+80002adc:	18 9b       	mov	r11,r12
+80002ade:	12 9a       	mov	r10,r9
+80002ae0:	12 9c       	mov	r12,r9
+80002ae2:	e0 a0 02 73 	rcall	80002fc8 <__register_exitproc>
+80002ae6:	d8 02       	popm	pc
+
+80002ae8 <exit>:
+80002ae8:	d4 21       	pushm	r4-r7,lr
+80002aea:	30 0b       	mov	r11,0
+80002aec:	18 97       	mov	r7,r12
+80002aee:	e0 a0 02 bf 	rcall	8000306c <__call_exitprocs>
+80002af2:	fe c8 f3 7a 	sub	r8,pc,-3206
+80002af6:	70 0c       	ld.w	r12,r8[0x0]
+80002af8:	78 a8       	ld.w	r8,r12[0x28]
+80002afa:	58 08       	cp.w	r8,0
+80002afc:	c0 20       	breq	80002b00 <exit+0x18>
+80002afe:	5d 18       	icall	r8
+80002b00:	0e 9c       	mov	r12,r7
+80002b02:	e0 a0 02 42 	rcall	80002f86 <_exit>
+80002b06:	d7 03       	nop
+
+80002b08 <free>:
+80002b08:	d4 01       	pushm	lr
+80002b0a:	e0 68 01 18 	mov	r8,280
+80002b0e:	18 9b       	mov	r11,r12
+80002b10:	70 0c       	ld.w	r12,r8[0x0]
+80002b12:	e0 a0 03 61 	rcall	800031d4 <_free_r>
+80002b16:	d8 02       	popm	pc
+
+80002b18 <malloc>:
+80002b18:	d4 01       	pushm	lr
+80002b1a:	e0 68 01 18 	mov	r8,280
+80002b1e:	18 9b       	mov	r11,r12
+80002b20:	70 0c       	ld.w	r12,r8[0x0]
+80002b22:	c0 3c       	rcall	80002b28 <_malloc_r>
+80002b24:	d8 02       	popm	pc
+80002b26:	d7 03       	nop
+
+80002b28 <_malloc_r>:
+80002b28:	d4 31       	pushm	r0-r7,lr
+80002b2a:	f6 c8 ff f5 	sub	r8,r11,-11
+80002b2e:	18 95       	mov	r5,r12
+80002b30:	10 97       	mov	r7,r8
+80002b32:	e0 17 ff f8 	andl	r7,0xfff8
+80002b36:	59 68       	cp.w	r8,22
+80002b38:	f9 b7 08 10 	movls	r7,16
+80002b3c:	16 37       	cp.w	r7,r11
+80002b3e:	5f 38       	srlo	r8
+80002b40:	f1 e7 13 f8 	or	r8,r8,r7>>0x1f
+80002b44:	c0 50       	breq	80002b4e <_malloc_r+0x26>
+80002b46:	30 c8       	mov	r8,12
+80002b48:	99 38       	st.w	r12[0xc],r8
+80002b4a:	e0 8f 01 f7 	bral	80002f38 <_malloc_r+0x410>
+80002b4e:	fe b0 fd b9 	rcall	800026c0 <__malloc_lock>
+80002b52:	e0 47 01 f7 	cp.w	r7,503
+80002b56:	e0 8b 00 1d 	brhi	80002b90 <_malloc_r+0x68>
+80002b5a:	ee 03 16 03 	lsr	r3,r7,0x3
+80002b5e:	e0 68 01 1c 	mov	r8,284
+80002b62:	f0 03 00 38 	add	r8,r8,r3<<0x3
+80002b66:	70 36       	ld.w	r6,r8[0xc]
+80002b68:	10 36       	cp.w	r6,r8
+80002b6a:	c0 61       	brne	80002b76 <_malloc_r+0x4e>
+80002b6c:	ec c8 ff f8 	sub	r8,r6,-8
+80002b70:	70 36       	ld.w	r6,r8[0xc]
+80002b72:	10 36       	cp.w	r6,r8
+80002b74:	c0 c0       	breq	80002b8c <_malloc_r+0x64>
+80002b76:	6c 18       	ld.w	r8,r6[0x4]
+80002b78:	e0 18 ff fc 	andl	r8,0xfffc
+80002b7c:	6c 3a       	ld.w	r10,r6[0xc]
+80002b7e:	ec 08 00 09 	add	r9,r6,r8
+80002b82:	0a 9c       	mov	r12,r5
+80002b84:	6c 28       	ld.w	r8,r6[0x8]
+80002b86:	95 28       	st.w	r10[0x8],r8
+80002b88:	91 3a       	st.w	r8[0xc],r10
+80002b8a:	c4 78       	rjmp	80002c18 <_malloc_r+0xf0>
+80002b8c:	2f e3       	sub	r3,-2
+80002b8e:	c4 d8       	rjmp	80002c28 <_malloc_r+0x100>
+80002b90:	ee 03 16 09 	lsr	r3,r7,0x9
+80002b94:	c0 41       	brne	80002b9c <_malloc_r+0x74>
+80002b96:	ee 03 16 03 	lsr	r3,r7,0x3
+80002b9a:	c2 68       	rjmp	80002be6 <_malloc_r+0xbe>
+80002b9c:	58 43       	cp.w	r3,4
+80002b9e:	e0 8b 00 06 	brhi	80002baa <_malloc_r+0x82>
+80002ba2:	ee 03 16 06 	lsr	r3,r7,0x6
+80002ba6:	2c 83       	sub	r3,-56
+80002ba8:	c1 f8       	rjmp	80002be6 <_malloc_r+0xbe>
+80002baa:	59 43       	cp.w	r3,20
+80002bac:	e0 8b 00 04 	brhi	80002bb4 <_malloc_r+0x8c>
+80002bb0:	2a 53       	sub	r3,-91
+80002bb2:	c1 a8       	rjmp	80002be6 <_malloc_r+0xbe>
+80002bb4:	e0 43 00 54 	cp.w	r3,84
+80002bb8:	e0 8b 00 06 	brhi	80002bc4 <_malloc_r+0x9c>
+80002bbc:	ee 03 16 0c 	lsr	r3,r7,0xc
+80002bc0:	29 23       	sub	r3,-110
+80002bc2:	c1 28       	rjmp	80002be6 <_malloc_r+0xbe>
+80002bc4:	e0 43 01 54 	cp.w	r3,340
+80002bc8:	e0 8b 00 06 	brhi	80002bd4 <_malloc_r+0xac>
+80002bcc:	ee 03 16 0f 	lsr	r3,r7,0xf
+80002bd0:	28 93       	sub	r3,-119
+80002bd2:	c0 a8       	rjmp	80002be6 <_malloc_r+0xbe>
+80002bd4:	e0 43 05 54 	cp.w	r3,1364
+80002bd8:	e0 88 00 04 	brls	80002be0 <_malloc_r+0xb8>
+80002bdc:	37 e3       	mov	r3,126
+80002bde:	c0 48       	rjmp	80002be6 <_malloc_r+0xbe>
+80002be0:	ee 03 16 12 	lsr	r3,r7,0x12
+80002be4:	28 43       	sub	r3,-124
+80002be6:	e0 6a 01 1c 	mov	r10,284
+80002bea:	f4 03 00 3a 	add	r10,r10,r3<<0x3
+80002bee:	74 36       	ld.w	r6,r10[0xc]
+80002bf0:	c1 98       	rjmp	80002c22 <_malloc_r+0xfa>
+80002bf2:	6c 19       	ld.w	r9,r6[0x4]
+80002bf4:	e0 19 ff fc 	andl	r9,0xfffc
+80002bf8:	f2 07 01 0b 	sub	r11,r9,r7
+80002bfc:	58 fb       	cp.w	r11,15
+80002bfe:	e0 8a 00 04 	brle	80002c06 <_malloc_r+0xde>
+80002c02:	20 13       	sub	r3,1
+80002c04:	c1 18       	rjmp	80002c26 <_malloc_r+0xfe>
+80002c06:	6c 38       	ld.w	r8,r6[0xc]
+80002c08:	58 0b       	cp.w	r11,0
+80002c0a:	c0 b5       	brlt	80002c20 <_malloc_r+0xf8>
+80002c0c:	6c 2a       	ld.w	r10,r6[0x8]
+80002c0e:	ec 09 00 09 	add	r9,r6,r9
+80002c12:	0a 9c       	mov	r12,r5
+80002c14:	91 2a       	st.w	r8[0x8],r10
+80002c16:	95 38       	st.w	r10[0xc],r8
+80002c18:	72 18       	ld.w	r8,r9[0x4]
+80002c1a:	a1 a8       	sbr	r8,0x0
+80002c1c:	93 18       	st.w	r9[0x4],r8
+80002c1e:	cb c8       	rjmp	80002d96 <_malloc_r+0x26e>
+80002c20:	10 96       	mov	r6,r8
+80002c22:	14 36       	cp.w	r6,r10
+80002c24:	ce 71       	brne	80002bf2 <_malloc_r+0xca>
+80002c26:	2f f3       	sub	r3,-1
+80002c28:	e0 6a 01 1c 	mov	r10,284
+80002c2c:	f4 cc ff f8 	sub	r12,r10,-8
+80002c30:	78 26       	ld.w	r6,r12[0x8]
+80002c32:	18 36       	cp.w	r6,r12
+80002c34:	c6 c0       	breq	80002d0c <_malloc_r+0x1e4>
+80002c36:	6c 19       	ld.w	r9,r6[0x4]
+80002c38:	e0 19 ff fc 	andl	r9,0xfffc
+80002c3c:	f2 07 01 08 	sub	r8,r9,r7
+80002c40:	58 f8       	cp.w	r8,15
+80002c42:	e0 89 00 8f 	brgt	80002d60 <_malloc_r+0x238>
+80002c46:	99 3c       	st.w	r12[0xc],r12
+80002c48:	99 2c       	st.w	r12[0x8],r12
+80002c4a:	58 08       	cp.w	r8,0
+80002c4c:	c0 55       	brlt	80002c56 <_malloc_r+0x12e>
+80002c4e:	ec 09 00 09 	add	r9,r6,r9
+80002c52:	0a 9c       	mov	r12,r5
+80002c54:	ce 2b       	rjmp	80002c18 <_malloc_r+0xf0>
+80002c56:	e0 49 01 ff 	cp.w	r9,511
+80002c5a:	e0 8b 00 13 	brhi	80002c80 <_malloc_r+0x158>
+80002c5e:	a3 99       	lsr	r9,0x3
+80002c60:	f4 09 00 38 	add	r8,r10,r9<<0x3
+80002c64:	70 2b       	ld.w	r11,r8[0x8]
+80002c66:	8d 38       	st.w	r6[0xc],r8
+80002c68:	8d 2b       	st.w	r6[0x8],r11
+80002c6a:	97 36       	st.w	r11[0xc],r6
+80002c6c:	91 26       	st.w	r8[0x8],r6
+80002c6e:	a3 49       	asr	r9,0x2
+80002c70:	74 18       	ld.w	r8,r10[0x4]
+80002c72:	30 1b       	mov	r11,1
+80002c74:	f6 09 09 49 	lsl	r9,r11,r9
+80002c78:	f1 e9 10 09 	or	r9,r8,r9
+80002c7c:	95 19       	st.w	r10[0x4],r9
+80002c7e:	c4 78       	rjmp	80002d0c <_malloc_r+0x1e4>
+80002c80:	f2 0a 16 09 	lsr	r10,r9,0x9
+80002c84:	58 4a       	cp.w	r10,4
+80002c86:	e0 8b 00 07 	brhi	80002c94 <_malloc_r+0x16c>
+80002c8a:	f2 0a 16 06 	lsr	r10,r9,0x6
+80002c8e:	2c 8a       	sub	r10,-56
+80002c90:	c2 08       	rjmp	80002cd0 <_malloc_r+0x1a8>
+80002c92:	d7 03       	nop
+80002c94:	59 4a       	cp.w	r10,20
+80002c96:	e0 8b 00 04 	brhi	80002c9e <_malloc_r+0x176>
+80002c9a:	2a 5a       	sub	r10,-91
+80002c9c:	c1 a8       	rjmp	80002cd0 <_malloc_r+0x1a8>
+80002c9e:	e0 4a 00 54 	cp.w	r10,84
+80002ca2:	e0 8b 00 06 	brhi	80002cae <_malloc_r+0x186>
+80002ca6:	f2 0a 16 0c 	lsr	r10,r9,0xc
+80002caa:	29 2a       	sub	r10,-110
+80002cac:	c1 28       	rjmp	80002cd0 <_malloc_r+0x1a8>
+80002cae:	e0 4a 01 54 	cp.w	r10,340
+80002cb2:	e0 8b 00 06 	brhi	80002cbe <_malloc_r+0x196>
+80002cb6:	f2 0a 16 0f 	lsr	r10,r9,0xf
+80002cba:	28 9a       	sub	r10,-119
+80002cbc:	c0 a8       	rjmp	80002cd0 <_malloc_r+0x1a8>
+80002cbe:	e0 4a 05 54 	cp.w	r10,1364
+80002cc2:	e0 88 00 04 	brls	80002cca <_malloc_r+0x1a2>
+80002cc6:	37 ea       	mov	r10,126
+80002cc8:	c0 48       	rjmp	80002cd0 <_malloc_r+0x1a8>
+80002cca:	f2 0a 16 12 	lsr	r10,r9,0x12
+80002cce:	28 4a       	sub	r10,-124
+80002cd0:	e0 6b 01 1c 	mov	r11,284
+80002cd4:	f6 0a 00 34 	add	r4,r11,r10<<0x3
+80002cd8:	68 28       	ld.w	r8,r4[0x8]
+80002cda:	08 38       	cp.w	r8,r4
+80002cdc:	c0 e1       	brne	80002cf8 <_malloc_r+0x1d0>
+80002cde:	76 19       	ld.w	r9,r11[0x4]
+80002ce0:	a3 4a       	asr	r10,0x2
+80002ce2:	30 1e       	mov	lr,1
+80002ce4:	fc 0a 09 4a 	lsl	r10,lr,r10
+80002ce8:	f3 ea 10 0a 	or	r10,r9,r10
+80002cec:	10 99       	mov	r9,r8
+80002cee:	97 1a       	st.w	r11[0x4],r10
+80002cf0:	c0 a8       	rjmp	80002d04 <_malloc_r+0x1dc>
+80002cf2:	70 28       	ld.w	r8,r8[0x8]
+80002cf4:	08 38       	cp.w	r8,r4
+80002cf6:	c0 60       	breq	80002d02 <_malloc_r+0x1da>
+80002cf8:	70 1a       	ld.w	r10,r8[0x4]
+80002cfa:	e0 1a ff fc 	andl	r10,0xfffc
+80002cfe:	14 39       	cp.w	r9,r10
+80002d00:	cf 93       	brcs	80002cf2 <_malloc_r+0x1ca>
+80002d02:	70 39       	ld.w	r9,r8[0xc]
+80002d04:	8d 39       	st.w	r6[0xc],r9
+80002d06:	8d 28       	st.w	r6[0x8],r8
+80002d08:	91 36       	st.w	r8[0xc],r6
+80002d0a:	93 26       	st.w	r9[0x8],r6
+80002d0c:	e6 08 14 02 	asr	r8,r3,0x2
+80002d10:	30 1b       	mov	r11,1
+80002d12:	e0 64 01 1c 	mov	r4,284
+80002d16:	f6 08 09 4b 	lsl	r11,r11,r8
+80002d1a:	68 18       	ld.w	r8,r4[0x4]
+80002d1c:	10 3b       	cp.w	r11,r8
+80002d1e:	e0 8b 00 6b 	brhi	80002df4 <_malloc_r+0x2cc>
+80002d22:	f7 e8 00 09 	and	r9,r11,r8
+80002d26:	c0 b1       	brne	80002d3c <_malloc_r+0x214>
+80002d28:	e0 13 ff fc 	andl	r3,0xfffc
+80002d2c:	a1 7b       	lsl	r11,0x1
+80002d2e:	2f c3       	sub	r3,-4
+80002d30:	c0 38       	rjmp	80002d36 <_malloc_r+0x20e>
+80002d32:	2f c3       	sub	r3,-4
+80002d34:	a1 7b       	lsl	r11,0x1
+80002d36:	f7 e8 00 09 	and	r9,r11,r8
+80002d3a:	cf c0       	breq	80002d32 <_malloc_r+0x20a>
+80002d3c:	e8 03 00 3e 	add	lr,r4,r3<<0x3
+80002d40:	06 92       	mov	r2,r3
+80002d42:	1c 91       	mov	r1,lr
+80002d44:	62 36       	ld.w	r6,r1[0xc]
+80002d46:	c2 e8       	rjmp	80002da2 <_malloc_r+0x27a>
+80002d48:	6c 1a       	ld.w	r10,r6[0x4]
+80002d4a:	e0 1a ff fc 	andl	r10,0xfffc
+80002d4e:	f4 07 01 08 	sub	r8,r10,r7
+80002d52:	58 f8       	cp.w	r8,15
+80002d54:	e0 8a 00 15 	brle	80002d7e <_malloc_r+0x256>
+80002d58:	6c 3a       	ld.w	r10,r6[0xc]
+80002d5a:	6c 29       	ld.w	r9,r6[0x8]
+80002d5c:	95 29       	st.w	r10[0x8],r9
+80002d5e:	93 3a       	st.w	r9[0xc],r10
+80002d60:	0e 99       	mov	r9,r7
+80002d62:	ec 07 00 07 	add	r7,r6,r7
+80002d66:	a1 a9       	sbr	r9,0x0
+80002d68:	99 37       	st.w	r12[0xc],r7
+80002d6a:	99 27       	st.w	r12[0x8],r7
+80002d6c:	8d 19       	st.w	r6[0x4],r9
+80002d6e:	ee 08 09 08 	st.w	r7[r8],r8
+80002d72:	8f 2c       	st.w	r7[0x8],r12
+80002d74:	8f 3c       	st.w	r7[0xc],r12
+80002d76:	a1 a8       	sbr	r8,0x0
+80002d78:	0a 9c       	mov	r12,r5
+80002d7a:	8f 18       	st.w	r7[0x4],r8
+80002d7c:	c0 d8       	rjmp	80002d96 <_malloc_r+0x26e>
+80002d7e:	6c 39       	ld.w	r9,r6[0xc]
+80002d80:	58 08       	cp.w	r8,0
+80002d82:	c0 f5       	brlt	80002da0 <_malloc_r+0x278>
+80002d84:	ec 0a 00 0a 	add	r10,r6,r10
+80002d88:	74 18       	ld.w	r8,r10[0x4]
+80002d8a:	a1 a8       	sbr	r8,0x0
+80002d8c:	0a 9c       	mov	r12,r5
+80002d8e:	95 18       	st.w	r10[0x4],r8
+80002d90:	6c 28       	ld.w	r8,r6[0x8]
+80002d92:	93 28       	st.w	r9[0x8],r8
+80002d94:	91 39       	st.w	r8[0xc],r9
+80002d96:	fe b0 fc 9b 	rcall	800026cc <__malloc_unlock>
+80002d9a:	ec cc ff f8 	sub	r12,r6,-8
+80002d9e:	d8 32       	popm	r0-r7,pc
+80002da0:	12 96       	mov	r6,r9
+80002da2:	02 36       	cp.w	r6,r1
+80002da4:	cd 21       	brne	80002d48 <_malloc_r+0x220>
+80002da6:	2f f2       	sub	r2,-1
+80002da8:	f1 d2 c0 02 	bfextu	r8,r2,0x0,0x2
+80002dac:	c0 30       	breq	80002db2 <_malloc_r+0x28a>
+80002dae:	2f 81       	sub	r1,-8
+80002db0:	cc ab       	rjmp	80002d44 <_malloc_r+0x21c>
+80002db2:	1c 98       	mov	r8,lr
+80002db4:	f3 d3 c0 02 	bfextu	r9,r3,0x0,0x2
+80002db8:	c0 81       	brne	80002dc8 <_malloc_r+0x2a0>
+80002dba:	68 19       	ld.w	r9,r4[0x4]
+80002dbc:	f6 08 11 ff 	rsub	r8,r11,-1
+80002dc0:	f3 e8 00 08 	and	r8,r9,r8
+80002dc4:	89 18       	st.w	r4[0x4],r8
+80002dc6:	c0 78       	rjmp	80002dd4 <_malloc_r+0x2ac>
+80002dc8:	f0 c9 00 08 	sub	r9,r8,8
+80002dcc:	20 13       	sub	r3,1
+80002dce:	70 08       	ld.w	r8,r8[0x0]
+80002dd0:	12 38       	cp.w	r8,r9
+80002dd2:	cf 10       	breq	80002db4 <_malloc_r+0x28c>
+80002dd4:	a1 7b       	lsl	r11,0x1
+80002dd6:	68 18       	ld.w	r8,r4[0x4]
+80002dd8:	10 3b       	cp.w	r11,r8
+80002dda:	e0 8b 00 0d 	brhi	80002df4 <_malloc_r+0x2cc>
+80002dde:	58 0b       	cp.w	r11,0
+80002de0:	c0 a0       	breq	80002df4 <_malloc_r+0x2cc>
+80002de2:	04 93       	mov	r3,r2
+80002de4:	c0 38       	rjmp	80002dea <_malloc_r+0x2c2>
+80002de6:	2f c3       	sub	r3,-4
+80002de8:	a1 7b       	lsl	r11,0x1
+80002dea:	f7 e8 00 09 	and	r9,r11,r8
+80002dee:	ca 71       	brne	80002d3c <_malloc_r+0x214>
+80002df0:	cf bb       	rjmp	80002de6 <_malloc_r+0x2be>
+80002df2:	d7 03       	nop
+80002df4:	68 23       	ld.w	r3,r4[0x8]
+80002df6:	66 12       	ld.w	r2,r3[0x4]
+80002df8:	e0 12 ff fc 	andl	r2,0xfffc
+80002dfc:	0e 32       	cp.w	r2,r7
+80002dfe:	5f 39       	srlo	r9
+80002e00:	e4 07 01 08 	sub	r8,r2,r7
+80002e04:	58 f8       	cp.w	r8,15
+80002e06:	5f aa       	srle	r10
+80002e08:	f5 e9 10 09 	or	r9,r10,r9
+80002e0c:	e0 80 00 98 	breq	80002f3c <_malloc_r+0x414>
+80002e10:	e0 68 07 1c 	mov	r8,1820
+80002e14:	70 01       	ld.w	r1,r8[0x0]
+80002e16:	e0 68 05 28 	mov	r8,1320
+80002e1a:	2f 01       	sub	r1,-16
+80002e1c:	70 08       	ld.w	r8,r8[0x0]
+80002e1e:	0e 01       	add	r1,r7
+80002e20:	5b f8       	cp.w	r8,-1
+80002e22:	c0 40       	breq	80002e2a <_malloc_r+0x302>
+80002e24:	28 11       	sub	r1,-127
+80002e26:	e0 11 ff 80 	andl	r1,0xff80
+80002e2a:	02 9b       	mov	r11,r1
+80002e2c:	0a 9c       	mov	r12,r5
+80002e2e:	c9 7c       	rcall	80002f5c <_sbrk_r>
+80002e30:	18 96       	mov	r6,r12
+80002e32:	5b fc       	cp.w	r12,-1
+80002e34:	c7 30       	breq	80002f1a <_malloc_r+0x3f2>
+80002e36:	e6 02 00 08 	add	r8,r3,r2
+80002e3a:	10 3c       	cp.w	r12,r8
+80002e3c:	c0 32       	brcc	80002e42 <_malloc_r+0x31a>
+80002e3e:	08 33       	cp.w	r3,r4
+80002e40:	c6 d1       	brne	80002f1a <_malloc_r+0x3f2>
+80002e42:	e0 6a 07 20 	mov	r10,1824
+80002e46:	74 09       	ld.w	r9,r10[0x0]
+80002e48:	e2 09 00 09 	add	r9,r1,r9
+80002e4c:	95 09       	st.w	r10[0x0],r9
+80002e4e:	10 36       	cp.w	r6,r8
+80002e50:	c0 a1       	brne	80002e64 <_malloc_r+0x33c>
+80002e52:	f5 d6 c0 07 	bfextu	r10,r6,0x0,0x7
+80002e56:	c0 71       	brne	80002e64 <_malloc_r+0x33c>
+80002e58:	e2 02 00 02 	add	r2,r1,r2
+80002e5c:	68 28       	ld.w	r8,r4[0x8]
+80002e5e:	a1 a2       	sbr	r2,0x0
+80002e60:	91 12       	st.w	r8[0x4],r2
+80002e62:	c4 d8       	rjmp	80002efc <_malloc_r+0x3d4>
+80002e64:	e0 6a 05 28 	mov	r10,1320
+80002e68:	74 0b       	ld.w	r11,r10[0x0]
+80002e6a:	5b fb       	cp.w	r11,-1
+80002e6c:	c0 31       	brne	80002e72 <_malloc_r+0x34a>
+80002e6e:	95 06       	st.w	r10[0x0],r6
+80002e70:	c0 78       	rjmp	80002e7e <_malloc_r+0x356>
+80002e72:	ec 09 00 09 	add	r9,r6,r9
+80002e76:	e0 6a 07 20 	mov	r10,1824
+80002e7a:	10 19       	sub	r9,r8
+80002e7c:	95 09       	st.w	r10[0x0],r9
+80002e7e:	f1 d6 c0 03 	bfextu	r8,r6,0x0,0x3
+80002e82:	f0 09 11 08 	rsub	r9,r8,8
+80002e86:	58 08       	cp.w	r8,0
+80002e88:	f2 08 17 10 	movne	r8,r9
+80002e8c:	ed d8 e1 06 	addne	r6,r6,r8
+80002e90:	28 08       	sub	r8,-128
+80002e92:	ec 01 00 01 	add	r1,r6,r1
+80002e96:	0a 9c       	mov	r12,r5
+80002e98:	e3 d1 c0 07 	bfextu	r1,r1,0x0,0x7
+80002e9c:	f0 01 01 01 	sub	r1,r8,r1
+80002ea0:	02 9b       	mov	r11,r1
+80002ea2:	c5 dc       	rcall	80002f5c <_sbrk_r>
+80002ea4:	e0 68 07 20 	mov	r8,1824
+80002ea8:	5b fc       	cp.w	r12,-1
+80002eaa:	ec 0c 17 00 	moveq	r12,r6
+80002eae:	f9 b1 00 00 	moveq	r1,0
+80002eb2:	70 09       	ld.w	r9,r8[0x0]
+80002eb4:	0c 1c       	sub	r12,r6
+80002eb6:	89 26       	st.w	r4[0x8],r6
+80002eb8:	02 0c       	add	r12,r1
+80002eba:	12 01       	add	r1,r9
+80002ebc:	a1 ac       	sbr	r12,0x0
+80002ebe:	91 01       	st.w	r8[0x0],r1
+80002ec0:	8d 1c       	st.w	r6[0x4],r12
+80002ec2:	08 33       	cp.w	r3,r4
+80002ec4:	c1 c0       	breq	80002efc <_malloc_r+0x3d4>
+80002ec6:	58 f2       	cp.w	r2,15
+80002ec8:	e0 8b 00 05 	brhi	80002ed2 <_malloc_r+0x3aa>
+80002ecc:	30 18       	mov	r8,1
+80002ece:	8d 18       	st.w	r6[0x4],r8
+80002ed0:	c2 58       	rjmp	80002f1a <_malloc_r+0x3f2>
+80002ed2:	30 59       	mov	r9,5
+80002ed4:	20 c2       	sub	r2,12
+80002ed6:	e0 12 ff f8 	andl	r2,0xfff8
+80002eda:	e6 02 00 08 	add	r8,r3,r2
+80002ede:	91 29       	st.w	r8[0x8],r9
+80002ee0:	91 19       	st.w	r8[0x4],r9
+80002ee2:	66 18       	ld.w	r8,r3[0x4]
+80002ee4:	f1 d8 c0 01 	bfextu	r8,r8,0x0,0x1
+80002ee8:	e5 e8 10 08 	or	r8,r2,r8
+80002eec:	87 18       	st.w	r3[0x4],r8
+80002eee:	58 f2       	cp.w	r2,15
+80002ef0:	e0 88 00 06 	brls	80002efc <_malloc_r+0x3d4>
+80002ef4:	e6 cb ff f8 	sub	r11,r3,-8
+80002ef8:	0a 9c       	mov	r12,r5
+80002efa:	c6 dd       	rcall	800031d4 <_free_r>
+80002efc:	e0 69 07 18 	mov	r9,1816
+80002f00:	72 0a       	ld.w	r10,r9[0x0]
+80002f02:	e0 68 07 20 	mov	r8,1824
+80002f06:	70 08       	ld.w	r8,r8[0x0]
+80002f08:	14 38       	cp.w	r8,r10
+80002f0a:	f3 f8 ba 00 	st.whi	r9[0x0],r8
+80002f0e:	e0 69 07 14 	mov	r9,1812
+80002f12:	72 0a       	ld.w	r10,r9[0x0]
+80002f14:	14 38       	cp.w	r8,r10
+80002f16:	f3 f8 ba 00 	st.whi	r9[0x0],r8
+80002f1a:	68 28       	ld.w	r8,r4[0x8]
+80002f1c:	70 18       	ld.w	r8,r8[0x4]
+80002f1e:	e0 18 ff fc 	andl	r8,0xfffc
+80002f22:	0e 38       	cp.w	r8,r7
+80002f24:	5f 39       	srlo	r9
+80002f26:	0e 18       	sub	r8,r7
+80002f28:	58 f8       	cp.w	r8,15
+80002f2a:	5f aa       	srle	r10
+80002f2c:	f5 e9 10 09 	or	r9,r10,r9
+80002f30:	c0 60       	breq	80002f3c <_malloc_r+0x414>
+80002f32:	0a 9c       	mov	r12,r5
+80002f34:	fe b0 fb cc 	rcall	800026cc <__malloc_unlock>
+80002f38:	d8 3a       	popm	r0-r7,pc,r12=0
+80002f3a:	d7 03       	nop
+80002f3c:	68 26       	ld.w	r6,r4[0x8]
+80002f3e:	a1 a8       	sbr	r8,0x0
+80002f40:	0e 99       	mov	r9,r7
+80002f42:	a1 a9       	sbr	r9,0x0
+80002f44:	8d 19       	st.w	r6[0x4],r9
+80002f46:	ec 07 00 07 	add	r7,r6,r7
+80002f4a:	0a 9c       	mov	r12,r5
+80002f4c:	89 27       	st.w	r4[0x8],r7
+80002f4e:	8f 18       	st.w	r7[0x4],r8
+80002f50:	fe b0 fb be 	rcall	800026cc <__malloc_unlock>
+80002f54:	ec cc ff f8 	sub	r12,r6,-8
+80002f58:	d8 32       	popm	r0-r7,pc
+80002f5a:	d7 03       	nop
+
+80002f5c <_sbrk_r>:
+80002f5c:	d4 21       	pushm	r4-r7,lr
+80002f5e:	30 08       	mov	r8,0
+80002f60:	18 97       	mov	r7,r12
+80002f62:	e0 66 07 4c 	mov	r6,1868
+80002f66:	16 9c       	mov	r12,r11
+80002f68:	8d 08       	st.w	r6[0x0],r8
+80002f6a:	c1 3c       	rcall	80002f90 <_sbrk>
+80002f6c:	5b fc       	cp.w	r12,-1
+80002f6e:	c0 51       	brne	80002f78 <_sbrk_r+0x1c>
+80002f70:	6c 08       	ld.w	r8,r6[0x0]
+80002f72:	58 08       	cp.w	r8,0
+80002f74:	ef f8 1a 03 	st.wne	r7[0xc],r8
+80002f78:	d8 22       	popm	r4-r7,pc
+80002f7a:	d7 03       	nop
+
+80002f7c <_init_argv>:
+80002f7c:	30 e8       	mov	r8,14
+80002f7e:	d6 73       	breakpoint
+80002f80:	3f fc       	mov	r12,-1
+80002f82:	35 8b       	mov	r11,88
+80002f84:	5e fc       	retal	r12
+
+80002f86 <_exit>:
+80002f86:	30 d8       	mov	r8,13
+80002f88:	d6 73       	breakpoint
+80002f8a:	3f fc       	mov	r12,-1
+80002f8c:	35 8b       	mov	r11,88
+80002f8e:	c0 08       	rjmp	80002f8e <_exit+0x8>
+
+80002f90 <_sbrk>:
+80002f90:	d4 01       	pushm	lr
+80002f92:	e0 68 07 48 	mov	r8,1864
+80002f96:	70 09       	ld.w	r9,r8[0x0]
+80002f98:	58 09       	cp.w	r9,0
+80002f9a:	c0 41       	brne	80002fa2 <_sbrk+0x12>
+80002f9c:	e0 69 07 50 	mov	r9,1872
+80002fa0:	91 09       	st.w	r8[0x0],r9
+80002fa2:	e0 69 07 48 	mov	r9,1864
+80002fa6:	e0 6a f0 00 	mov	r10,61440
+80002faa:	72 08       	ld.w	r8,r9[0x0]
+80002fac:	f0 0c 00 0c 	add	r12,r8,r12
+80002fb0:	14 3c       	cp.w	r12,r10
+80002fb2:	e0 8b 00 04 	brhi	80002fba <_sbrk+0x2a>
+80002fb6:	93 0c       	st.w	r9[0x0],r12
+80002fb8:	c0 58       	rjmp	80002fc2 <_sbrk+0x32>
+80002fba:	cb fc       	rcall	80003138 <__errno>
+80002fbc:	30 c8       	mov	r8,12
+80002fbe:	99 08       	st.w	r12[0x0],r8
+80002fc0:	3f f8       	mov	r8,-1
+80002fc2:	10 9c       	mov	r12,r8
+80002fc4:	d8 02       	popm	pc
+80002fc6:	d7 03       	nop
+
+80002fc8 <__register_exitproc>:
+80002fc8:	d4 31       	pushm	r0-r7,lr
+80002fca:	fe c8 f8 52 	sub	r8,pc,-1966
+80002fce:	70 03       	ld.w	r3,r8[0x0]
+80002fd0:	67 24       	ld.w	r4,r3[0x48]
+80002fd2:	e6 c8 ff b4 	sub	r8,r3,-76
+80002fd6:	58 04       	cp.w	r4,0
+80002fd8:	f0 04 17 00 	moveq	r4,r8
+80002fdc:	e7 f4 0a 12 	st.weq	r3[0x48],r4
+80002fe0:	18 97       	mov	r7,r12
+80002fe2:	16 96       	mov	r6,r11
+80002fe4:	14 95       	mov	r5,r10
+80002fe6:	12 92       	mov	r2,r9
+80002fe8:	68 18       	ld.w	r8,r4[0x4]
+80002fea:	59 f8       	cp.w	r8,31
+80002fec:	e0 8a 00 0e 	brle	80003008 <__register_exitproc+0x40>
+80002ff0:	e0 6c 00 8c 	mov	r12,140
+80002ff4:	fe b0 fd 92 	rcall	80002b18 <malloc>
+80002ff8:	18 94       	mov	r4,r12
+80002ffa:	c3 80       	breq	8000306a <__register_exitproc+0xa2>
+80002ffc:	67 28       	ld.w	r8,r3[0x48]
+80002ffe:	99 08       	st.w	r12[0x0],r8
+80003000:	e7 4c 00 48 	st.w	r3[72],r12
+80003004:	30 08       	mov	r8,0
+80003006:	99 18       	st.w	r12[0x4],r8
+80003008:	58 07       	cp.w	r7,0
+8000300a:	c2 70       	breq	80003058 <__register_exitproc+0x90>
+8000300c:	e8 fc 00 88 	ld.w	r12,r4[136]
+80003010:	58 0c       	cp.w	r12,0
+80003012:	c0 d1       	brne	8000302c <__register_exitproc+0x64>
+80003014:	e0 6c 01 08 	mov	r12,264
+80003018:	fe b0 fd 80 	rcall	80002b18 <malloc>
+8000301c:	c2 70       	breq	8000306a <__register_exitproc+0xa2>
+8000301e:	30 08       	mov	r8,0
+80003020:	e9 4c 00 88 	st.w	r4[136],r12
+80003024:	f9 48 01 04 	st.w	r12[260],r8
+80003028:	f9 48 01 00 	st.w	r12[256],r8
+8000302c:	68 18       	ld.w	r8,r4[0x4]
+8000302e:	f0 c9 ff e0 	sub	r9,r8,-32
+80003032:	f8 08 09 25 	st.w	r12[r8<<0x2],r5
+80003036:	f8 09 09 22 	st.w	r12[r9<<0x2],r2
+8000303a:	30 1a       	mov	r10,1
+8000303c:	f8 f9 01 00 	ld.w	r9,r12[256]
+80003040:	f4 08 09 48 	lsl	r8,r10,r8
+80003044:	10 49       	or	r9,r8
+80003046:	f9 49 01 00 	st.w	r12[256],r9
+8000304a:	58 27       	cp.w	r7,2
+8000304c:	f9 f9 00 41 	ld.weq	r9,r12[0x104]
+80003050:	f3 d8 e0 38 	oreq	r8,r9,r8
+80003054:	f9 f8 0a 41 	st.weq	r12[0x104],r8
+80003058:	68 18       	ld.w	r8,r4[0x4]
+8000305a:	30 0c       	mov	r12,0
+8000305c:	f0 c9 ff ff 	sub	r9,r8,-1
+80003060:	2f e8       	sub	r8,-2
+80003062:	89 19       	st.w	r4[0x4],r9
+80003064:	e8 08 09 26 	st.w	r4[r8<<0x2],r6
+80003068:	d8 32       	popm	r0-r7,pc
+8000306a:	dc 3a       	popm	r0-r7,pc,r12=-1
+
+8000306c <__call_exitprocs>:
+8000306c:	d4 31       	pushm	r0-r7,lr
+8000306e:	20 3d       	sub	sp,12
+80003070:	fe c8 f8 f8 	sub	r8,pc,-1800
+80003074:	50 2c       	stdsp	sp[0x8],r12
+80003076:	70 08       	ld.w	r8,r8[0x0]
+80003078:	16 91       	mov	r1,r11
+8000307a:	50 08       	stdsp	sp[0x0],r8
+8000307c:	2b 88       	sub	r8,-72
+8000307e:	50 18       	stdsp	sp[0x4],r8
+80003080:	40 0a       	lddsp	r10,sp[0x0]
+80003082:	40 14       	lddsp	r4,sp[0x4]
+80003084:	75 27       	ld.w	r7,r10[0x48]
+80003086:	c5 58       	rjmp	80003130 <__call_exitprocs+0xc4>
+80003088:	6e 15       	ld.w	r5,r7[0x4]
+8000308a:	ee f6 00 88 	ld.w	r6,r7[136]
+8000308e:	ea c2 ff ff 	sub	r2,r5,-1
+80003092:	20 15       	sub	r5,1
+80003094:	ee 02 00 22 	add	r2,r7,r2<<0x2
+80003098:	ec 05 00 23 	add	r3,r6,r5<<0x2
+8000309c:	c3 58       	rjmp	80003106 <__call_exitprocs+0x9a>
+8000309e:	58 01       	cp.w	r1,0
+800030a0:	c0 70       	breq	800030ae <__call_exitprocs+0x42>
+800030a2:	58 06       	cp.w	r6,0
+800030a4:	c2 e0       	breq	80003100 <__call_exitprocs+0x94>
+800030a6:	e6 f8 00 80 	ld.w	r8,r3[128]
+800030aa:	02 38       	cp.w	r8,r1
+800030ac:	c2 a1       	brne	80003100 <__call_exitprocs+0x94>
+800030ae:	6e 19       	ld.w	r9,r7[0x4]
+800030b0:	64 08       	ld.w	r8,r2[0x0]
+800030b2:	20 19       	sub	r9,1
+800030b4:	12 35       	cp.w	r5,r9
+800030b6:	ef f5 0a 01 	st.weq	r7[0x4],r5
+800030ba:	f9 b9 01 00 	movne	r9,0
+800030be:	e5 f9 1a 00 	st.wne	r2[0x0],r9
+800030c2:	58 08       	cp.w	r8,0
+800030c4:	c1 e0       	breq	80003100 <__call_exitprocs+0x94>
+800030c6:	6e 10       	ld.w	r0,r7[0x4]
+800030c8:	58 06       	cp.w	r6,0
+800030ca:	c0 90       	breq	800030dc <__call_exitprocs+0x70>
+800030cc:	30 1a       	mov	r10,1
+800030ce:	f4 05 09 49 	lsl	r9,r10,r5
+800030d2:	ec fa 01 00 	ld.w	r10,r6[256]
+800030d6:	f3 ea 00 0a 	and	r10,r9,r10
+800030da:	c0 31       	brne	800030e0 <__call_exitprocs+0x74>
+800030dc:	5d 18       	icall	r8
+800030de:	c0 b8       	rjmp	800030f4 <__call_exitprocs+0x88>
+800030e0:	ec fa 01 04 	ld.w	r10,r6[260]
+800030e4:	66 0b       	ld.w	r11,r3[0x0]
+800030e6:	14 69       	and	r9,r10
+800030e8:	c0 41       	brne	800030f0 <__call_exitprocs+0x84>
+800030ea:	40 2c       	lddsp	r12,sp[0x8]
+800030ec:	5d 18       	icall	r8
+800030ee:	c0 38       	rjmp	800030f4 <__call_exitprocs+0x88>
+800030f0:	16 9c       	mov	r12,r11
+800030f2:	5d 18       	icall	r8
+800030f4:	6e 18       	ld.w	r8,r7[0x4]
+800030f6:	10 30       	cp.w	r0,r8
+800030f8:	cc 41       	brne	80003080 <__call_exitprocs+0x14>
+800030fa:	68 08       	ld.w	r8,r4[0x0]
+800030fc:	0e 38       	cp.w	r8,r7
+800030fe:	cc 11       	brne	80003080 <__call_exitprocs+0x14>
+80003100:	20 15       	sub	r5,1
+80003102:	20 43       	sub	r3,4
+80003104:	20 42       	sub	r2,4
+80003106:	58 05       	cp.w	r5,0
+80003108:	cc b4       	brge	8000309e <__call_exitprocs+0x32>
+8000310a:	6e 18       	ld.w	r8,r7[0x4]
+8000310c:	58 08       	cp.w	r8,0
+8000310e:	c0 f1       	brne	8000312c <__call_exitprocs+0xc0>
+80003110:	6e 08       	ld.w	r8,r7[0x0]
+80003112:	58 08       	cp.w	r8,0
+80003114:	c0 c0       	breq	8000312c <__call_exitprocs+0xc0>
+80003116:	89 08       	st.w	r4[0x0],r8
+80003118:	58 06       	cp.w	r6,0
+8000311a:	c0 40       	breq	80003122 <__call_exitprocs+0xb6>
+8000311c:	0c 9c       	mov	r12,r6
+8000311e:	fe b0 fc f5 	rcall	80002b08 <free>
+80003122:	0e 9c       	mov	r12,r7
+80003124:	fe b0 fc f2 	rcall	80002b08 <free>
+80003128:	68 07       	ld.w	r7,r4[0x0]
+8000312a:	c0 38       	rjmp	80003130 <__call_exitprocs+0xc4>
+8000312c:	0e 94       	mov	r4,r7
+8000312e:	6e 07       	ld.w	r7,r7[0x0]
+80003130:	58 07       	cp.w	r7,0
+80003132:	ca b1       	brne	80003088 <__call_exitprocs+0x1c>
+80003134:	2f dd       	sub	sp,-12
+80003136:	d8 32       	popm	r0-r7,pc
+
+80003138 <__errno>:
+80003138:	e0 68 01 18 	mov	r8,280
+8000313c:	70 0c       	ld.w	r12,r8[0x0]
+8000313e:	2f 4c       	sub	r12,-12
+80003140:	5e fc       	retal	r12
+80003142:	d7 03       	nop
+
+80003144 <_malloc_trim_r>:
+80003144:	d4 21       	pushm	r4-r7,lr
+80003146:	16 95       	mov	r5,r11
+80003148:	18 97       	mov	r7,r12
+8000314a:	fe b0 fa bb 	rcall	800026c0 <__malloc_lock>
+8000314e:	e0 64 01 1c 	mov	r4,284
+80003152:	68 28       	ld.w	r8,r4[0x8]
+80003154:	70 16       	ld.w	r6,r8[0x4]
+80003156:	e0 16 ff fc 	andl	r6,0xfffc
+8000315a:	ec c8 ff 91 	sub	r8,r6,-111
+8000315e:	f0 05 01 05 	sub	r5,r8,r5
+80003162:	e0 15 ff 80 	andl	r5,0xff80
+80003166:	ea c5 00 80 	sub	r5,r5,128
+8000316a:	e0 45 00 7f 	cp.w	r5,127
+8000316e:	e0 8a 00 22 	brle	800031b2 <_malloc_trim_r+0x6e>
+80003172:	30 0b       	mov	r11,0
+80003174:	0e 9c       	mov	r12,r7
+80003176:	cf 3e       	rcall	80002f5c <_sbrk_r>
+80003178:	68 28       	ld.w	r8,r4[0x8]
+8000317a:	0c 08       	add	r8,r6
+8000317c:	10 3c       	cp.w	r12,r8
+8000317e:	c1 a1       	brne	800031b2 <_malloc_trim_r+0x6e>
+80003180:	ea 0b 11 00 	rsub	r11,r5,0
+80003184:	0e 9c       	mov	r12,r7
+80003186:	ce be       	rcall	80002f5c <_sbrk_r>
+80003188:	5b fc       	cp.w	r12,-1
+8000318a:	c1 81       	brne	800031ba <_malloc_trim_r+0x76>
+8000318c:	30 0b       	mov	r11,0
+8000318e:	0e 9c       	mov	r12,r7
+80003190:	ce 6e       	rcall	80002f5c <_sbrk_r>
+80003192:	68 28       	ld.w	r8,r4[0x8]
+80003194:	f8 08 01 09 	sub	r9,r12,r8
+80003198:	58 f9       	cp.w	r9,15
+8000319a:	e0 8a 00 0c 	brle	800031b2 <_malloc_trim_r+0x6e>
+8000319e:	a1 a9       	sbr	r9,0x0
+800031a0:	91 19       	st.w	r8[0x4],r9
+800031a2:	e0 68 05 28 	mov	r8,1320
+800031a6:	70 09       	ld.w	r9,r8[0x0]
+800031a8:	e0 68 07 20 	mov	r8,1824
+800031ac:	f8 09 01 09 	sub	r9,r12,r9
+800031b0:	91 09       	st.w	r8[0x0],r9
+800031b2:	0e 9c       	mov	r12,r7
+800031b4:	fe b0 fa 8c 	rcall	800026cc <__malloc_unlock>
+800031b8:	d8 2a       	popm	r4-r7,pc,r12=0
+800031ba:	68 28       	ld.w	r8,r4[0x8]
+800031bc:	0a 16       	sub	r6,r5
+800031be:	a1 a6       	sbr	r6,0x0
+800031c0:	91 16       	st.w	r8[0x4],r6
+800031c2:	e0 68 07 20 	mov	r8,1824
+800031c6:	70 09       	ld.w	r9,r8[0x0]
+800031c8:	0a 19       	sub	r9,r5
+800031ca:	0e 9c       	mov	r12,r7
+800031cc:	91 09       	st.w	r8[0x0],r9
+800031ce:	fe b0 fa 7f 	rcall	800026cc <__malloc_unlock>
+800031d2:	da 2a       	popm	r4-r7,pc,r12=1
+
+800031d4 <_free_r>:
+800031d4:	d4 21       	pushm	r4-r7,lr
+800031d6:	16 96       	mov	r6,r11
+800031d8:	18 97       	mov	r7,r12
+800031da:	58 0b       	cp.w	r11,0
+800031dc:	e0 80 00 c0 	breq	8000335c <_free_r+0x188>
+800031e0:	fe b0 fa 70 	rcall	800026c0 <__malloc_lock>
+800031e4:	20 86       	sub	r6,8
+800031e6:	e0 6a 01 1c 	mov	r10,284
+800031ea:	6c 18       	ld.w	r8,r6[0x4]
+800031ec:	74 2e       	ld.w	lr,r10[0x8]
+800031ee:	f9 d8 c0 01 	bfextu	r12,r8,0x0,0x1
+800031f2:	a1 c8       	cbr	r8,0x0
+800031f4:	ec 08 00 09 	add	r9,r6,r8
+800031f8:	72 1b       	ld.w	r11,r9[0x4]
+800031fa:	e0 1b ff fc 	andl	r11,0xfffc
+800031fe:	1c 39       	cp.w	r9,lr
+80003200:	c1 e1       	brne	8000323c <_free_r+0x68>
+80003202:	f6 08 00 08 	add	r8,r11,r8
+80003206:	58 0c       	cp.w	r12,0
+80003208:	c0 81       	brne	80003218 <_free_r+0x44>
+8000320a:	6c 09       	ld.w	r9,r6[0x0]
+8000320c:	12 16       	sub	r6,r9
+8000320e:	12 08       	add	r8,r9
+80003210:	6c 3b       	ld.w	r11,r6[0xc]
+80003212:	6c 29       	ld.w	r9,r6[0x8]
+80003214:	97 29       	st.w	r11[0x8],r9
+80003216:	93 3b       	st.w	r9[0xc],r11
+80003218:	10 99       	mov	r9,r8
+8000321a:	95 26       	st.w	r10[0x8],r6
+8000321c:	a1 a9       	sbr	r9,0x0
+8000321e:	8d 19       	st.w	r6[0x4],r9
+80003220:	e0 69 05 24 	mov	r9,1316
+80003224:	72 09       	ld.w	r9,r9[0x0]
+80003226:	12 38       	cp.w	r8,r9
+80003228:	c0 63       	brcs	80003234 <_free_r+0x60>
+8000322a:	e0 68 07 1c 	mov	r8,1820
+8000322e:	0e 9c       	mov	r12,r7
+80003230:	70 0b       	ld.w	r11,r8[0x0]
+80003232:	c8 9f       	rcall	80003144 <_malloc_trim_r>
+80003234:	0e 9c       	mov	r12,r7
+80003236:	fe b0 fa 4b 	rcall	800026cc <__malloc_unlock>
+8000323a:	d8 22       	popm	r4-r7,pc
+8000323c:	93 1b       	st.w	r9[0x4],r11
+8000323e:	58 0c       	cp.w	r12,0
+80003240:	c0 30       	breq	80003246 <_free_r+0x72>
+80003242:	30 0c       	mov	r12,0
+80003244:	c1 08       	rjmp	80003264 <_free_r+0x90>
+80003246:	6c 0e       	ld.w	lr,r6[0x0]
+80003248:	f4 c5 ff f8 	sub	r5,r10,-8
+8000324c:	1c 16       	sub	r6,lr
+8000324e:	1c 08       	add	r8,lr
+80003250:	6c 2e       	ld.w	lr,r6[0x8]
+80003252:	0a 3e       	cp.w	lr,r5
+80003254:	f9 bc 00 01 	moveq	r12,1
+80003258:	ed f5 10 03 	ld.wne	r5,r6[0xc]
+8000325c:	eb fe 1a 02 	st.wne	r5[0x8],lr
+80003260:	fd f5 1a 03 	st.wne	lr[0xc],r5
+80003264:	f2 0b 00 0e 	add	lr,r9,r11
+80003268:	7c 1e       	ld.w	lr,lr[0x4]
+8000326a:	ed be 00 00 	bld	lr,0x0
+8000326e:	c1 40       	breq	80003296 <_free_r+0xc2>
+80003270:	16 08       	add	r8,r11
+80003272:	58 0c       	cp.w	r12,0
+80003274:	c0 d1       	brne	8000328e <_free_r+0xba>
+80003276:	e0 6e 01 1c 	mov	lr,284
+8000327a:	72 2b       	ld.w	r11,r9[0x8]
+8000327c:	2f 8e       	sub	lr,-8
+8000327e:	1c 3b       	cp.w	r11,lr
+80003280:	c0 71       	brne	8000328e <_free_r+0xba>
+80003282:	97 36       	st.w	r11[0xc],r6
+80003284:	97 26       	st.w	r11[0x8],r6
+80003286:	8d 2b       	st.w	r6[0x8],r11
+80003288:	8d 3b       	st.w	r6[0xc],r11
+8000328a:	30 1c       	mov	r12,1
+8000328c:	c0 58       	rjmp	80003296 <_free_r+0xc2>
+8000328e:	72 2b       	ld.w	r11,r9[0x8]
+80003290:	72 39       	ld.w	r9,r9[0xc]
+80003292:	93 2b       	st.w	r9[0x8],r11
+80003294:	97 39       	st.w	r11[0xc],r9
+80003296:	10 99       	mov	r9,r8
+80003298:	ec 08 09 08 	st.w	r6[r8],r8
+8000329c:	a1 a9       	sbr	r9,0x0
+8000329e:	8d 19       	st.w	r6[0x4],r9
+800032a0:	58 0c       	cp.w	r12,0
+800032a2:	c5 a1       	brne	80003356 <_free_r+0x182>
+800032a4:	e0 48 01 ff 	cp.w	r8,511
+800032a8:	e0 8b 00 13 	brhi	800032ce <_free_r+0xfa>
+800032ac:	a3 98       	lsr	r8,0x3
+800032ae:	f4 08 00 39 	add	r9,r10,r8<<0x3
+800032b2:	72 2b       	ld.w	r11,r9[0x8]
+800032b4:	8d 39       	st.w	r6[0xc],r9
+800032b6:	8d 2b       	st.w	r6[0x8],r11
+800032b8:	97 36       	st.w	r11[0xc],r6
+800032ba:	93 26       	st.w	r9[0x8],r6
+800032bc:	a3 48       	asr	r8,0x2
+800032be:	74 19       	ld.w	r9,r10[0x4]
+800032c0:	30 1b       	mov	r11,1
+800032c2:	f6 08 09 48 	lsl	r8,r11,r8
+800032c6:	f3 e8 10 08 	or	r8,r9,r8
+800032ca:	95 18       	st.w	r10[0x4],r8
+800032cc:	c4 58       	rjmp	80003356 <_free_r+0x182>
+800032ce:	f0 0b 16 09 	lsr	r11,r8,0x9
+800032d2:	58 4b       	cp.w	r11,4
+800032d4:	e0 8b 00 06 	brhi	800032e0 <_free_r+0x10c>
+800032d8:	f0 0b 16 06 	lsr	r11,r8,0x6
+800032dc:	2c 8b       	sub	r11,-56
+800032de:	c2 08       	rjmp	8000331e <_free_r+0x14a>
+800032e0:	59 4b       	cp.w	r11,20
+800032e2:	e0 8b 00 04 	brhi	800032ea <_free_r+0x116>
+800032e6:	2a 5b       	sub	r11,-91
+800032e8:	c1 b8       	rjmp	8000331e <_free_r+0x14a>
+800032ea:	e0 4b 00 54 	cp.w	r11,84
+800032ee:	e0 8b 00 06 	brhi	800032fa <_free_r+0x126>
+800032f2:	f0 0b 16 0c 	lsr	r11,r8,0xc
+800032f6:	29 2b       	sub	r11,-110
+800032f8:	c1 38       	rjmp	8000331e <_free_r+0x14a>
+800032fa:	e0 4b 01 54 	cp.w	r11,340
+800032fe:	e0 8b 00 06 	brhi	8000330a <_free_r+0x136>
+80003302:	f0 0b 16 0f 	lsr	r11,r8,0xf
+80003306:	28 9b       	sub	r11,-119
+80003308:	c0 b8       	rjmp	8000331e <_free_r+0x14a>
+8000330a:	e0 4b 05 54 	cp.w	r11,1364
+8000330e:	e0 88 00 05 	brls	80003318 <_free_r+0x144>
+80003312:	37 eb       	mov	r11,126
+80003314:	c0 58       	rjmp	8000331e <_free_r+0x14a>
+80003316:	d7 03       	nop
+80003318:	f0 0b 16 12 	lsr	r11,r8,0x12
+8000331c:	28 4b       	sub	r11,-124
+8000331e:	f4 0b 00 3c 	add	r12,r10,r11<<0x3
+80003322:	78 29       	ld.w	r9,r12[0x8]
+80003324:	18 39       	cp.w	r9,r12
+80003326:	c0 e1       	brne	80003342 <_free_r+0x16e>
+80003328:	74 18       	ld.w	r8,r10[0x4]
+8000332a:	a3 4b       	asr	r11,0x2
+8000332c:	30 1c       	mov	r12,1
+8000332e:	f8 0b 09 4b 	lsl	r11,r12,r11
+80003332:	f1 eb 10 0b 	or	r11,r8,r11
+80003336:	12 98       	mov	r8,r9
+80003338:	95 1b       	st.w	r10[0x4],r11
+8000333a:	c0 a8       	rjmp	8000334e <_free_r+0x17a>
+8000333c:	72 29       	ld.w	r9,r9[0x8]
+8000333e:	18 39       	cp.w	r9,r12
+80003340:	c0 60       	breq	8000334c <_free_r+0x178>
+80003342:	72 1a       	ld.w	r10,r9[0x4]
+80003344:	e0 1a ff fc 	andl	r10,0xfffc
+80003348:	14 38       	cp.w	r8,r10
+8000334a:	cf 93       	brcs	8000333c <_free_r+0x168>
+8000334c:	72 38       	ld.w	r8,r9[0xc]
+8000334e:	8d 38       	st.w	r6[0xc],r8
+80003350:	8d 29       	st.w	r6[0x8],r9
+80003352:	93 36       	st.w	r9[0xc],r6
+80003354:	91 26       	st.w	r8[0x8],r6
+80003356:	0e 9c       	mov	r12,r7
+80003358:	fe b0 f9 ba 	rcall	800026cc <__malloc_unlock>
+8000335c:	d8 22       	popm	r4-r7,pc
+8000335e:	d7 03       	nop
+
+80003360 <__do_global_ctors_aux>:
+80003360:	d4 21       	pushm	r4-r7,lr
+80003362:	30 c7       	mov	r7,12
+80003364:	c0 28       	rjmp	80003368 <__do_global_ctors_aux+0x8>
+80003366:	5d 18       	icall	r8
+80003368:	20 47       	sub	r7,4
+8000336a:	6e 08       	ld.w	r8,r7[0x0]
+8000336c:	5b f8       	cp.w	r8,-1
+8000336e:	cf c1       	brne	80003366 <__do_global_ctors_aux+0x6>
+80003370:	d8 22       	popm	r4-r7,pc
+80003372:	d7 03       	nop
+
+Disassembly of section .exception:
+
+80003400 <_evba>:
+_evba:
+
+	.org  0x000
+	// Unrecoverable Exception.
+_handle_Unrecoverable_Exception:
+	rjmp $
+80003400:	c0 08       	rjmp	80003400 <_evba>
+	...
+
+80003404 <_handle_TLB_Multiple_Hit>:
+
+	.org  0x004
+	// TLB Multiple Hit.
+_handle_TLB_Multiple_Hit:
+	rjmp $
+80003404:	c0 08       	rjmp	80003404 <_handle_TLB_Multiple_Hit>
+	...
+
+80003408 <_handle_Bus_Error_Data_Fetch>:
+
+	.org  0x008
+	// Bus Error Data Fetch.
+_handle_Bus_Error_Data_Fetch:
+	rjmp $
+80003408:	c0 08       	rjmp	80003408 <_handle_Bus_Error_Data_Fetch>
+	...
+
+8000340c <_handle_Bus_Error_Instruction_Fetch>:
+
+	.org  0x00C
+	// Bus Error Instruction Fetch.
+_handle_Bus_Error_Instruction_Fetch:
+	rjmp $
+8000340c:	c0 08       	rjmp	8000340c <_handle_Bus_Error_Instruction_Fetch>
+	...
+
+80003410 <_handle_NMI>:
+
+	.org  0x010
+	// NMI.
+_handle_NMI:
+	rjmp $
+80003410:	c0 08       	rjmp	80003410 <_handle_NMI>
+	...
+
+80003414 <_handle_Instruction_Address>:
+
+	.org  0x014
+	// Instruction Address.
+_handle_Instruction_Address:
+	rjmp $
+80003414:	c0 08       	rjmp	80003414 <_handle_Instruction_Address>
+	...
+
+80003418 <_handle_ITLB_Protection>:
+
+	.org  0x018
+	// ITLB Protection.
+_handle_ITLB_Protection:
+	rjmp $
+80003418:	c0 08       	rjmp	80003418 <_handle_ITLB_Protection>
+	...
+
+8000341c <_handle_Breakpoint>:
+
+	.org  0x01C
+	// Breakpoint.
+_handle_Breakpoint:
+	rjmp $
+8000341c:	c0 08       	rjmp	8000341c <_handle_Breakpoint>
+	...
+
+80003420 <_handle_Illegal_Opcode>:
+
+	.org  0x020
+	// Illegal Opcode.
+_handle_Illegal_Opcode:
+	rjmp $
+80003420:	c0 08       	rjmp	80003420 <_handle_Illegal_Opcode>
+	...
+
+80003424 <_handle_Unimplemented_Instruction>:
+
+	.org  0x024
+	// Unimplemented Instruction.
+_handle_Unimplemented_Instruction:
+	rjmp $
+80003424:	c0 08       	rjmp	80003424 <_handle_Unimplemented_Instruction>
+	...
+
+80003428 <_handle_Privilege_Violation>:
+
+	.org  0x028
+	// Privilege Violation.
+_handle_Privilege_Violation:
+	rjmp $
+80003428:	c0 08       	rjmp	80003428 <_handle_Privilege_Violation>
+	...
+
+8000342c <_handle_Floating_Point>:
+
+	.org  0x02C
+	// Floating-Point: UNUSED IN AVR UC3.
+_handle_Floating_Point:
+	rjmp $
+8000342c:	c0 08       	rjmp	8000342c <_handle_Floating_Point>
+	...
+
+80003430 <_handle_Coprocessor_Absent>:
+
+	.org  0x030
+	// Coprocessor Absent: UNUSED IN AVR UC3.
+_handle_Coprocessor_Absent:
+	rjmp $
+80003430:	c0 08       	rjmp	80003430 <_handle_Coprocessor_Absent>
+	...
+
+80003434 <_handle_Data_Address_Read>:
+
+	.org  0x034
+	// Data Address (Read).
+_handle_Data_Address_Read:
+	rjmp $
+80003434:	c0 08       	rjmp	80003434 <_handle_Data_Address_Read>
+	...
+
+80003438 <_handle_Data_Address_Write>:
+
+	.org  0x038
+	// Data Address (Write).
+_handle_Data_Address_Write:
+	rjmp $
+80003438:	c0 08       	rjmp	80003438 <_handle_Data_Address_Write>
+	...
+
+8000343c <_handle_DTLB_Protection_Read>:
+
+	.org  0x03C
+	// DTLB Protection (Read).
+_handle_DTLB_Protection_Read:
+	rjmp $
+8000343c:	c0 08       	rjmp	8000343c <_handle_DTLB_Protection_Read>
+	...
+
+80003440 <_handle_DTLB_Protection_Write>:
+
+	.org  0x040
+	// DTLB Protection (Write).
+_handle_DTLB_Protection_Write:
+	rjmp $
+80003440:	c0 08       	rjmp	80003440 <_handle_DTLB_Protection_Write>
+	...
+
+80003444 <_handle_DTLB_Modified>:
+
+	.org  0x044
+	// DTLB Modified: UNUSED IN AVR32UC.
+_handle_DTLB_Modified:
+	rjmp $
+80003444:	c0 08       	rjmp	80003444 <_handle_DTLB_Modified>
+	...
+
+80003450 <_handle_ITLB_Miss>:
+
+	.org  0x050
+	// ITLB Miss.
+_handle_ITLB_Miss:
+	rjmp $
+80003450:	c0 08       	rjmp	80003450 <_handle_ITLB_Miss>
+	...
+
+80003460 <_handle_DTLB_Miss_Read>:
+
+	.org  0x060
+	// DTLB Miss (Read).
+_handle_DTLB_Miss_Read:
+	rjmp $
+80003460:	c0 08       	rjmp	80003460 <_handle_DTLB_Miss_Read>
+	...
+
+80003470 <_handle_DTLB_Miss_Write>:
+
+	.org  0x070
+	// DTLB Miss (Write).
+_handle_DTLB_Miss_Write:
+	rjmp $
+80003470:	c0 08       	rjmp	80003470 <_handle_DTLB_Miss_Write>
+	...
+
+80003500 <_handle_Supervisor_Call>:
+
+	.org  0x100
+	// Supervisor Call.
+_handle_Supervisor_Call:
+	lda.w   pc, SCALLYield
+80003500:	fe cf 0e f8 	sub	pc,pc,3832
+
+80003504 <_int0>:
+	/*
+	 * If this was a spurious interrupt (R12 == NULL), return from event
+	 * handler.
+	 */
+	rete
+.endr
+80003504:	30 0c       	mov	r12,0
+80003506:	fe b0 f6 a3 	rcall	8000224c <_get_interrupt_handler>
+8000350a:	58 0c       	cp.w	r12,0
+8000350c:	f8 0f 17 10 	movne	pc,r12
+80003510:	d6 03       	rete
+
+80003512 <_int1>:
+80003512:	30 1c       	mov	r12,1
+80003514:	fe b0 f6 9c 	rcall	8000224c <_get_interrupt_handler>
+80003518:	58 0c       	cp.w	r12,0
+8000351a:	f8 0f 17 10 	movne	pc,r12
+8000351e:	d6 03       	rete
+
+80003520 <_int2>:
+80003520:	30 2c       	mov	r12,2
+80003522:	fe b0 f6 95 	rcall	8000224c <_get_interrupt_handler>
+80003526:	58 0c       	cp.w	r12,0
+80003528:	f8 0f 17 10 	movne	pc,r12
+8000352c:	d6 03       	rete
+
+8000352e <_int3>:
+8000352e:	30 3c       	mov	r12,3
+80003530:	fe b0 f6 8e 	rcall	8000224c <_get_interrupt_handler>
+80003534:	58 0c       	cp.w	r12,0
+80003536:	f8 0f 17 10 	movne	pc,r12
+8000353a:	d6 03       	rete
+8000353c:	d7 03       	nop
+8000353e:	d7 03       	nop
+80003540:	d7 03       	nop
+80003542:	d7 03       	nop
+80003544:	d7 03       	nop
+80003546:	d7 03       	nop
+80003548:	d7 03       	nop
+8000354a:	d7 03       	nop
+8000354c:	d7 03       	nop
+8000354e:	d7 03       	nop
+80003550:	d7 03       	nop
+80003552:	d7 03       	nop
+80003554:	d7 03       	nop
+80003556:	d7 03       	nop
+80003558:	d7 03       	nop
+8000355a:	d7 03       	nop
+8000355c:	d7 03       	nop
+8000355e:	d7 03       	nop
+80003560:	d7 03       	nop
+80003562:	d7 03       	nop
+80003564:	d7 03       	nop
+80003566:	d7 03       	nop
+80003568:	d7 03       	nop
+8000356a:	d7 03       	nop
+8000356c:	d7 03       	nop
+8000356e:	d7 03       	nop
+80003570:	d7 03       	nop
+80003572:	d7 03       	nop
+80003574:	d7 03       	nop
+80003576:	d7 03       	nop
+80003578:	d7 03       	nop
+8000357a:	d7 03       	nop
+8000357c:	d7 03       	nop
+8000357e:	d7 03       	nop
+80003580:	d7 03       	nop
+80003582:	d7 03       	nop
+80003584:	d7 03       	nop
+80003586:	d7 03       	nop
+80003588:	d7 03       	nop
+8000358a:	d7 03       	nop
+8000358c:	d7 03       	nop
+8000358e:	d7 03       	nop
+80003590:	d7 03       	nop
+80003592:	d7 03       	nop
+80003594:	d7 03       	nop
+80003596:	d7 03       	nop
+80003598:	d7 03       	nop
+8000359a:	d7 03       	nop
+8000359c:	d7 03       	nop
+8000359e:	d7 03       	nop
+800035a0:	d7 03       	nop
+800035a2:	d7 03       	nop
+800035a4:	d7 03       	nop
+800035a6:	d7 03       	nop
+800035a8:	d7 03       	nop
+800035aa:	d7 03       	nop
+800035ac:	d7 03       	nop
+800035ae:	d7 03       	nop
+800035b0:	d7 03       	nop
+800035b2:	d7 03       	nop
+800035b4:	d7 03       	nop
+800035b6:	d7 03       	nop
+800035b8:	d7 03       	nop
+800035ba:	d7 03       	nop
+800035bc:	d7 03       	nop
+800035be:	d7 03       	nop
+800035c0:	d7 03       	nop
+800035c2:	d7 03       	nop
+800035c4:	d7 03       	nop
+800035c6:	d7 03       	nop
+800035c8:	d7 03       	nop
+800035ca:	d7 03       	nop
+800035cc:	d7 03       	nop
+800035ce:	d7 03       	nop
+800035d0:	d7 03       	nop
+800035d2:	d7 03       	nop
+800035d4:	d7 03       	nop
+800035d6:	d7 03       	nop
+800035d8:	d7 03       	nop
+800035da:	d7 03       	nop
+800035dc:	d7 03       	nop
+800035de:	d7 03       	nop
+800035e0:	d7 03       	nop
+800035e2:	d7 03       	nop
+800035e4:	d7 03       	nop
+800035e6:	d7 03       	nop
+800035e8:	d7 03       	nop
+800035ea:	d7 03       	nop
+800035ec:	d7 03       	nop
+800035ee:	d7 03       	nop
+800035f0:	d7 03       	nop
+800035f2:	d7 03       	nop
+800035f4:	d7 03       	nop
+800035f6:	d7 03       	nop
+800035f8:	d7 03       	nop
+800035fa:	d7 03       	nop
+800035fc:	d7 03       	nop
+800035fe:	d7 03       	nop
+
+Disassembly of section .fini:
+
+80003600 <_fini>:
+80003600:	eb cd 40 40 	pushm	r6,lr
+80003604:	48 26       	lddpc	r6,8000360c <_fini+0xc>
+80003606:	1e 26       	rsub	r6,pc
+80003608:	c0 48       	rjmp	80003610 <_fini+0x10>
+8000360a:	d7 03       	nop
+8000360c:	80 00       	ld.sh	r0,r0[0x0]
+8000360e:	35 ea       	mov	r10,94
+80003610:	fe b0 f5 3c 	rcall	80002088 <__do_global_dtors_aux>
+80003614:	e3 cd 80 40 	ldm	sp++,r6,pc

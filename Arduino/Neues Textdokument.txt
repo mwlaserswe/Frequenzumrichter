@@ -1,0 +1,9 @@
+Bootloader-Infos	https://www.arduino.cc/en/Tutorial/ArduinoISP
+			http://startingelectronics.org/tutorials/arduino/arduino-uno-burning-bootloader-avr-studio/
+
+
+Program Arduino with Atmel Studio 7:		https://www.youtube.com/watch?v=zEbSQaQJvHI
+
+
+
+			

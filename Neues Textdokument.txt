@@ -12,7 +12,9 @@ http://www.microchip.com/mplab/avr-support/atmel-studio-7
 Gesamtdoku:		https://www.microchip.com/webdoc/index.html
 Schulung C:		http://www.schellong.de/c.htm
 AVR-GCC-Tutorial:	https://www.mikrocontroller.net/articles/AVR-GCC-Tutorial
-
+Simulator Stimuli:	https://www.youtube.com/watch?v=5kF-Y8q7e9k&t=124s
+			https://www.microchip.com/webdoc/simulator/simulator.wb_Simulator2_Stimuli.Example_stimuli_file.html
+Doku auf Youtube: 	Stichwort "Getting Started With AVR"
 
 https://www.avrfreaks.net/forum/as7-error-failed-initialize-asf-distribution
 
@@ -25,6 +27,12 @@ Failed to initialize ASF distribution
 		- variable als volatile
 		- oder globale variable
 		z.B. volatile uint8_t value
+		
+
+Display: EA W162B-NLW  Bürklin:  Bestell-Nr. 73 S 2033
+
+Taster über Optokoppler einbinden
+
 
 
 

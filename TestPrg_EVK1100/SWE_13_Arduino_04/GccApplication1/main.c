@@ -6,14 +6,9 @@
 #include "SpsMainLoop.h"
 
 
-int main (void)
+void InitInterrupt(void);
+void InitInterrupt(void)
 {
-	// Port PB5 auf Output setzen
-	DDRB |= (1 << PINB5);
-
-	// Port PD6 auf Output setzen
-	DDRD |= (1 << PIND6);
-	
 	// CS02,CS01,CS00 = 1,0,1  prescaler 1024 )
 	// TIMSK0 = 2  compare A Interrupt Enable
 	TCCR0A = (1 << WGM01);					// CTC-Mode
@@ -21,7 +16,14 @@ int main (void)
 	TIMSK0 = (1 << OCIE0A);					// Interrupt, wenn compare A ist
 	OCR0A = 200;							// Timer0 zählt von 0 bis OCR0A und löst dann einen Interrupt aus
 	
-	sei();
+	sei();	
+}
+
+
+int main (void)
+{
+	InitSPS();
+	InitInterrupt();
 	
 	while(1) {;}
 }

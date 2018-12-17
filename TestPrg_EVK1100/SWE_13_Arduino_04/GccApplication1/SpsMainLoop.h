@@ -6,4 +6,6 @@
  */ 
 
 volatile uint32_t EndLessCounter;
+void InitSPS (void);
 void SpsMainLoop (void);
+

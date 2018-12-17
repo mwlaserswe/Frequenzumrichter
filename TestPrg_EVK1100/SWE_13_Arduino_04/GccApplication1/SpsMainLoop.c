@@ -13,6 +13,20 @@ volatile uint32_t LifeBitTimer;
 volatile uint8_t DemoState;
 volatile uint8_t LifeBitState;
 
+
+void InitSPS (void);
+void InitSPS (void)
+{
+	// Port PB5 auf Output setzen
+	DDRB |= (1 << PINB5);
+
+	// Port PD6 auf Output setzen
+	DDRD |= (1 << PIND6);
+
+}
+
+
+void SpsMainLoop (void);
 void SpsMainLoop (void)
 	{
 	// Statemachine "Demo"

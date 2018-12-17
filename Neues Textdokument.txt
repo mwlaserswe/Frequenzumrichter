@@ -33,6 +33,18 @@ Display: EA W162B-NLW  Bürklin:  Bestell-Nr. 73 S 2033
 
 Taster über Optokoppler einbinden
 
+Optokoppler:
+- HCPL 3120
+- HCPL 3180
+- HCPL 2630
+
+- SPS-Signale: ILD206SO8A
+
+Brückentreiber:
+- IR2110/2113
+- IR2112S, IR2113S und IR2213S
+- IR2130
+- IR2184
 
 
 

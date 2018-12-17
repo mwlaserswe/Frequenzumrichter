@@ -81,7 +81,12 @@ https://www.avrfreaks.net/forum/device-selection-not-showing-any-devices
 	  
 	  - Wenn man mit <> einbindet, werden die Dateien aus der Altmel-Studio Installation genommen.
 
-
+=== PWM ===
+	https://www.youtube.com/watch?v=POaJqnMHofo	Das Tutorial passt nicht genau auf den ATmega328
+	https://www.youtube.com/watch?v=6PWEpY6SlSc	AVR C Tutorial Part 4
+	
+=== Interrupts ===
+	https://www.youtube.com/watch?v=vl5H_Q1slYY	AVR C Tutorial Part 5    Sehr gutes Tutorial für Interrupts von Pin und Timern
 
 
 

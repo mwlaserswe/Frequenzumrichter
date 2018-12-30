@@ -278,9 +278,10 @@ void InitInterrupt(void)
  198:	95 bd       	out	0x25, r25	; 37
 	TIMSK0 = (1 << OCIE0A);					// Interrupt, wenn compare A ist
  19a:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7e006e>
-	OCR0A = 200;							// Timer0 zählt von 0 bis OCR0A und löst dann einen Interrupt aus
- 19e:	88 ec       	ldi	r24, 0xC8	; 200
+	OCR0A = 156;							// Timer0 zählt von 0 bis OCR0A und löst dann einen Interrupt aus
+ 19e:	8c e9       	ldi	r24, 0x9C	; 156
  1a0:	87 bd       	out	0x27, r24	; 39
+											// 16MHz / 1024 / 156 = 100,16 Hz
 	
 	sei();	
  1a2:	78 94       	sei

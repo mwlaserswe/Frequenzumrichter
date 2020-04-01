@@ -1,7 +1,25 @@
 
+
+GitHub
+Username: mwlaserswe
+Email address: weingartner@mwlaser.de
+Password: Swcud7ZgG
+
 01 Neues Repository anlegen
 	->www.github.com ->"New repository" klicken
-	
+	Beispiel Repositories New  /MWLasweSwe/NexStar
+
 02 Repository clonen
 	->Smart Git ->Repository ->Clone... ->https://github.com/mwlaserswe/RepositoryName.git
+	-> Ordner: D:\...\NexStar.git
+	-> Commit
+	->Push
 
+
+=== SmartGit ===
+- Fehlermeldung: your commercial smartgit evaluation period ended
+- Smartgit: How to change SmartGit's licensing option after 30 days of commercial use
+  https://www.syntevo.com/blog/?p=3669
+- Dieses Verzeichnis löschen C:\Users\j1\AppData\Roaming\syntevo\SmartGit\18.2
+     18.2 ist die aktuelle Version
+ 

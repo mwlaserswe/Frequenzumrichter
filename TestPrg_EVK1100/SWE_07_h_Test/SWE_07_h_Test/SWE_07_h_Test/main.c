@@ -21,10 +21,10 @@ int main(void)
     {
 		BitMuster = 0xAA;
 		PORTB = BitMuster;
-//		_delay_ms(2000);
+		_delay_ms(2000);
 		BitMuster = 0x55;
 		PORTB = BitMuster;
-// 		_delay_ms(2000);
+ 		_delay_ms(2000);
    }
 }
 

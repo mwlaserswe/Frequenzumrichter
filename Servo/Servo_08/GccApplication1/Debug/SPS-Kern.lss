@@ -1,0 +1,439 @@
+
+SPS-Kern.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000002be  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000024a  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000000d  00800100  00800100  000002be  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002be  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002f0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000058  00000000  00000000  00000330  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000083d  00000000  00000000  00000388  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000006d0  00000000  00000000  00000bc5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000006e0  00000000  00000000  00001295  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000c0  00000000  00000000  00001978  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00006d90  00000000  00000000  00001a38  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000000cb  00000000  00000000  000087c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000038  00000000  00000000  00008893  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_macro  0000281c  00000000  00000000  000088cb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	33 c0       	rjmp	.+102    	; 0x68 <__ctors_end>
+   2:	00 00       	nop
+   4:	41 c0       	rjmp	.+130    	; 0x88 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	3f c0       	rjmp	.+126    	; 0x88 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	3d c0       	rjmp	.+122    	; 0x88 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	3b c0       	rjmp	.+118    	; 0x88 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	39 c0       	rjmp	.+114    	; 0x88 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	37 c0       	rjmp	.+110    	; 0x88 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	35 c0       	rjmp	.+106    	; 0x88 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	33 c0       	rjmp	.+102    	; 0x88 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	31 c0       	rjmp	.+98     	; 0x88 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	2f c0       	rjmp	.+94     	; 0x88 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	2d c0       	rjmp	.+90     	; 0x88 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	2b c0       	rjmp	.+86     	; 0x88 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	29 c0       	rjmp	.+82     	; 0x88 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	ce c0       	rjmp	.+412    	; 0x1d6 <__vector_14>
+  3a:	00 00       	nop
+  3c:	25 c0       	rjmp	.+74     	; 0x88 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	23 c0       	rjmp	.+70     	; 0x88 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	21 c0       	rjmp	.+66     	; 0x88 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	1f c0       	rjmp	.+62     	; 0x88 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	1d c0       	rjmp	.+58     	; 0x88 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	1b c0       	rjmp	.+54     	; 0x88 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	19 c0       	rjmp	.+50     	; 0x88 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	17 c0       	rjmp	.+46     	; 0x88 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	15 c0       	rjmp	.+42     	; 0x88 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	13 c0       	rjmp	.+38     	; 0x88 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	11 c0       	rjmp	.+34     	; 0x88 <__bad_interrupt>
+	...
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_clear_bss>:
+  74:	21 e0       	ldi	r18, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	01 c0       	rjmp	.+2      	; 0x7e <.do_clear_bss_start>
+
+0000007c <.do_clear_bss_loop>:
+  7c:	1d 92       	st	X+, r1
+
+0000007e <.do_clear_bss_start>:
+  7e:	ad 30       	cpi	r26, 0x0D	; 13
+  80:	b2 07       	cpc	r27, r18
+  82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
+  84:	a5 d0       	rcall	.+330    	; 0x1d0 <main>
+  86:	df c0       	rjmp	.+446    	; 0x246 <_exit>
+
+00000088 <__bad_interrupt>:
+  88:	bb cf       	rjmp	.-138    	; 0x0 <__vectors>
+
+0000008a <InitSPS>:
+void InitSPS (void);
+void InitSPS (void)
+{
+	// Port B as Input			-> PB0 Input Servo 1 signal
+	// Port PB5 as Output		-> Life Ticker
+	DDRB |= (1 << PINB5);
+  8a:	25 9a       	sbi	0x04, 5	; 4
+
+	// Port PD5 as Output		-> check Servo 1 signal
+	// Port PD6					-> check PLC clock
+	// Port PD7 as Output		-> Indicator "time exceeds"
+	DDRD |= (1 << PIND7) | (1 << PIND6) | (1 << PIND5);
+  8c:	8a b1       	in	r24, 0x0a	; 10
+  8e:	80 6e       	ori	r24, 0xE0	; 224
+  90:	8a b9       	out	0x0a, r24	; 10
+	// es gibt zwei TC1 Control Register: TCCR2A und TCCR2B
+	//    WGM22,WGM21,WGM20 = 0,1,1    heißt Fast PWM 8-Bit
+	//    COM2A1,COM2A0 = 1,0  heißt Clear OC2A on compare match, set OC2A at BOTTOM (Non-inverting mode)
+	//    CS22,CS21,CS20 = 1,1,1      heißt clk/1024 (From prescaler)
+	//    Mode 3: Beschreibung: ATmega328_p data sheet.pdf Seite -206-
+	TCCR2A |= ((1 << COM2A1) | (1 << WGM21) | (1 << WGM20) );
+  92:	e0 eb       	ldi	r30, 0xB0	; 176
+  94:	f0 e0       	ldi	r31, 0x00	; 0
+  96:	80 81       	ld	r24, Z
+  98:	83 68       	ori	r24, 0x83	; 131
+  9a:	80 83       	st	Z, r24
+	TCCR2B |= ((1 << CS22) | (1 << CS21) | (1 << CS20));
+  9c:	e1 eb       	ldi	r30, 0xB1	; 177
+  9e:	f0 e0       	ldi	r31, 0x00	; 0
+  a0:	80 81       	ld	r24, Z
+  a2:	87 60       	ori	r24, 0x07	; 7
+  a4:	80 83       	st	Z, r24
+		
+	// Port  PB3(OC2A) as Output	-> Servo 1
+	DDRB |= (1 << PINB3);
+  a6:	23 9a       	sbi	0x04, 3	; 4
+  a8:	08 95       	ret
+
+000000aa <SpsMainLoop>:
+			//////break;
+	//////}
+
+	// Statemachine "LifeBit"
+	// Die OnBoardLED blinkt mit 1Hz
+	switch (LifeBitState)
+  aa:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <LifeBitState>
+  ae:	88 23       	and	r24, r24
+  b0:	19 f0       	breq	.+6      	; 0xb8 <SpsMainLoop+0xe>
+  b2:	8a 30       	cpi	r24, 0x0A	; 10
+  b4:	c9 f0       	breq	.+50     	; 0xe8 <SpsMainLoop+0x3e>
+  b6:	33 c0       	rjmp	.+102    	; 0x11e <SpsMainLoop+0x74>
+	{
+		case 0:
+			LifeBitTimer = EndLessCounter + 50UL * 200UL;	// 200 ms at 50 kHz PLC clock
+  b8:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <EndLessCounter>
+  bc:	90 91 04 01 	lds	r25, 0x0104	; 0x800104 <EndLessCounter+0x1>
+  c0:	a0 91 05 01 	lds	r26, 0x0105	; 0x800105 <EndLessCounter+0x2>
+  c4:	b0 91 06 01 	lds	r27, 0x0106	; 0x800106 <EndLessCounter+0x3>
+  c8:	80 5f       	subi	r24, 0xF0	; 240
+  ca:	98 4d       	sbci	r25, 0xD8	; 216
+  cc:	af 4f       	sbci	r26, 0xFF	; 255
+  ce:	bf 4f       	sbci	r27, 0xFF	; 255
+  d0:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <LifeBitTimer>
+  d4:	90 93 08 01 	sts	0x0108, r25	; 0x800108 <LifeBitTimer+0x1>
+  d8:	a0 93 09 01 	sts	0x0109, r26	; 0x800109 <LifeBitTimer+0x2>
+  dc:	b0 93 0a 01 	sts	0x010A, r27	; 0x80010a <LifeBitTimer+0x3>
+			LifeBitState = 10;
+  e0:	8a e0       	ldi	r24, 0x0A	; 10
+  e2:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <LifeBitState>
+			break;
+  e6:	1b c0       	rjmp	.+54     	; 0x11e <SpsMainLoop+0x74>
+
+		case 10:
+			if (EndLessCounter > LifeBitTimer)
+  e8:	40 91 03 01 	lds	r20, 0x0103	; 0x800103 <EndLessCounter>
+  ec:	50 91 04 01 	lds	r21, 0x0104	; 0x800104 <EndLessCounter+0x1>
+  f0:	60 91 05 01 	lds	r22, 0x0105	; 0x800105 <EndLessCounter+0x2>
+  f4:	70 91 06 01 	lds	r23, 0x0106	; 0x800106 <EndLessCounter+0x3>
+  f8:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <LifeBitTimer>
+  fc:	90 91 08 01 	lds	r25, 0x0108	; 0x800108 <LifeBitTimer+0x1>
+ 100:	a0 91 09 01 	lds	r26, 0x0109	; 0x800109 <LifeBitTimer+0x2>
+ 104:	b0 91 0a 01 	lds	r27, 0x010A	; 0x80010a <LifeBitTimer+0x3>
+ 108:	84 17       	cp	r24, r20
+ 10a:	95 07       	cpc	r25, r21
+ 10c:	a6 07       	cpc	r26, r22
+ 10e:	b7 07       	cpc	r27, r23
+ 110:	30 f4       	brcc	.+12     	; 0x11e <SpsMainLoop+0x74>
+			{
+				PORTB ^= (1 << PINB5);	// Toggle on board LED
+ 112:	95 b1       	in	r25, 0x05	; 5
+ 114:	80 e2       	ldi	r24, 0x20	; 32
+ 116:	89 27       	eor	r24, r25
+ 118:	85 b9       	out	0x05, r24	; 5
+				LifeBitState = 0;
+ 11a:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <LifeBitState>
+///			Servo1_LED_ON();
+///		}
+
+
+	// State machine "Read Pulse Width From RC Receiver Channel 1"
+	switch (Servo1State)
+ 11e:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <Servo1State>
+ 122:	88 23       	and	r24, r24
+ 124:	19 f0       	breq	.+6      	; 0x12c <SpsMainLoop+0x82>
+ 126:	8a 30       	cpi	r24, 0x0A	; 10
+ 128:	51 f0       	breq	.+20     	; 0x13e <SpsMainLoop+0x94>
+ 12a:	27 c0       	rjmp	.+78     	; 0x17a <SpsMainLoop+0xd0>
+	{
+		case 0:
+		Servo1_LED_OFF();
+ 12c:	5d 98       	cbi	0x0b, 5	; 11
+		if ((PINB & 0x01) > 0)
+ 12e:	18 9b       	sbis	0x03, 0	; 3
+ 130:	24 c0       	rjmp	.+72     	; 0x17a <SpsMainLoop+0xd0>
+		{
+			Servo1cnt = 0;
+ 132:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <_edata>
+			Servo1State = 10;
+ 136:	8a e0       	ldi	r24, 0x0A	; 10
+ 138:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <Servo1State>
+ 13c:	1e c0       	rjmp	.+60     	; 0x17a <SpsMainLoop+0xd0>
+		}
+		break;
+
+		case 10:
+		Servo1_LED_ON();
+ 13e:	5d 9a       	sbi	0x0b, 5	; 11
+		if  ((PINB & 0x01) == 0)
+ 140:	18 99       	sbic	0x03, 0	; 3
+ 142:	16 c0       	rjmp	.+44     	; 0x170 <SpsMainLoop+0xc6>
+		{
+			
+			if (Servo1cnt >= 95)
+ 144:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 148:	8f 35       	cpi	r24, 0x5F	; 95
+ 14a:	20 f0       	brcs	.+8      	; 0x154 <SpsMainLoop+0xaa>
+			{
+				OCR2A = 28;
+ 14c:	8c e1       	ldi	r24, 0x1C	; 28
+ 14e:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 152:	0b c0       	rjmp	.+22     	; 0x16a <SpsMainLoop+0xc0>
+			}
+			else if (Servo1cnt >= 65)
+ 154:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 158:	81 34       	cpi	r24, 0x41	; 65
+ 15a:	20 f0       	brcs	.+8      	; 0x164 <SpsMainLoop+0xba>
+			{
+				OCR2A = 22;
+ 15c:	86 e1       	ldi	r24, 0x16	; 22
+ 15e:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 162:	03 c0       	rjmp	.+6      	; 0x16a <SpsMainLoop+0xc0>
+			}
+			else
+			{
+				OCR2A = 16;
+ 164:	80 e1       	ldi	r24, 0x10	; 16
+ 166:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+			}
+			Servo1State = 0;
+ 16a:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <Servo1State>
+ 16e:	05 c0       	rjmp	.+10     	; 0x17a <SpsMainLoop+0xd0>
+		}
+		else
+		{
+			Servo1cnt += 1;
+ 170:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 174:	8f 5f       	subi	r24, 0xFF	; 255
+ 176:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+	}
+	
+
+	// Statemachine "Read Pulse Width From RC Receicer Channel 1"
+	// Die OnBoardLED blinkt mit 1Hz
+	switch (Servo2State)
+ 17a:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <Servo2State>
+ 17e:	88 23       	and	r24, r24
+ 180:	19 f0       	breq	.+6      	; 0x188 <SpsMainLoop+0xde>
+ 182:	8a 30       	cpi	r24, 0x0A	; 10
+ 184:	51 f0       	breq	.+20     	; 0x19a <SpsMainLoop+0xf0>
+ 186:	08 95       	ret
+	{
+		case 0:
+		if (PIND == 2)
+ 188:	89 b1       	in	r24, 0x09	; 9
+ 18a:	82 30       	cpi	r24, 0x02	; 2
+ 18c:	89 f4       	brne	.+34     	; 0x1b0 <SpsMainLoop+0x106>
+		{
+			Servo2cnt = 0;
+ 18e:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <Servo2cnt>
+			Servo2State = 10;
+ 192:	8a e0       	ldi	r24, 0x0A	; 10
+ 194:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <Servo2State>
+ 198:	08 95       	ret
+		}
+		break;
+
+		case 10:
+		if (PIND == 0)
+ 19a:	89 b1       	in	r24, 0x09	; 9
+ 19c:	81 11       	cpse	r24, r1
+ 19e:	03 c0       	rjmp	.+6      	; 0x1a6 <SpsMainLoop+0xfc>
+		{
+			Servo2State = 0;
+ 1a0:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <Servo2State>
+ 1a4:	08 95       	ret
+		}
+		else
+		{
+			Servo2cnt += 1;
+ 1a6:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <Servo2cnt>
+ 1aa:	8f 5f       	subi	r24, 0xFF	; 255
+ 1ac:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <Servo2cnt>
+ 1b0:	08 95       	ret
+
+000001b2 <InitInterrupt>:
+
+void InitInterrupt(void);
+void InitInterrupt(void)
+{
+	// Init PLC clock
+	TCCR0A |= (1 << WGM01) | (1 << COM0A0);	// CTC-Mode, Signal output at PD6
+ 1b2:	84 b5       	in	r24, 0x24	; 36
+ 1b4:	82 64       	ori	r24, 0x42	; 66
+ 1b6:	84 bd       	out	0x24, r24	; 36
+	TCCR0B |= (1 << CS01);					// CS02,CS01,CS00 = 0,1,0  Prescaler 8, Frequenz = 16MHz/8/OCR0A=160  => 100 kHz  
+ 1b8:	85 b5       	in	r24, 0x25	; 37
+ 1ba:	82 60       	ori	r24, 0x02	; 2
+ 1bc:	85 bd       	out	0x25, r24	; 37
+	TIMSK0 |= (1 << OCIE0A);					// Interrupt, wenn compare A ist
+ 1be:	ee e6       	ldi	r30, 0x6E	; 110
+ 1c0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1c2:	80 81       	ld	r24, Z
+ 1c4:	82 60       	ori	r24, 0x02	; 2
+ 1c6:	80 83       	st	Z, r24
+	OCR0A = 39;								// Timer0 zählt von 0 bis OCR0A und löst dann einen Interrupt aus
+ 1c8:	87 e2       	ldi	r24, 0x27	; 39
+ 1ca:	87 bd       	out	0x27, r24	; 39
+											// f(PD6) = f(clk) / (2 * N *(1 + OCR0A))
+											// f(PD6) = 16MHz / (2 * 8 *(1 + 39)) = 25 kHz
+											// ==> PLC clock = 50 kHz
+	sei();	
+ 1cc:	78 94       	sei
+ 1ce:	08 95       	ret
+
+000001d0 <main>:
+}
+
+
+int main (void)
+{
+	InitSPS();
+ 1d0:	5c df       	rcall	.-328    	; 0x8a <InitSPS>
+	InitInterrupt();
+ 1d2:	ef df       	rcall	.-34     	; 0x1b2 <InitInterrupt>
+ 1d4:	ff cf       	rjmp	.-2      	; 0x1d4 <main+0x4>
+
+000001d6 <__vector_14>:
+ 1d6:	1f 92       	push	r1
+	while(1) {;}
+}
+
+
+ISR(TIMER0_COMPA_vect)
+{	LED_ON();				// Led checks "time exceeds"
+ 1d8:	0f 92       	push	r0
+ 1da:	0f b6       	in	r0, 0x3f	; 63
+ 1dc:	0f 92       	push	r0
+ 1de:	11 24       	eor	r1, r1
+ 1e0:	2f 93       	push	r18
+ 1e2:	3f 93       	push	r19
+ 1e4:	4f 93       	push	r20
+ 1e6:	5f 93       	push	r21
+ 1e8:	6f 93       	push	r22
+ 1ea:	7f 93       	push	r23
+ 1ec:	8f 93       	push	r24
+ 1ee:	9f 93       	push	r25
+ 1f0:	af 93       	push	r26
+ 1f2:	bf 93       	push	r27
+ 1f4:	ef 93       	push	r30
+ 1f6:	ff 93       	push	r31
+ 1f8:	5f 9a       	sbi	0x0b, 7	; 11
+	EndLessCounter++;
+ 1fa:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <EndLessCounter>
+ 1fe:	90 91 04 01 	lds	r25, 0x0104	; 0x800104 <EndLessCounter+0x1>
+ 202:	a0 91 05 01 	lds	r26, 0x0105	; 0x800105 <EndLessCounter+0x2>
+ 206:	b0 91 06 01 	lds	r27, 0x0106	; 0x800106 <EndLessCounter+0x3>
+ 20a:	01 96       	adiw	r24, 0x01	; 1
+ 20c:	a1 1d       	adc	r26, r1
+ 20e:	b1 1d       	adc	r27, r1
+ 210:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <EndLessCounter>
+ 214:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <EndLessCounter+0x1>
+ 218:	a0 93 05 01 	sts	0x0105, r26	; 0x800105 <EndLessCounter+0x2>
+ 21c:	b0 93 06 01 	sts	0x0106, r27	; 0x800106 <EndLessCounter+0x3>
+	SpsMainLoop();
+ 220:	44 df       	rcall	.-376    	; 0xaa <SpsMainLoop>
+	LED_OFF();				// Led checks "time exceeds"
+ 222:	5f 98       	cbi	0x0b, 7	; 11
+}
+ 224:	ff 91       	pop	r31
+ 226:	ef 91       	pop	r30
+ 228:	bf 91       	pop	r27
+ 22a:	af 91       	pop	r26
+ 22c:	9f 91       	pop	r25
+ 22e:	8f 91       	pop	r24
+ 230:	7f 91       	pop	r23
+ 232:	6f 91       	pop	r22
+ 234:	5f 91       	pop	r21
+ 236:	4f 91       	pop	r20
+ 238:	3f 91       	pop	r19
+ 23a:	2f 91       	pop	r18
+ 23c:	0f 90       	pop	r0
+ 23e:	0f be       	out	0x3f, r0	; 63
+ 240:	0f 90       	pop	r0
+ 242:	1f 90       	pop	r1
+ 244:	18 95       	reti
+
+00000246 <_exit>:
+ 246:	f8 94       	cli
+
+00000248 <__stop_program>:
+ 248:	ff cf       	rjmp	.-2      	; 0x248 <__stop_program>

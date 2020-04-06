@@ -3,33 +3,33 @@ SPS-Kern.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000004bc  2**0
+  0 .data         00000000  00800100  00800100  00000580  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000448  00000000  00000000  00000074  2**1
+  1 .text         0000050c  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000017  00800100  00800100  000004bc  2**0
+  2 .bss          00000018  00800100  00800100  00000580  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000004bc  2**0
+  3 .comment      00000030  00000000  00000000  00000580  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000004ec  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000005b0  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000078  00000000  00000000  0000052c  2**0
+  5 .debug_aranges 00000078  00000000  00000000  000005f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000009d7  00000000  00000000  000005a4  2**0
+  6 .debug_info   000009e9  00000000  00000000  00000668  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000073c  00000000  00000000  00000f7b  2**0
+  7 .debug_abbrev 0000073c  00000000  00000000  00001051  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000a47  00000000  00000000  000016b7  2**0
+  8 .debug_line   00000a7d  00000000  00000000  0000178d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000e4  00000000  00000000  00002100  2**2
+  9 .debug_frame  000000e4  00000000  00000000  0000220c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00006e93  00000000  00000000  000021e4  2**0
+ 10 .debug_str    00006ea8  00000000  00000000  000022f0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000000cb  00000000  00000000  00009077  2**0
+ 11 .debug_loc    000000cb  00000000  00000000  00009198  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000048  00000000  00000000  00009142  2**0
+ 12 .debug_ranges 00000048  00000000  00000000  00009263  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  000028db  00000000  00000000  0000918a  2**0
+ 13 .debug_macro  000028db  00000000  00000000  000092ab  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -57,7 +57,7 @@ Disassembly of section .text:
   26:	00 00       	nop
   28:	37 c0       	rjmp	.+110    	; 0x98 <__bad_interrupt>
   2a:	00 00       	nop
-  2c:	be c1       	rjmp	.+892    	; 0x3aa <__vector_11>
+  2c:	20 c2       	rjmp	.+1088   	; 0x46e <__vector_11>
   2e:	00 00       	nop
   30:	33 c0       	rjmp	.+102    	; 0x98 <__bad_interrupt>
   32:	00 00       	nop
@@ -89,12 +89,12 @@ Disassembly of section .text:
   66:	00 00       	nop
   68:	92 00       	.word	0x0092	; ????
   6a:	a6 00       	.word	0x00a6	; ????
-  6c:	e2 00       	.word	0x00e2	; ????
-  6e:	f5 00       	.word	0x00f5	; ????
-  70:	f9 00       	.word	0x00f9	; ????
-  72:	03 01       	movw	r0, r6
-  74:	5e 01       	movw	r10, r28
-  76:	24 01       	movw	r4, r8
+  6c:	e3 00       	.word	0x00e3	; ????
+  6e:	f6 00       	.word	0x00f6	; ????
+  70:	33 01       	movw	r6, r6
+  72:	45 01       	movw	r8, r10
+  74:	bd 01       	movw	r22, r26
+  76:	82 01       	movw	r16, r4
 
 00000078 <__ctors_end>:
   78:	11 24       	eor	r1, r1
@@ -114,11 +114,11 @@ Disassembly of section .text:
   8c:	1d 92       	st	X+, r1
 
 0000008e <.do_clear_bss_start>:
-  8e:	a7 31       	cpi	r26, 0x17	; 23
+  8e:	a8 31       	cpi	r26, 0x18	; 24
   90:	b2 07       	cpc	r27, r18
   92:	e1 f7       	brne	.-8      	; 0x8c <.do_clear_bss_loop>
-  94:	80 d1       	rcall	.+768    	; 0x396 <main>
-  96:	d6 c1       	rjmp	.+940    	; 0x444 <_exit>
+  94:	e2 d1       	rcall	.+964    	; 0x45a <main>
+  96:	38 c2       	rjmp	.+1136   	; 0x508 <_exit>
 
 00000098 <__bad_interrupt>:
   98:	b3 cf       	rjmp	.-154    	; 0x0 <__vectors>
@@ -139,10 +139,10 @@ void PLC_StandardTask (void)
 	{
 		case 0:
 		TON_LifeBit = 0;	
-  a8:	10 92 09 01 	sts	0x0109, r1	; 0x800109 <TON_LifeBit>
-  ac:	10 92 0a 01 	sts	0x010A, r1	; 0x80010a <TON_LifeBit+0x1>
-  b0:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_LifeBit+0x2>
-  b4:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_LifeBit+0x3>
+  a8:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_LifeBit>
+  ac:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_LifeBit+0x1>
+  b0:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_LifeBit+0x2>
+  b4:	10 92 09 01 	sts	0x0109, r1	; 0x800109 <TON_LifeBit+0x3>
 		LifeBitState = 10;
   b8:	8a e0       	ldi	r24, 0x0A	; 10
   ba:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
@@ -151,22 +151,22 @@ void PLC_StandardTask (void)
 
 		case 10:
 		TON_LifeBit += 1;
-  c0:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <TON_LifeBit>
-  c4:	90 91 0a 01 	lds	r25, 0x010A	; 0x80010a <TON_LifeBit+0x1>
-  c8:	a0 91 0b 01 	lds	r26, 0x010B	; 0x80010b <TON_LifeBit+0x2>
-  cc:	b0 91 0c 01 	lds	r27, 0x010C	; 0x80010c <TON_LifeBit+0x3>
+  c0:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <TON_LifeBit>
+  c4:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <TON_LifeBit+0x1>
+  c8:	a0 91 08 01 	lds	r26, 0x0108	; 0x800108 <TON_LifeBit+0x2>
+  cc:	b0 91 09 01 	lds	r27, 0x0109	; 0x800109 <TON_LifeBit+0x3>
   d0:	01 96       	adiw	r24, 0x01	; 1
   d2:	a1 1d       	adc	r26, r1
   d4:	b1 1d       	adc	r27, r1
-  d6:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <TON_LifeBit>
-  da:	90 93 0a 01 	sts	0x010A, r25	; 0x80010a <TON_LifeBit+0x1>
-  de:	a0 93 0b 01 	sts	0x010B, r26	; 0x80010b <TON_LifeBit+0x2>
-  e2:	b0 93 0c 01 	sts	0x010C, r27	; 0x80010c <TON_LifeBit+0x3>
+  d6:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <TON_LifeBit>
+  da:	90 93 07 01 	sts	0x0107, r25	; 0x800107 <TON_LifeBit+0x1>
+  de:	a0 93 08 01 	sts	0x0108, r26	; 0x800108 <TON_LifeBit+0x2>
+  e2:	b0 93 09 01 	sts	0x0109, r27	; 0x800109 <TON_LifeBit+0x3>
 		if (TON_LifeBit >= 200)		// 200 ms at 50 kHz PLC clock
-  e6:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <TON_LifeBit>
-  ea:	90 91 0a 01 	lds	r25, 0x010A	; 0x80010a <TON_LifeBit+0x1>
-  ee:	a0 91 0b 01 	lds	r26, 0x010B	; 0x80010b <TON_LifeBit+0x2>
-  f2:	b0 91 0c 01 	lds	r27, 0x010C	; 0x80010c <TON_LifeBit+0x3>
+  e6:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <TON_LifeBit>
+  ea:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <TON_LifeBit+0x1>
+  ee:	a0 91 08 01 	lds	r26, 0x0108	; 0x800108 <TON_LifeBit+0x2>
+  f2:	b0 91 09 01 	lds	r27, 0x0109	; 0x800109 <TON_LifeBit+0x3>
   f6:	88 3c       	cpi	r24, 0xC8	; 200
   f8:	91 05       	cpc	r25, r1
   fa:	a1 05       	cpc	r26, r1
@@ -186,560 +186,643 @@ void PLC_StandardTask (void)
 	// FoldOut / FoldIN
 	// Motor On / Off
 	switch (GenaralFunctionState)
- 10c:	e0 91 0f 01 	lds	r30, 0x010F	; 0x80010f <GenaralFunctionState>
+ 10c:	e0 91 10 01 	lds	r30, 0x0110	; 0x800110 <GenaralFunctionState>
  110:	8e 2f       	mov	r24, r30
  112:	90 e0       	ldi	r25, 0x00	; 0
  114:	88 30       	cpi	r24, 0x08	; 8
  116:	91 05       	cpc	r25, r1
  118:	08 f0       	brcs	.+2      	; 0x11c <PLC_StandardTask+0x82>
- 11a:	d0 c0       	rjmp	.+416    	; 0x2bc <PLC_StandardTask+0x222>
+ 11a:	2f c1       	rjmp	.+606    	; 0x37a <PLC_StandardTask+0x2e0>
  11c:	fc 01       	movw	r30, r24
  11e:	ec 5c       	subi	r30, 0xCC	; 204
  120:	ff 4f       	sbci	r31, 0xFF	; 255
- 122:	8a c1       	rjmp	.+788    	; 0x438 <__tablejump2__>
+ 122:	ec c1       	rjmp	.+984    	; 0x4fc <__tablejump2__>
 	{
 		
 		case StateOff:
 			PWM_Servo1 = 16;
  124:	80 e1       	ldi	r24, 0x10	; 16
- 126:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <PWM_Servo1>
-			TON_PWM_Servo1 = 0;
- 12a:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <TON_PWM_Servo1>
- 12e:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_PWM_Servo1+0x1>
- 132:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_PWM_Servo1+0x2>
- 136:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_PWM_Servo1+0x3>
+ 126:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <PWM_Servo1>
+			TON_PWM_Servo = 0;
+ 12a:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 12e:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 132:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 136:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
 			
 			if (GlbServo1Cnt >= 65)
- 13a:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
+ 13a:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
  13e:	81 34       	cpi	r24, 0x41	; 65
  140:	08 f4       	brcc	.+2      	; 0x144 <PLC_StandardTask+0xaa>
- 142:	be c0       	rjmp	.+380    	; 0x2c0 <PLC_StandardTask+0x226>
+ 142:	1d c1       	rjmp	.+570    	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateFoldOut;
  144:	81 e0       	ldi	r24, 0x01	; 1
- 146:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
- 14a:	ba c0       	rjmp	.+372    	; 0x2c0 <PLC_StandardTask+0x226>
+ 146:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 14a:	19 c1       	rjmp	.+562    	; 0x37e <PLC_StandardTask+0x2e4>
 			}
 			break;
 			
 		case StateFoldOut:
-			TON_PWM_Servo1 += 1;
- 14c:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <TON_PWM_Servo1>
- 150:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <TON_PWM_Servo1+0x1>
- 154:	a0 91 07 01 	lds	r26, 0x0107	; 0x800107 <TON_PWM_Servo1+0x2>
- 158:	b0 91 08 01 	lds	r27, 0x0108	; 0x800108 <TON_PWM_Servo1+0x3>
+			TON_PWM_Servo += 1;
+ 14c:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 150:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 154:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 158:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
  15c:	01 96       	adiw	r24, 0x01	; 1
  15e:	a1 1d       	adc	r26, r1
  160:	b1 1d       	adc	r27, r1
- 162:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <TON_PWM_Servo1>
- 166:	90 93 06 01 	sts	0x0106, r25	; 0x800106 <TON_PWM_Servo1+0x1>
- 16a:	a0 93 07 01 	sts	0x0107, r26	; 0x800107 <TON_PWM_Servo1+0x2>
- 16e:	b0 93 08 01 	sts	0x0108, r27	; 0x800108 <TON_PWM_Servo1+0x3>
-			if (TON_PWM_Servo1 >= 20)	// increase PWM every 20 ms
- 172:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <TON_PWM_Servo1>
- 176:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <TON_PWM_Servo1+0x1>
- 17a:	a0 91 07 01 	lds	r26, 0x0107	; 0x800107 <TON_PWM_Servo1+0x2>
- 17e:	b0 91 08 01 	lds	r27, 0x0108	; 0x800108 <TON_PWM_Servo1+0x3>
- 182:	44 97       	sbiw	r24, 0x14	; 20
- 184:	a1 05       	cpc	r26, r1
- 186:	b1 05       	cpc	r27, r1
- 188:	a0 f0       	brcs	.+40     	; 0x1b2 <PLC_StandardTask+0x118>
+ 162:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <TON_PWM_Servo>
+ 166:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <TON_PWM_Servo+0x1>
+ 16a:	a0 93 0d 01 	sts	0x010D, r26	; 0x80010d <TON_PWM_Servo+0x2>
+ 16e:	b0 93 0e 01 	sts	0x010E, r27	; 0x80010e <TON_PWM_Servo+0x3>
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
+ 172:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 176:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 17a:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 17e:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 182:	88 3c       	cpi	r24, 0xC8	; 200
+ 184:	91 05       	cpc	r25, r1
+ 186:	a1 05       	cpc	r26, r1
+ 188:	b1 05       	cpc	r27, r1
+ 18a:	a0 f0       	brcs	.+40     	; 0x1b4 <PLC_StandardTask+0x11a>
 			{	
-				TON_PWM_Servo1 = 0;
- 18a:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <TON_PWM_Servo1>
- 18e:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_PWM_Servo1+0x1>
- 192:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_PWM_Servo1+0x2>
- 196:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_PWM_Servo1+0x3>
+				TON_PWM_Servo = 0;
+ 18c:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 190:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 194:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 198:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
 				PWM_Servo1 += 1;
- 19a:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <PWM_Servo1>
- 19e:	8f 5f       	subi	r24, 0xFF	; 255
- 1a0:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <PWM_Servo1>
+ 19c:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <PWM_Servo1>
+ 1a0:	8f 5f       	subi	r24, 0xFF	; 255
+ 1a2:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <PWM_Servo1>
 				if (PWM_Servo1 >= 28)
- 1a4:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <PWM_Servo1>
- 1a8:	8c 31       	cpi	r24, 0x1C	; 28
- 1aa:	18 f0       	brcs	.+6      	; 0x1b2 <PLC_StandardTask+0x118>
+ 1a6:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <PWM_Servo1>
+ 1aa:	8c 31       	cpi	r24, 0x1C	; 28
+ 1ac:	18 f0       	brcs	.+6      	; 0x1b4 <PLC_StandardTask+0x11a>
 				 {
 					GenaralFunctionState = StateOut;					 
- 1ac:	82 e0       	ldi	r24, 0x02	; 2
- 1ae:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
+ 1ae:	82 e0       	ldi	r24, 0x02	; 2
+ 1b0:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
 				 }
 			}
 			
 			if (GlbServo1Cnt < 65)
- 1b2:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 1b6:	81 34       	cpi	r24, 0x41	; 65
- 1b8:	08 f0       	brcs	.+2      	; 0x1bc <PLC_StandardTask+0x122>
- 1ba:	82 c0       	rjmp	.+260    	; 0x2c0 <PLC_StandardTask+0x226>
+ 1b4:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 1b8:	81 34       	cpi	r24, 0x41	; 65
+ 1ba:	08 f0       	brcs	.+2      	; 0x1be <PLC_StandardTask+0x124>
+ 1bc:	e0 c0       	rjmp	.+448    	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateFoldIn;
- 1bc:	87 e0       	ldi	r24, 0x07	; 7
- 1be:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
- 1c2:	7e c0       	rjmp	.+252    	; 0x2c0 <PLC_StandardTask+0x226>
+ 1be:	87 e0       	ldi	r24, 0x07	; 7
+ 1c0:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 1c4:	dc c0       	rjmp	.+440    	; 0x37e <PLC_StandardTask+0x2e4>
 			break;
 			
 			
 			
 		case StateOut:
 			PWM_Servo1 = 28;
- 1c4:	8c e1       	ldi	r24, 0x1C	; 28
- 1c6:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <PWM_Servo1>
+ 1c6:	8c e1       	ldi	r24, 0x1C	; 28
+ 1c8:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <PWM_Servo1>
 			if (GlbServo1Cnt < 65)
- 1ca:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 1ce:	81 34       	cpi	r24, 0x41	; 65
- 1d0:	18 f4       	brcc	.+6      	; 0x1d8 <PLC_StandardTask+0x13e>
+ 1cc:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 1d0:	81 34       	cpi	r24, 0x41	; 65
+ 1d2:	18 f4       	brcc	.+6      	; 0x1da <PLC_StandardTask+0x140>
 			{
 				GenaralFunctionState = StateFoldIn;
- 1d2:	87 e0       	ldi	r24, 0x07	; 7
- 1d4:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
+ 1d4:	87 e0       	ldi	r24, 0x07	; 7
+ 1d6:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
 			}
 
 
 			if (GlbServo1Cnt > 95)
- 1d8:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 1dc:	80 36       	cpi	r24, 0x60	; 96
- 1de:	08 f4       	brcc	.+2      	; 0x1e2 <PLC_StandardTask+0x148>
- 1e0:	6f c0       	rjmp	.+222    	; 0x2c0 <PLC_StandardTask+0x226>
+ 1da:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 1de:	80 36       	cpi	r24, 0x60	; 96
+ 1e0:	08 f4       	brcc	.+2      	; 0x1e4 <PLC_StandardTask+0x14a>
+ 1e2:	cd c0       	rjmp	.+410    	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateRampUpMotor;
- 1e2:	83 e0       	ldi	r24, 0x03	; 3
- 1e4:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
- 1e8:	6b c0       	rjmp	.+214    	; 0x2c0 <PLC_StandardTask+0x226>
+ 1e4:	83 e0       	ldi	r24, 0x03	; 3
+ 1e6:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 1ea:	c9 c0       	rjmp	.+402    	; 0x37e <PLC_StandardTask+0x2e4>
 			break;
 		
 
 
 		case StateRampUpMotor:
-			GenaralFunctionState = StateMotorOn;
- 1ea:	84 e0       	ldi	r24, 0x04	; 4
- 1ec:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
+			TON_PWM_Servo += 1;
+ 1ec:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 1f0:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 1f4:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 1f8:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 1fc:	01 96       	adiw	r24, 0x01	; 1
+ 1fe:	a1 1d       	adc	r26, r1
+ 200:	b1 1d       	adc	r27, r1
+ 202:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <TON_PWM_Servo>
+ 206:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <TON_PWM_Servo+0x1>
+ 20a:	a0 93 0d 01 	sts	0x010D, r26	; 0x80010d <TON_PWM_Servo+0x2>
+ 20e:	b0 93 0e 01 	sts	0x010E, r27	; 0x80010e <TON_PWM_Servo+0x3>
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
+ 212:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 216:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 21a:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 21e:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 222:	88 3c       	cpi	r24, 0xC8	; 200
+ 224:	91 05       	cpc	r25, r1
+ 226:	a1 05       	cpc	r26, r1
+ 228:	b1 05       	cpc	r27, r1
+ 22a:	a0 f0       	brcs	.+40     	; 0x254 <PLC_StandardTask+0x1ba>
+			{
+				TON_PWM_Servo = 0;
+ 22c:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 230:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 234:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 238:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
+				PWM_Servo2 += 1;
+ 23c:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <PWM_Servo2>
+ 240:	8f 5f       	subi	r24, 0xFF	; 255
+ 242:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <PWM_Servo2>
+				if (PWM_Servo2 >= 28)
+ 246:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <PWM_Servo2>
+ 24a:	8c 31       	cpi	r24, 0x1C	; 28
+ 24c:	18 f0       	brcs	.+6      	; 0x254 <PLC_StandardTask+0x1ba>
+				{
+					GenaralFunctionState = StateMotorOn;
+ 24e:	84 e0       	ldi	r24, 0x04	; 4
+ 250:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+				}
+			}
+			
+			if (GlbServo1Cnt < 95)
+ 254:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 258:	8f 35       	cpi	r24, 0x5F	; 95
+ 25a:	08 f0       	brcs	.+2      	; 0x25e <PLC_StandardTask+0x1c4>
+ 25c:	90 c0       	rjmp	.+288    	; 0x37e <PLC_StandardTask+0x2e4>
+			{
+				GenaralFunctionState = StateOut;
+ 25e:	82 e0       	ldi	r24, 0x02	; 2
+ 260:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 264:	8c c0       	rjmp	.+280    	; 0x37e <PLC_StandardTask+0x2e4>
+			}
 			break;
- 1f0:	67 c0       	rjmp	.+206    	; 0x2c0 <PLC_StandardTask+0x226>
-
+			
+			
 		case StateMotorOn:
 			Servo1_LED_ON();
- 1f2:	5d 9a       	sbi	0x0b, 5	; 11
+ 266:	5d 9a       	sbi	0x0b, 5	; 11
+			TON_PWM_Servo = 0;
+ 268:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 26c:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 270:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 274:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
+
 			if (GlbServo1Cnt < 95)
- 1f4:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 1f8:	8f 35       	cpi	r24, 0x5F	; 95
- 1fa:	08 f0       	brcs	.+2      	; 0x1fe <PLC_StandardTask+0x164>
- 1fc:	61 c0       	rjmp	.+194    	; 0x2c0 <PLC_StandardTask+0x226>
+ 278:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 27c:	8f 35       	cpi	r24, 0x5F	; 95
+ 27e:	08 f0       	brcs	.+2      	; 0x282 <PLC_StandardTask+0x1e8>
+ 280:	7e c0       	rjmp	.+252    	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateRampDownMotor;
- 1fe:	85 e0       	ldi	r24, 0x05	; 5
- 200:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
- 204:	5d c0       	rjmp	.+186    	; 0x2c0 <PLC_StandardTask+0x226>
+ 282:	85 e0       	ldi	r24, 0x05	; 5
+ 284:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 288:	7a c0       	rjmp	.+244    	; 0x37e <PLC_StandardTask+0x2e4>
 		
 		
 		break;
 
 		case StateRampDownMotor:
-			Servo1_LED_OFF();
- 206:	5d 98       	cbi	0x0b, 5	; 11
-			if (GlbServo1Cnt < 65)
- 208:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 20c:	81 34       	cpi	r24, 0x41	; 65
- 20e:	58 f4       	brcc	.+22     	; 0x226 <PLC_StandardTask+0x18c>
+			TON_PWM_Servo += 1;
+ 28a:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 28e:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 292:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 296:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 29a:	01 96       	adiw	r24, 0x01	; 1
+ 29c:	a1 1d       	adc	r26, r1
+ 29e:	b1 1d       	adc	r27, r1
+ 2a0:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <TON_PWM_Servo>
+ 2a4:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <TON_PWM_Servo+0x1>
+ 2a8:	a0 93 0d 01 	sts	0x010D, r26	; 0x80010d <TON_PWM_Servo+0x2>
+ 2ac:	b0 93 0e 01 	sts	0x010E, r27	; 0x80010e <TON_PWM_Servo+0x3>
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
+ 2b0:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 2b4:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 2b8:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 2bc:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 2c0:	88 3c       	cpi	r24, 0xC8	; 200
+ 2c2:	91 05       	cpc	r25, r1
+ 2c4:	a1 05       	cpc	r26, r1
+ 2c6:	b1 05       	cpc	r27, r1
+ 2c8:	a0 f0       	brcs	.+40     	; 0x2f2 <PLC_StandardTask+0x258>
 			{
-				GenaralFunctionState = StateFoldIn;
- 210:	87 e0       	ldi	r24, 0x07	; 7
- 212:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
-				TON_PWM_Servo1 = 0;
- 216:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <TON_PWM_Servo1>
- 21a:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_PWM_Servo1+0x1>
- 21e:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_PWM_Servo1+0x2>
- 222:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_PWM_Servo1+0x3>
+				TON_PWM_Servo = 0;
+ 2ca:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 2ce:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 2d2:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 2d6:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
+				PWM_Servo2 -= 1;
+ 2da:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <PWM_Servo2>
+ 2de:	81 50       	subi	r24, 0x01	; 1
+ 2e0:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <PWM_Servo2>
+				if (PWM_Servo2 <= 16)
+ 2e4:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <PWM_Servo2>
+ 2e8:	81 31       	cpi	r24, 0x11	; 17
+ 2ea:	18 f4       	brcc	.+6      	; 0x2f2 <PLC_StandardTask+0x258>
+				{
+					GenaralFunctionState = StateFoldIn;
+ 2ec:	87 e0       	ldi	r24, 0x07	; 7
+ 2ee:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+				}
 			}
-
+			
 			if (GlbServo1Cnt > 95)
- 226:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 22a:	80 36       	cpi	r24, 0x60	; 96
- 22c:	08 f4       	brcc	.+2      	; 0x230 <PLC_StandardTask+0x196>
- 22e:	48 c0       	rjmp	.+144    	; 0x2c0 <PLC_StandardTask+0x226>
+ 2f2:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 2f6:	80 36       	cpi	r24, 0x60	; 96
+ 2f8:	08 f4       	brcc	.+2      	; 0x2fc <PLC_StandardTask+0x262>
+ 2fa:	41 c0       	rjmp	.+130    	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateRampUpMotor;
- 230:	83 e0       	ldi	r24, 0x03	; 3
- 232:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
-				TON_PWM_Servo1 = 0;
- 236:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <TON_PWM_Servo1>
- 23a:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_PWM_Servo1+0x1>
- 23e:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_PWM_Servo1+0x2>
- 242:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_PWM_Servo1+0x3>
- 246:	3c c0       	rjmp	.+120    	; 0x2c0 <PLC_StandardTask+0x226>
+ 2fc:	83 e0       	ldi	r24, 0x03	; 3
+ 2fe:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 302:	3d c0       	rjmp	.+122    	; 0x37e <PLC_StandardTask+0x2e4>
 			}
-
 			break;
 
+
 		case StateFoldIn:
-			TON_PWM_Servo1 += 1;
- 248:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <TON_PWM_Servo1>
- 24c:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <TON_PWM_Servo1+0x1>
- 250:	a0 91 07 01 	lds	r26, 0x0107	; 0x800107 <TON_PWM_Servo1+0x2>
- 254:	b0 91 08 01 	lds	r27, 0x0108	; 0x800108 <TON_PWM_Servo1+0x3>
- 258:	01 96       	adiw	r24, 0x01	; 1
- 25a:	a1 1d       	adc	r26, r1
- 25c:	b1 1d       	adc	r27, r1
- 25e:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <TON_PWM_Servo1>
- 262:	90 93 06 01 	sts	0x0106, r25	; 0x800106 <TON_PWM_Servo1+0x1>
- 266:	a0 93 07 01 	sts	0x0107, r26	; 0x800107 <TON_PWM_Servo1+0x2>
- 26a:	b0 93 08 01 	sts	0x0108, r27	; 0x800108 <TON_PWM_Servo1+0x3>
-			if (TON_PWM_Servo1 >= 20)	// decrease PWM every 20 ms
- 26e:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <TON_PWM_Servo1>
- 272:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <TON_PWM_Servo1+0x1>
- 276:	a0 91 07 01 	lds	r26, 0x0107	; 0x800107 <TON_PWM_Servo1+0x2>
- 27a:	b0 91 08 01 	lds	r27, 0x0108	; 0x800108 <TON_PWM_Servo1+0x3>
- 27e:	44 97       	sbiw	r24, 0x14	; 20
- 280:	a1 05       	cpc	r26, r1
- 282:	b1 05       	cpc	r27, r1
- 284:	98 f0       	brcs	.+38     	; 0x2ac <PLC_StandardTask+0x212>
+			TON_PWM_Servo += 1;
+ 304:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 308:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 30c:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 310:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 314:	01 96       	adiw	r24, 0x01	; 1
+ 316:	a1 1d       	adc	r26, r1
+ 318:	b1 1d       	adc	r27, r1
+ 31a:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <TON_PWM_Servo>
+ 31e:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <TON_PWM_Servo+0x1>
+ 322:	a0 93 0d 01 	sts	0x010D, r26	; 0x80010d <TON_PWM_Servo+0x2>
+ 326:	b0 93 0e 01 	sts	0x010E, r27	; 0x80010e <TON_PWM_Servo+0x3>
+			if (TON_PWM_Servo >= 200)	// decrease PWM every 20 ms
+ 32a:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TON_PWM_Servo>
+ 32e:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <TON_PWM_Servo+0x1>
+ 332:	a0 91 0d 01 	lds	r26, 0x010D	; 0x80010d <TON_PWM_Servo+0x2>
+ 336:	b0 91 0e 01 	lds	r27, 0x010E	; 0x80010e <TON_PWM_Servo+0x3>
+ 33a:	88 3c       	cpi	r24, 0xC8	; 200
+ 33c:	91 05       	cpc	r25, r1
+ 33e:	a1 05       	cpc	r26, r1
+ 340:	b1 05       	cpc	r27, r1
+ 342:	98 f0       	brcs	.+38     	; 0x36a <PLC_StandardTask+0x2d0>
 			{
-				TON_PWM_Servo1 = 0;
- 286:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <TON_PWM_Servo1>
- 28a:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <TON_PWM_Servo1+0x1>
- 28e:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <TON_PWM_Servo1+0x2>
- 292:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <TON_PWM_Servo1+0x3>
+				TON_PWM_Servo = 0;
+ 344:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TON_PWM_Servo>
+ 348:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <TON_PWM_Servo+0x1>
+ 34c:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <TON_PWM_Servo+0x2>
+ 350:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <TON_PWM_Servo+0x3>
 				PWM_Servo1 -= 1;
- 296:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <PWM_Servo1>
- 29a:	81 50       	subi	r24, 0x01	; 1
- 29c:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <PWM_Servo1>
+ 354:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <PWM_Servo1>
+ 358:	81 50       	subi	r24, 0x01	; 1
+ 35a:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <PWM_Servo1>
 				if (PWM_Servo1 <= 16)
- 2a0:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <PWM_Servo1>
- 2a4:	81 31       	cpi	r24, 0x11	; 17
- 2a6:	10 f4       	brcc	.+4      	; 0x2ac <PLC_StandardTask+0x212>
+ 35e:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <PWM_Servo1>
+ 362:	81 31       	cpi	r24, 0x11	; 17
+ 364:	10 f4       	brcc	.+4      	; 0x36a <PLC_StandardTask+0x2d0>
 				{
 					GenaralFunctionState = StateOff;
- 2a8:	10 92 0f 01 	sts	0x010F, r1	; 0x80010f <GenaralFunctionState>
+ 366:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <GenaralFunctionState>
 				}
 			}
 			
 			if (GlbServo1Cnt > 65)
- 2ac:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <GlbServo1Cnt>
- 2b0:	82 34       	cpi	r24, 0x42	; 66
- 2b2:	30 f0       	brcs	.+12     	; 0x2c0 <PLC_StandardTask+0x226>
+ 36a:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <GlbServo1Cnt>
+ 36e:	82 34       	cpi	r24, 0x42	; 66
+ 370:	30 f0       	brcs	.+12     	; 0x37e <PLC_StandardTask+0x2e4>
 			{
 				GenaralFunctionState = StateFoldOut;
- 2b4:	81 e0       	ldi	r24, 0x01	; 1
- 2b6:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <GenaralFunctionState>
- 2ba:	02 c0       	rjmp	.+4      	; 0x2c0 <PLC_StandardTask+0x226>
+ 372:	81 e0       	ldi	r24, 0x01	; 1
+ 374:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GenaralFunctionState>
+ 378:	02 c0       	rjmp	.+4      	; 0x37e <PLC_StandardTask+0x2e4>
 
 			break;
 		break;
 		
 		default:
 			GenaralFunctionState = StateOff;
- 2bc:	10 92 0f 01 	sts	0x010F, r1	; 0x80010f <GenaralFunctionState>
+ 37a:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <GenaralFunctionState>
 
 
 	}
 	
 	
 	OCR2A = PWM_Servo1;
- 2c0:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <PWM_Servo1>
- 2c4:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
- 2c8:	08 95       	ret
+ 37e:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <PWM_Servo1>
+ 382:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+	OCR0A = PWM_Servo2;
+ 386:	80 91 05 01 	lds	r24, 0x0105	; 0x800105 <PWM_Servo2>
+ 38a:	87 bd       	out	0x27, r24	; 39
+ 38c:	08 95       	ret
 
-000002ca <InitSPS>:
+0000038e <InitSPS>:
 void InitSPS (void);
 void InitSPS (void)
 {
 	// Port B as Input			-> PB0 Input Servo 1 signal
 	// Port PB5 as Output		-> Life Ticker
 	DDRB |= (1 << PINB5);
- 2ca:	25 9a       	sbi	0x04, 5	; 4
+ 38e:	25 9a       	sbi	0x04, 5	; 4
 
 	// Port PD5 as Output		-> check Servo 1 signal
 	// Port PD7 as Output		-> Indicator "time exceeds"
 	DDRD |= (1 << PIND7) | (1 << PIND5);
- 2cc:	8a b1       	in	r24, 0x0a	; 10
- 2ce:	80 6a       	ori	r24, 0xA0	; 160
- 2d0:	8a b9       	out	0x0a, r24	; 10
+ 390:	8a b1       	in	r24, 0x0a	; 10
+ 392:	80 6a       	ori	r24, 0xA0	; 160
+ 394:	8a b9       	out	0x0a, r24	; 10
 	// es gibt zwei TC1 Control Register: TCCR2A und TCCR2B
 	//    WGM22,WGM21,WGM20 = 0,1,1    heißt Fast PWM 8-Bit
 	//    COM2A1,COM2A0 = 1,0  heißt Clear OC2A on compare match, set OC2A at BOTTOM (Non-inverting mode)
 	//    CS22,CS21,CS20 = 1,1,1      heißt clk/1024 (From prescaler)
 	//    Mode 3: Beschreibung: ATmega328_p data sheet.pdf Seite -206-
 	TCCR2A |= ((1 << COM2A1) | (1 << WGM21) | (1 << WGM20) );
- 2d2:	e0 eb       	ldi	r30, 0xB0	; 176
- 2d4:	f0 e0       	ldi	r31, 0x00	; 0
- 2d6:	80 81       	ld	r24, Z
- 2d8:	83 68       	ori	r24, 0x83	; 131
- 2da:	80 83       	st	Z, r24
+ 396:	e0 eb       	ldi	r30, 0xB0	; 176
+ 398:	f0 e0       	ldi	r31, 0x00	; 0
+ 39a:	80 81       	ld	r24, Z
+ 39c:	83 68       	ori	r24, 0x83	; 131
+ 39e:	80 83       	st	Z, r24
 	TCCR2B |= ((1 << CS22) | (1 << CS21) | (1 << CS20));
- 2dc:	e1 eb       	ldi	r30, 0xB1	; 177
- 2de:	f0 e0       	ldi	r31, 0x00	; 0
- 2e0:	80 81       	ld	r24, Z
- 2e2:	87 60       	ori	r24, 0x07	; 7
- 2e4:	80 83       	st	Z, r24
+ 3a0:	e1 eb       	ldi	r30, 0xB1	; 177
+ 3a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 3a4:	80 81       	ld	r24, Z
+ 3a6:	87 60       	ori	r24, 0x07	; 7
+ 3a8:	80 83       	st	Z, r24
 
 	// Port  PB3(OC2A) as Output	-> Servo 1
 	DDRB |= (1 << PINB3);
- 2e6:	23 9a       	sbi	0x04, 3	; 4
+ 3aa:	23 9a       	sbi	0x04, 3	; 4
 	// es gibt zwei TC1 Control Register: TCCR0A und TCCR0B
 	//    WGM02,WGM01,WGM00 = 0,1,1    heißt Fast PWM 8-Bit
 	//    COM0A1,COM0A0 = 1,0  heißt Clear OC0A on compare match, set OC0A at BOTTOM (Non-inverting mode)
 	//    CS02,CS01,CS00 = 1,0,1      heißt clk/1024 (From prescaler)
 	//    Mode 3: Beschreibung: ATmega328_p data sheet.pdf Seite -xxx-
 	TCCR0A |= ((1 << COM0A1) | (1 << WGM01) | (1 << WGM00) );
- 2e8:	84 b5       	in	r24, 0x24	; 36
- 2ea:	83 68       	ori	r24, 0x83	; 131
- 2ec:	84 bd       	out	0x24, r24	; 36
+ 3ac:	84 b5       	in	r24, 0x24	; 36
+ 3ae:	83 68       	ori	r24, 0x83	; 131
+ 3b0:	84 bd       	out	0x24, r24	; 36
 	TCCR0B |= ((1 << CS02) | (1 << CS00));
- 2ee:	85 b5       	in	r24, 0x25	; 37
- 2f0:	85 60       	ori	r24, 0x05	; 5
- 2f2:	85 bd       	out	0x25, r24	; 37
+ 3b2:	85 b5       	in	r24, 0x25	; 37
+ 3b4:	85 60       	ori	r24, 0x05	; 5
+ 3b6:	85 bd       	out	0x25, r24	; 37
 	
 	// Port  PB3(OC0A) as Output	-> Servo 2
 	DDRD |= (1 << PIND6);
- 2f4:	56 9a       	sbi	0x0a, 6	; 10
- 2f6:	08 95       	ret
+ 3b8:	56 9a       	sbi	0x0a, 6	; 10
+ 3ba:	08 95       	ret
 
-000002f8 <SpsMainLoop>:
+000003bc <SpsMainLoop>:
 void SpsMainLoop (void)
 {
 
 
 	// State machine "Read Pulse Width From RC Receiver Channel 1"
 	switch (Servo1State)
- 2f8:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <Servo1State>
- 2fc:	88 23       	and	r24, r24
- 2fe:	19 f0       	breq	.+6      	; 0x306 <SpsMainLoop+0xe>
- 300:	8a 30       	cpi	r24, 0x0A	; 10
- 302:	49 f0       	breq	.+18     	; 0x316 <SpsMainLoop+0x1e>
- 304:	16 c0       	rjmp	.+44     	; 0x332 <SpsMainLoop+0x3a>
+ 3bc:	80 91 15 01 	lds	r24, 0x0115	; 0x800115 <Servo1State>
+ 3c0:	88 23       	and	r24, r24
+ 3c2:	19 f0       	breq	.+6      	; 0x3ca <SpsMainLoop+0xe>
+ 3c4:	8a 30       	cpi	r24, 0x0A	; 10
+ 3c6:	49 f0       	breq	.+18     	; 0x3da <SpsMainLoop+0x1e>
+ 3c8:	16 c0       	rjmp	.+44     	; 0x3f6 <SpsMainLoop+0x3a>
 	{
 		case 0:
 		//Servo1_LED_OFF();
 		if ((PINB & 0x01) > 0)
- 306:	18 9b       	sbis	0x03, 0	; 3
- 308:	14 c0       	rjmp	.+40     	; 0x332 <SpsMainLoop+0x3a>
+ 3ca:	18 9b       	sbis	0x03, 0	; 3
+ 3cc:	14 c0       	rjmp	.+40     	; 0x3f6 <SpsMainLoop+0x3a>
 		{
 			Servo1cnt = 0;
- 30a:	10 92 11 01 	sts	0x0111, r1	; 0x800111 <Servo1cnt>
+ 3ce:	10 92 12 01 	sts	0x0112, r1	; 0x800112 <Servo1cnt>
 			Servo1State = 10;
- 30e:	8a e0       	ldi	r24, 0x0A	; 10
- 310:	80 93 14 01 	sts	0x0114, r24	; 0x800114 <Servo1State>
- 314:	0e c0       	rjmp	.+28     	; 0x332 <SpsMainLoop+0x3a>
+ 3d2:	8a e0       	ldi	r24, 0x0A	; 10
+ 3d4:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <Servo1State>
+ 3d8:	0e c0       	rjmp	.+28     	; 0x3f6 <SpsMainLoop+0x3a>
 		}
 		break;
 
 		case 10:
 		//Servo1_LED_ON();
 		if  ((PINB & 0x01) == 0)
- 316:	18 99       	sbic	0x03, 0	; 3
- 318:	07 c0       	rjmp	.+14     	; 0x328 <SpsMainLoop+0x30>
+ 3da:	18 99       	sbic	0x03, 0	; 3
+ 3dc:	07 c0       	rjmp	.+14     	; 0x3ec <SpsMainLoop+0x30>
 		{ 
 			GlbServo1Cnt = Servo1cnt;
- 31a:	80 91 11 01 	lds	r24, 0x0111	; 0x800111 <Servo1cnt>
- 31e:	80 93 0d 01 	sts	0x010D, r24	; 0x80010d <GlbServo1Cnt>
+ 3de:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Servo1cnt>
+ 3e2:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <GlbServo1Cnt>
 			Servo1State = 0;
- 322:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <Servo1State>
- 326:	05 c0       	rjmp	.+10     	; 0x332 <SpsMainLoop+0x3a>
+ 3e6:	10 92 15 01 	sts	0x0115, r1	; 0x800115 <Servo1State>
+ 3ea:	05 c0       	rjmp	.+10     	; 0x3f6 <SpsMainLoop+0x3a>
 		}
 		else
 		{
 			Servo1cnt += 1;
- 328:	80 91 11 01 	lds	r24, 0x0111	; 0x800111 <Servo1cnt>
- 32c:	8f 5f       	subi	r24, 0xFF	; 255
- 32e:	80 93 11 01 	sts	0x0111, r24	; 0x800111 <Servo1cnt>
+ 3ec:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Servo1cnt>
+ 3f0:	8f 5f       	subi	r24, 0xFF	; 255
+ 3f2:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <Servo1cnt>
 		break;
 	}
 	
 
 	// State machine "Read Pulse Width From RC Receiver Channel 2"
 	switch (Servo2State)
- 332:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <Servo2State>
- 336:	88 23       	and	r24, r24
- 338:	19 f0       	breq	.+6      	; 0x340 <SpsMainLoop+0x48>
- 33a:	8a 30       	cpi	r24, 0x0A	; 10
- 33c:	49 f0       	breq	.+18     	; 0x350 <SpsMainLoop+0x58>
- 33e:	08 95       	ret
+ 3f6:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <Servo2State>
+ 3fa:	88 23       	and	r24, r24
+ 3fc:	19 f0       	breq	.+6      	; 0x404 <__LOCK_REGION_LENGTH__+0x4>
+ 3fe:	8a 30       	cpi	r24, 0x0A	; 10
+ 400:	49 f0       	breq	.+18     	; 0x414 <__LOCK_REGION_LENGTH__+0x14>
+ 402:	08 95       	ret
 	{
 		case 0:
 		//Servo1_LED_OFF();
-		if ((PINB & 0x01) > 0)
- 340:	18 9b       	sbis	0x03, 0	; 3
- 342:	14 c0       	rjmp	.+40     	; 0x36c <SpsMainLoop+0x74>
+		if ((PINB & 0x10) > 0)
+ 404:	1c 9b       	sbis	0x03, 4	; 3
+ 406:	14 c0       	rjmp	.+40     	; 0x430 <__LOCK_REGION_LENGTH__+0x30>
 		{
 			Servo2cnt = 0;
- 344:	10 92 12 01 	sts	0x0112, r1	; 0x800112 <Servo2cnt>
+ 408:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <Servo2cnt>
 			Servo2State = 10;
- 348:	8a e0       	ldi	r24, 0x0A	; 10
- 34a:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <Servo2State>
- 34e:	08 95       	ret
+ 40c:	8a e0       	ldi	r24, 0x0A	; 10
+ 40e:	80 93 14 01 	sts	0x0114, r24	; 0x800114 <Servo2State>
+ 412:	08 95       	ret
 		}
 		break;
 
 		case 10:
 		//Servo1_LED_ON();
-		if  ((PINB & 0x01) == 0)
- 350:	18 99       	sbic	0x03, 0	; 3
- 352:	07 c0       	rjmp	.+14     	; 0x362 <SpsMainLoop+0x6a>
+		if  ((PINB & 0x10) == 0)
+ 414:	1c 99       	sbic	0x03, 4	; 3
+ 416:	07 c0       	rjmp	.+14     	; 0x426 <__LOCK_REGION_LENGTH__+0x26>
 		{
 			GlbServo2Cnt = Servo2cnt;
- 354:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Servo2cnt>
- 358:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <GlbServo2Cnt>
+ 418:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <Servo2cnt>
+ 41c:	80 93 11 01 	sts	0x0111, r24	; 0x800111 <GlbServo2Cnt>
 
 			
 			Servo2State = 0;
- 35c:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <Servo2State>
- 360:	08 95       	ret
+ 420:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <Servo2State>
+ 424:	08 95       	ret
 		}
 		else
 		{
 			Servo2cnt += 1;
- 362:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Servo2cnt>
- 366:	8f 5f       	subi	r24, 0xFF	; 255
- 368:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <Servo2cnt>
- 36c:	08 95       	ret
+ 426:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <Servo2cnt>
+ 42a:	8f 5f       	subi	r24, 0xFF	; 255
+ 42c:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <Servo2cnt>
+ 430:	08 95       	ret
 
-0000036e <InitInterrupt>:
+00000432 <InitInterrupt>:
 											// ==> PLC clock = 50 kHz
 	*/
 	
 	// Timer 1 as PCL clock
 	// Init PLC clock
 	TCCR1A = 0;	// CTC-Mode, no Signal output at Pin
- 36e:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7e0080>
+ 432:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7e0080>
 	TCCR1B |= (1 << CS11) | (1 << WGM12);					// CS12,CS11,CS10 = 0,1,0  Prescaler 8, Frequenz = 16MHz/8/OCR1A=160  => 100 kHz
- 372:	e1 e8       	ldi	r30, 0x81	; 129
- 374:	f0 e0       	ldi	r31, 0x00	; 0
- 376:	80 81       	ld	r24, Z
- 378:	8a 60       	ori	r24, 0x0A	; 10
- 37a:	80 83       	st	Z, r24
+ 436:	e1 e8       	ldi	r30, 0x81	; 129
+ 438:	f0 e0       	ldi	r31, 0x00	; 0
+ 43a:	80 81       	ld	r24, Z
+ 43c:	8a 60       	ori	r24, 0x0A	; 10
+ 43e:	80 83       	st	Z, r24
 	TIMSK1 |= (1 << OCIE1A);					// Interrupt, wenn compare A ist
- 37c:	ef e6       	ldi	r30, 0x6F	; 111
- 37e:	f0 e0       	ldi	r31, 0x00	; 0
- 380:	80 81       	ld	r24, Z
- 382:	82 60       	ori	r24, 0x02	; 2
- 384:	80 83       	st	Z, r24
+ 440:	ef e6       	ldi	r30, 0x6F	; 111
+ 442:	f0 e0       	ldi	r31, 0x00	; 0
+ 444:	80 81       	ld	r24, Z
+ 446:	82 60       	ori	r24, 0x02	; 2
+ 448:	80 83       	st	Z, r24
 	OCR1A = 39;								// Timer0 zählt von 0 bis OCR0A und löst dann einen Interrupt aus
- 386:	87 e2       	ldi	r24, 0x27	; 39
- 388:	90 e0       	ldi	r25, 0x00	; 0
- 38a:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
- 38e:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+ 44a:	87 e2       	ldi	r24, 0x27	; 39
+ 44c:	90 e0       	ldi	r25, 0x00	; 0
+ 44e:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 452:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
 	// f(PD6) = f(clk) / (2 * N *(1 + OCR0A))
 	// f(PD6) = 16MHz / (2 * 8 *(1 + 39)) = 25 kHz
 	// ==> PLC clock = 50 kHz
 
 
 	sei();	
- 392:	78 94       	sei
- 394:	08 95       	ret
+ 456:	78 94       	sei
+ 458:	08 95       	ret
 
-00000396 <main>:
+0000045a <main>:
 }
 
 
 int main (void)
 {
 	InitSPS();
- 396:	99 df       	rcall	.-206    	; 0x2ca <InitSPS>
+ 45a:	99 df       	rcall	.-206    	; 0x38e <InitSPS>
 	InitInterrupt();
- 398:	ea df       	rcall	.-44     	; 0x36e <InitInterrupt>
- 39a:	80 91 15 01 	lds	r24, 0x0115	; 0x800115 <StandardTaskTrigger>
+ 45c:	ea df       	rcall	.-44     	; 0x432 <InitInterrupt>
+ 45e:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <StandardTaskTrigger>
 	
 	while(1) 
 	{
 		if (StandardTaskTrigger == 1)
- 39e:	81 30       	cpi	r24, 0x01	; 1
- 3a0:	e1 f7       	brne	.-8      	; 0x39a <main+0x4>
- 3a2:	10 92 15 01 	sts	0x0115, r1	; 0x800115 <StandardTaskTrigger>
+ 462:	81 30       	cpi	r24, 0x01	; 1
+ 464:	e1 f7       	brne	.-8      	; 0x45e <main+0x4>
+ 466:	10 92 16 01 	sts	0x0116, r1	; 0x800116 <StandardTaskTrigger>
 		{		
 			StandardTaskTrigger = 0;
 			PLC_StandardTask();
- 3a6:	79 de       	rcall	.-782    	; 0x9a <PLC_StandardTask>
- 3a8:	f8 cf       	rjmp	.-16     	; 0x39a <main+0x4>
+ 46a:	17 de       	rcall	.-978    	; 0x9a <PLC_StandardTask>
+ 46c:	f8 cf       	rjmp	.-16     	; 0x45e <main+0x4>
 
-000003aa <__vector_11>:
- 3aa:	1f 92       	push	r1
+0000046e <__vector_11>:
+ 46e:	1f 92       	push	r1
 /* Timer 0 as PLC clock
 ISR(TIMER0_COMPA_vect)
 */
 
 ISR(TIMER1_COMPA_vect)
 {	LED_ON();				// Led checks "time exceeds"
- 3ac:	0f 92       	push	r0
- 3ae:	0f b6       	in	r0, 0x3f	; 63
- 3b0:	0f 92       	push	r0
- 3b2:	11 24       	eor	r1, r1
- 3b4:	2f 93       	push	r18
- 3b6:	3f 93       	push	r19
- 3b8:	4f 93       	push	r20
- 3ba:	5f 93       	push	r21
- 3bc:	6f 93       	push	r22
- 3be:	7f 93       	push	r23
- 3c0:	8f 93       	push	r24
- 3c2:	9f 93       	push	r25
- 3c4:	af 93       	push	r26
- 3c6:	bf 93       	push	r27
- 3c8:	ef 93       	push	r30
- 3ca:	ff 93       	push	r31
- 3cc:	5f 9a       	sbi	0x0b, 7	; 11
+ 470:	0f 92       	push	r0
+ 472:	0f b6       	in	r0, 0x3f	; 63
+ 474:	0f 92       	push	r0
+ 476:	11 24       	eor	r1, r1
+ 478:	2f 93       	push	r18
+ 47a:	3f 93       	push	r19
+ 47c:	4f 93       	push	r20
+ 47e:	5f 93       	push	r21
+ 480:	6f 93       	push	r22
+ 482:	7f 93       	push	r23
+ 484:	8f 93       	push	r24
+ 486:	9f 93       	push	r25
+ 488:	af 93       	push	r26
+ 48a:	bf 93       	push	r27
+ 48c:	ef 93       	push	r30
+ 48e:	ff 93       	push	r31
+ 490:	5f 9a       	sbi	0x0b, 7	; 11
 	EndLessCounter++;
- 3ce:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <EndLessCounter>
- 3d2:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <EndLessCounter+0x1>
- 3d6:	a0 91 03 01 	lds	r26, 0x0103	; 0x800103 <EndLessCounter+0x2>
- 3da:	b0 91 04 01 	lds	r27, 0x0104	; 0x800104 <EndLessCounter+0x3>
- 3de:	01 96       	adiw	r24, 0x01	; 1
- 3e0:	a1 1d       	adc	r26, r1
- 3e2:	b1 1d       	adc	r27, r1
- 3e4:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <EndLessCounter>
- 3e8:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <EndLessCounter+0x1>
- 3ec:	a0 93 03 01 	sts	0x0103, r26	; 0x800103 <EndLessCounter+0x2>
- 3f0:	b0 93 04 01 	sts	0x0104, r27	; 0x800104 <EndLessCounter+0x3>
+ 492:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <EndLessCounter>
+ 496:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <EndLessCounter+0x1>
+ 49a:	a0 91 03 01 	lds	r26, 0x0103	; 0x800103 <EndLessCounter+0x2>
+ 49e:	b0 91 04 01 	lds	r27, 0x0104	; 0x800104 <EndLessCounter+0x3>
+ 4a2:	01 96       	adiw	r24, 0x01	; 1
+ 4a4:	a1 1d       	adc	r26, r1
+ 4a6:	b1 1d       	adc	r27, r1
+ 4a8:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <EndLessCounter>
+ 4ac:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <EndLessCounter+0x1>
+ 4b0:	a0 93 03 01 	sts	0x0103, r26	; 0x800103 <EndLessCounter+0x2>
+ 4b4:	b0 93 04 01 	sts	0x0104, r27	; 0x800104 <EndLessCounter+0x3>
 	
 	if (StandardTaskCnt >= 50)
- 3f4:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <StandardTaskCnt>
- 3f8:	82 33       	cpi	r24, 0x32	; 50
- 3fa:	30 f0       	brcs	.+12     	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
+ 4b8:	80 91 17 01 	lds	r24, 0x0117	; 0x800117 <StandardTaskCnt>
+ 4bc:	82 33       	cpi	r24, 0x32	; 50
+ 4be:	30 f0       	brcs	.+12     	; 0x4cc <__vector_11+0x5e>
 	{
 		StandardTaskTrigger = 1;
- 3fc:	81 e0       	ldi	r24, 0x01	; 1
- 3fe:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <StandardTaskTrigger>
+ 4c0:	81 e0       	ldi	r24, 0x01	; 1
+ 4c2:	80 93 16 01 	sts	0x0116, r24	; 0x800116 <StandardTaskTrigger>
 		StandardTaskCnt = 0;
- 402:	10 92 16 01 	sts	0x0116, r1	; 0x800116 <StandardTaskCnt>
- 406:	05 c0       	rjmp	.+10     	; 0x412 <__LOCK_REGION_LENGTH__+0x12>
+ 4c6:	10 92 17 01 	sts	0x0117, r1	; 0x800117 <StandardTaskCnt>
+ 4ca:	05 c0       	rjmp	.+10     	; 0x4d6 <__vector_11+0x68>
 	} 
 	else
 	{
 		StandardTaskCnt += 1;
- 408:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <StandardTaskCnt>
- 40c:	8f 5f       	subi	r24, 0xFF	; 255
- 40e:	80 93 16 01 	sts	0x0116, r24	; 0x800116 <StandardTaskCnt>
+ 4cc:	80 91 17 01 	lds	r24, 0x0117	; 0x800117 <StandardTaskCnt>
+ 4d0:	8f 5f       	subi	r24, 0xFF	; 255
+ 4d2:	80 93 17 01 	sts	0x0117, r24	; 0x800117 <StandardTaskCnt>
 	}
 	
 	SpsMainLoop();
- 412:	72 df       	rcall	.-284    	; 0x2f8 <SpsMainLoop>
+ 4d6:	72 df       	rcall	.-284    	; 0x3bc <SpsMainLoop>
 	LED_OFF();				// Led checks "time exceeds"
- 414:	5f 98       	cbi	0x0b, 7	; 11
+ 4d8:	5f 98       	cbi	0x0b, 7	; 11
 }
- 416:	ff 91       	pop	r31
- 418:	ef 91       	pop	r30
- 41a:	bf 91       	pop	r27
- 41c:	af 91       	pop	r26
- 41e:	9f 91       	pop	r25
- 420:	8f 91       	pop	r24
- 422:	7f 91       	pop	r23
- 424:	6f 91       	pop	r22
- 426:	5f 91       	pop	r21
- 428:	4f 91       	pop	r20
- 42a:	3f 91       	pop	r19
- 42c:	2f 91       	pop	r18
- 42e:	0f 90       	pop	r0
- 430:	0f be       	out	0x3f, r0	; 63
- 432:	0f 90       	pop	r0
- 434:	1f 90       	pop	r1
- 436:	18 95       	reti
+ 4da:	ff 91       	pop	r31
+ 4dc:	ef 91       	pop	r30
+ 4de:	bf 91       	pop	r27
+ 4e0:	af 91       	pop	r26
+ 4e2:	9f 91       	pop	r25
+ 4e4:	8f 91       	pop	r24
+ 4e6:	7f 91       	pop	r23
+ 4e8:	6f 91       	pop	r22
+ 4ea:	5f 91       	pop	r21
+ 4ec:	4f 91       	pop	r20
+ 4ee:	3f 91       	pop	r19
+ 4f0:	2f 91       	pop	r18
+ 4f2:	0f 90       	pop	r0
+ 4f4:	0f be       	out	0x3f, r0	; 63
+ 4f6:	0f 90       	pop	r0
+ 4f8:	1f 90       	pop	r1
+ 4fa:	18 95       	reti
 
-00000438 <__tablejump2__>:
- 438:	ee 0f       	add	r30, r30
- 43a:	ff 1f       	adc	r31, r31
- 43c:	05 90       	lpm	r0, Z+
- 43e:	f4 91       	lpm	r31, Z
- 440:	e0 2d       	mov	r30, r0
- 442:	09 94       	ijmp
+000004fc <__tablejump2__>:
+ 4fc:	ee 0f       	add	r30, r30
+ 4fe:	ff 1f       	adc	r31, r31
+ 500:	05 90       	lpm	r0, Z+
+ 502:	f4 91       	lpm	r31, Z
+ 504:	e0 2d       	mov	r30, r0
+ 506:	09 94       	ijmp
 
-00000444 <_exit>:
- 444:	f8 94       	cli
+00000508 <_exit>:
+ 508:	f8 94       	cli
 
-00000446 <__stop_program>:
- 446:	ff cf       	rjmp	.-2      	; 0x446 <__stop_program>
+0000050a <__stop_program>:
+ 50a:	ff cf       	rjmp	.-2      	; 0x50a <__stop_program>

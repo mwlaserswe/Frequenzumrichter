@@ -28,7 +28,8 @@ volatile uint32_t TON_LifeBit;
 
 volatile uint8_t GenaralFunctionState;
 volatile uint8_t PWM_Servo1;
-volatile uint32_t TON_PWM_Servo1;
+volatile uint8_t PWM_Servo2;
+volatile uint32_t TON_PWM_Servo;
 
 void PLC_StandardTask (void);
 void PLC_StandardTask (void)
@@ -68,7 +69,7 @@ void PLC_StandardTask (void)
 	}
 
 			
-	// Set Servo1 PWM	
+	// Set Servo2 PWM	
 	if (GlbServo2Cnt >= 95)
 	{
 		OCR0A = 28;
@@ -91,7 +92,7 @@ void PLC_StandardTask (void)
 		
 		case StateOff:
 			PWM_Servo1 = 16;
-			TON_PWM_Servo1 = 0;
+			TON_PWM_Servo = 0;
 			
 			if (GlbServo1Cnt >= 65)
 			{
@@ -100,10 +101,10 @@ void PLC_StandardTask (void)
 			break;
 			
 		case StateFoldOut:
-			TON_PWM_Servo1 += 1;
-			if (TON_PWM_Servo1 >= 20)	// increase PWM every 20 ms
+			TON_PWM_Servo += 1;
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
 			{	
-				TON_PWM_Servo1 = 0;
+				TON_PWM_Servo = 0;
 				PWM_Servo1 += 1;
 				if (PWM_Servo1 >= 28)
 				 {
@@ -138,11 +139,28 @@ void PLC_StandardTask (void)
 
 
 		case StateRampUpMotor:
-			GenaralFunctionState = StateMotorOn;
+			TON_PWM_Servo += 1;
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
+			{
+				TON_PWM_Servo = 0;
+				PWM_Servo2 += 1;
+				if (PWM_Servo2 >= 28)
+				{
+					GenaralFunctionState = StateMotorOn;
+				}
+			}
+			
+			if (GlbServo1Cnt < 95)
+			{
+				GenaralFunctionState = StateOut;
+			}
 			break;
-
+			
+			
 		case StateMotorOn:
 			Servo1_LED_ON();
+			TON_PWM_Servo = 0;
+
 			if (GlbServo1Cnt < 95)
 			{
 				GenaralFunctionState = StateRampDownMotor;
@@ -152,26 +170,29 @@ void PLC_StandardTask (void)
 		break;
 
 		case StateRampDownMotor:
-			Servo1_LED_OFF();
-			if (GlbServo1Cnt < 65)
+			TON_PWM_Servo += 1;
+			if (TON_PWM_Servo >= 200)	// increase PWM every 20 ms
 			{
-				GenaralFunctionState = StateFoldIn;
-				TON_PWM_Servo1 = 0;
+				TON_PWM_Servo = 0;
+				PWM_Servo2 -= 1;
+				if (PWM_Servo2 <= 16)
+				{
+					GenaralFunctionState = StateFoldIn;
+				}
 			}
-
+			
 			if (GlbServo1Cnt > 95)
 			{
 				GenaralFunctionState = StateRampUpMotor;
-				TON_PWM_Servo1 = 0;
 			}
-
 			break;
 
+
 		case StateFoldIn:
-			TON_PWM_Servo1 += 1;
-			if (TON_PWM_Servo1 >= 20)	// decrease PWM every 20 ms
+			TON_PWM_Servo += 1;
+			if (TON_PWM_Servo >= 200)	// decrease PWM every 20 ms
 			{
-				TON_PWM_Servo1 = 0;
+				TON_PWM_Servo = 0;
 				PWM_Servo1 -= 1;
 				if (PWM_Servo1 <= 16)
 				{
@@ -198,4 +219,5 @@ void PLC_StandardTask (void)
 	
 	
 	OCR2A = PWM_Servo1;
+	OCR0A = PWM_Servo2;
 }

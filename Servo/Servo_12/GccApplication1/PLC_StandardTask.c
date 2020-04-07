@@ -17,8 +17,12 @@
 #define StateMotorOff		6
 #define StateFoldIn			7
 
+volatile uint8_t CurrentMotorCmdOld;
 volatile uint8_t LifeBitState;
 volatile uint32_t TON_LifeBit;
+
+volatile uint8_t WatchdogState;
+volatile uint32_t TON_Watchdog;
 
 volatile uint8_t GenaralFunctionState;
 volatile uint8_t PWM_Servo1;
@@ -37,19 +41,51 @@ void PLC_StandardTask (void)
 	switch (LifeBitState)
 	{
 		case 0:
-		TON_LifeBit = 0;	
-		LifeBitState = 10;
-		break;
+			TON_LifeBit = 0;	
+			LifeBitState = 10;
+			break;
 
 		case 10:
-		TON_LifeBit += 1;
-		if (TON_LifeBit >= 200)		// 200 ms at 50 kHz PLC clock
-		{
-			PORTB ^= (1 << PINB5);	// Toggle on board LED
-			LifeBitState = 0;
-		}
-		break;
+			TON_LifeBit += 1;
+			if (TON_LifeBit >= 200)		// 200 ms at 50 kHz PLC clock
+			{
+				PORTB ^= (1 << PINB5);	// Toggle on board LED
+				LifeBitState = 0;
+			}
+			break;
 	}
+	
+	
+	// State machine "Watchdog"
+	// If 
+	switch (WatchdogState)
+	{
+		case 0:
+			TON_Watchdog = 0;
+			WatchdogState = 10;
+			break;
+
+		case 10:
+			TON_Watchdog += 1;
+			if (Watchdog)
+			{
+				Watchdog = 0;					// clear Watchdog flag
+				WatchdogState = 0;
+			}
+			else if (TON_Watchdog >= 500)		// No signal from RC Receiver for 500 ms
+			{
+				GlbServo1Cnt = ServoMin1;
+				GlbServo2Cnt = ServoMin2;
+				WatchdogState = 0;
+			}
+			break;
+	}
+	
+	
+	
+	
+	
+	
 	
 	/*
 	// Set Servo1 PWM	
@@ -83,12 +119,23 @@ void PLC_StandardTask (void)
 	*/
 
 
-	//CurrentMotorCmd = GlbServo2Cnt;
+	
+	
+
+
 
 	fCurrentMotorCmd = ((fM * GlbServo2Cnt) + fT) + 0.5;
 	CurrentMotorCmd = fCurrentMotorCmd;
-
-
+	
+	// Hysteresis to avoid jitter
+	if (CurrentMotorCmd == CurrentMotorCmdOld -1 )
+	{
+		CurrentMotorCmd = CurrentMotorCmdOld;
+	}
+	else
+	{
+		CurrentMotorCmdOld = CurrentMotorCmd;
+	}
 
 	// General function state machine
 	// FoldOut / FoldIN

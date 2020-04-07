@@ -66,9 +66,8 @@ ISR(TIMER0_COMPA_vect)
 
 ISR(TIMER1_COMPA_vect)
 {	LED_ON();				// Led checks "time exceeds"
-	EndLessCounter++;
 	
-	if (StandardTaskCnt >= 50)
+	if (StandardTaskCnt >= 50)		// 50 x Fast Task. 1 x Standard task
 	{
 		StandardTaskTrigger = 1;
 		StandardTaskCnt = 0;
@@ -79,6 +78,7 @@ ISR(TIMER1_COMPA_vect)
 	}
 	
 	SpsMainLoop();
+	
 	LED_OFF();				// Led checks "time exceeds"
 }
 

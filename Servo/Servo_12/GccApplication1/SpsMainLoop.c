@@ -94,6 +94,7 @@ void SpsMainLoop (void)
 		if  ((PINB & 0x01) == 0)
 		{ 
 			GlbServo1Cnt = Servo1cnt;
+			Watchdog = 1;
 			Servo1State = 0;
 		}
 		else
@@ -121,8 +122,7 @@ void SpsMainLoop (void)
 		if  ((PINB & 0x10) == 0)
 		{
 			GlbServo2Cnt = Servo2cnt;
-
-			
+			Watchdog = 1;
 			Servo2State = 0;
 		}
 		else

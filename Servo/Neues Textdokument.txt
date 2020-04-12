@@ -1,9 +1,0 @@
-
-Frequenz:	47,35 Hz
-Periodendauer:	21 ms    
-
-Pulsdauer:	1100µs - 2100µs
-
-
-
-
